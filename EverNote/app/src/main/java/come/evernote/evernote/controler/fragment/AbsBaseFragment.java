@@ -1,5 +1,6 @@
 package come.evernote.evernote.controler.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,7 +14,12 @@ import android.view.ViewGroup;
  * @author duxiand
  */
 public abstract class AbsBaseFragment extends Fragment{
-    
+    protected Context context;
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.context = context;
+    }
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
