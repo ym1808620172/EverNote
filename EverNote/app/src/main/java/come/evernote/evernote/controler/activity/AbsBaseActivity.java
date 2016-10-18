@@ -26,6 +26,8 @@ public abstract class AbsBaseActivity extends AppCompatActivity implements View.
     private ImageView midImg;
     private TextView titltTv;
     private View titlebar;
+    private ImageView drawerImg;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +66,13 @@ public abstract class AbsBaseActivity extends AppCompatActivity implements View.
                     onClickMid();
                 }
             });
+            drawerImg = (ImageView) findViewById(R.id.base_title_drawer_img);
+            drawerImg.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onClickDrawer();
+                }
+            });
             titltTv=(TextView) findViewById(R.id.base_title_tv);
         }
 
@@ -74,11 +83,6 @@ public abstract class AbsBaseActivity extends AppCompatActivity implements View.
         initDatas();
 
     }
-
-
-
-
-
     /**
      * 加载布局
      *
@@ -105,6 +109,26 @@ public abstract class AbsBaseActivity extends AppCompatActivity implements View.
     protected <T extends View> T byView(int resId) {
         return (T) findViewById(resId);
     }
+    /**
+     * 打开抽屉的点击事件
+     */
+    protected abstract void onClickDrawer();
+
+    /**
+     * 右侧图片的点击事件
+     */
+    protected abstract void onClickRight();
+
+    /**
+     * 中间图片的点击事件
+     */
+    protected abstract void onClickMid();
+
+    /**
+     * 左侧图片的点击事件
+     */
+    protected abstract void onClickLeft();
+
 
     /**
      * 不带返回值跳转
@@ -128,26 +152,26 @@ public abstract class AbsBaseActivity extends AppCompatActivity implements View.
         super.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 
-    /**
-     * 点击左侧按钮
-     * 默认什么都不做
-     */
-    protected void onClickLeft() {
-    }
-
-    /**
-     * 点击左侧图片
-     * 默认什么都不做
-     */
-    private void onClickMid() {
-    }
-    /**
-     * 点击右侧按钮
-     * 默认什么都不做
-     */
-    protected void onClickRight() {
-
-    }
+//    /**
+//     * 点击左侧按钮
+//     * 默认什么都不做
+//     */
+//    protected void onClickLeft() {
+//    }
+//
+//    /**
+//     * 点击左侧图片
+//     * 默认什么都不做
+//     */
+//    private void onClickMid() {
+//    }
+//    /**
+//     * 点击右侧按钮
+//     * 默认什么都不做
+//     */
+//    protected void onClickRight() {
+//
+//    }
 
     /**
      * 设置左侧图片显示与隐藏
@@ -159,6 +183,20 @@ public abstract class AbsBaseActivity extends AppCompatActivity implements View.
                 leftImg.setVisibility(View.VISIBLE);
             }else{
                 leftImg.setVisibility(View.GONE);
+            }
+        }
+
+    }
+    /**
+     * 设置左侧图片显示与隐藏
+     * @param visible
+     */
+    public void setDrawerImgVisible(Boolean visible) {
+        if (drawerImg!=null) {
+            if (visible) {
+                drawerImg.setVisibility(View.VISIBLE);
+            }else{
+                drawerImg.setVisibility(View.GONE);
             }
         }
 
@@ -210,6 +248,51 @@ public abstract class AbsBaseActivity extends AppCompatActivity implements View.
         if (titltTv!=null) {
             if (titltTv!=null) {
                 titltTv.setText(title);
+            }
+        }
+    }
+
+    /**
+     * 设置抽屉图片的样式
+     * @param imgResource
+     */
+    protected void setDrawerImg(int imgResource){
+        if (drawerImg!=null) {
+            if (drawerImg!=null) {
+                drawerImg.setImageResource(imgResource);
+            }
+        }
+    }
+    /**
+     * 设置左边图片的样式
+     * @param imgResource
+     */
+    protected void setLeftImg(int imgResource){
+        if (leftImg!=null) {
+            if (leftImg!=null) {
+                leftImg.setImageResource(imgResource);
+            }
+        }
+    }
+    /**
+     * 设置右边图片的样式
+     * @param imgResource
+     */
+    protected void setRightImg(int imgResource){
+        if (rightImg!=null) {
+            if (rightImg!=null) {
+                rightImg.setImageResource(imgResource);
+            }
+        }
+    }
+    /**
+     * 设置中间图片的样式
+     * @param imgResource
+     */
+    protected void setMidImg(int imgResource){
+        if (midImg!=null) {
+            if (midImg!=null) {
+                midImg.setImageResource(imgResource);
             }
         }
     }
