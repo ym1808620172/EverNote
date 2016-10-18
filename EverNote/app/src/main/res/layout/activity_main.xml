@@ -85,7 +85,10 @@
             <ListView
                 android:id="@+id/drawer_lv"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:scrollbars="none"
+                android:divider="#fff"
+                />
 
         </LinearLayout>
 
@@ -98,4 +101,4 @@
 
 
 
-   
+

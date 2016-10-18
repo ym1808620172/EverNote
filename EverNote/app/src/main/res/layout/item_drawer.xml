@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?><!--抽屉里的行布局-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="15dp"
+    android:orientation="vertical">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/item_drawer_img"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+       android:src="@mipmap/note"
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="20dp"
+        />
+
+    <TextView
+        android:id="@+id/item_drawer_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="哈哈哈哈"
+        android:textSize="15sp"
+        android:layout_toRightOf="@+id/item_drawer_img"
+        android:layout_alignTop="@+id/item_drawer_img"
+        android:layout_marginLeft="20dp"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="12dp"
+        android:layout_below="@+id/item_drawer_img"
+        ></View>
+</RelativeLayout>
+</LinearLayout>
