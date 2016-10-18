@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
+<<<<<<< HEAD
 <android.support.v4.widget.DrawerLayout
     android:id="@+id/main_drawer"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+=======
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+>>>>>>> 48c3aa743714774b1986d5c667f597e76f898cd0
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".controler.activity.MainActivity">
+    android:orientation="vertical">
+    <!--Activity的主界面-->
+
 
     <RelativeLayout
         android:layout_width="match_parent"
+<<<<<<< HEAD
         android:layout_height="match_parent">
 
         <FrameLayout
@@ -56,3 +63,16 @@
     </LinearLayout>
 
 </android.support.v4.widget.DrawerLayout>
+=======
+        android:layout_height="match_parent"/>
+    <ImageView
+        android:padding="10dp"
+        android:id="@+id/main_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:src="@mipmap/large_ic_compose"/>
+
+
+</RelativeLayout>
