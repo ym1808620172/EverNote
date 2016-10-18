@@ -4,13 +4,13 @@ import come.evernote.evernote.R;
 
 /**
  * Created by dllo on 16/10/17.
- * 笔记本界面
+ * 文字笔记界面
  * @author 杜显东
  */
-public class NoteBookFragment extends AbsBaseFragment {
+public class TextNotesFragment extends AbsBaseFragment {
     @Override
     protected int setLayout() {
-        return R.layout.fragment_note_book;
+        return R.layout.fragment_notes_text;
     }
 
     @Override
