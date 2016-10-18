@@ -15,17 +15,18 @@ public class MainActivity extends AbsBaseActivity implements View.OnClickListene
     }
 
     @Override
-    protected void intiView() {
+    protected void initView() {
         imageView = byView(R.id.main_img);
         imageView.setOnClickListener(this);
 
     }
-    @Override
-    protected void initData() {
 
+    @Override
+    protected void initDatas() {
     }
 
     @Override
-    public void onClick(View view) {
+    public void onClick(View v) {
+
     }
 }
