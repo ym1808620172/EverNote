@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+
     <FrameLayout
         android:id="@+id/main_frame_layout"
         android:layout_width="match_parent"
@@ -13,8 +14,9 @@
         android:id="@+id/main_img"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
         android:src="@mipmap/large_ic_compose"/>
+
 
 </RelativeLayout>

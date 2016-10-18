@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">EverNote</string>
+    <!--文字笔记-->
+    <string name="text_Notes_editText_title">笔记标题</string>
+    <string name="text_Notes_text_book">我的第一个笔记本</string>
+    <string name="text_Notes_editText_idea">写下此刻的想法...</string>
 </resources>

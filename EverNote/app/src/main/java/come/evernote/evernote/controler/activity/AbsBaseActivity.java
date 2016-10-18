@@ -2,19 +2,13 @@ package come.evernote.evernote.controler.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import come.evernote.evernote.R;
 
@@ -80,6 +74,7 @@ public abstract class AbsBaseActivity extends AppCompatActivity implements View.
         initDatas();
 
     }
+
 
 
 
