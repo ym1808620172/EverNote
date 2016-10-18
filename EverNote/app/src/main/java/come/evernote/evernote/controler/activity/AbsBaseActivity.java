@@ -27,8 +27,9 @@ import come.evernote.evernote.R;
  */
 public abstract class AbsBaseActivity extends AppCompatActivity implements View.OnClickListener {
     public ViewGroup contentView;
-    private TextView rightBtn;
-    private View leftBtn;
+    private ImageView rightImg;
+    private ImageView leftImg;
+    private ImageView midImg;
     private TextView titltTv;
     private View titlebar;
     @Override
@@ -46,20 +47,27 @@ public abstract class AbsBaseActivity extends AppCompatActivity implements View.
             titlebar=titleView;
         }else {
             titlebar=findViewById(R.id.base_titlebar);
-            leftBtn = findViewById(R.id.base_back_btn);
-            leftBtn.setOnClickListener(new View.OnClickListener() {
+            leftImg = (ImageView) findViewById(R.id.base_title_msg_img);
+            leftImg.setOnClickListener(new View.OnClickListener() {
 
                 @Override
                 public void onClick(View v) {
                     onClickLeft();
                 }
             });
-            rightBtn = (TextView) findViewById(R.id.base_menu_btn);
-            rightBtn.setOnClickListener(new View.OnClickListener() {
+            rightImg = (ImageView) findViewById(R.id.base_title_menu_img);
+            rightImg.setOnClickListener(new View.OnClickListener() {
 
                 @Override
                 public void onClick(View v) {
                     onClickRight();
+                }
+            });
+            midImg = (ImageView) findViewById(R.id.base_title_search_img);
+            midImg.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onClickMid();
                 }
             });
             titltTv=(TextView) findViewById(R.id.base_title_tv);
@@ -67,12 +75,15 @@ public abstract class AbsBaseActivity extends AppCompatActivity implements View.
 
         contentView=(ViewGroup) findViewById(R.id.base_contentview);
         contentView.addView(View.inflate(this, setLayout(), null));
-        setRightBtnVisible(false);
         //制定流程
         initView();
         initDatas();
 
     }
+
+
+
+
     /**
      * 加载布局
      *
@@ -124,12 +135,17 @@ public abstract class AbsBaseActivity extends AppCompatActivity implements View.
 
     /**
      * 点击左侧按钮
-     * 默认是退出
+     * 默认什么都不做
      */
     protected void onClickLeft() {
-        finish();
     }
 
+    /**
+     * 点击左侧图片
+     * 默认什么都不做
+     */
+    private void onClickMid() {
+    }
     /**
      * 点击右侧按钮
      * 默认什么都不做
@@ -139,33 +155,46 @@ public abstract class AbsBaseActivity extends AppCompatActivity implements View.
     }
 
     /**
-     * 设置左侧按钮显示与隐藏
+     * 设置左侧图片显示与隐藏
      * @param visible
      */
-    public void setLeftBtnVisible(Boolean visible) {
-        if (leftBtn!=null) {
+    public void setLeftImgVisible(Boolean visible) {
+        if (leftImg!=null) {
             if (visible) {
-                leftBtn.setVisibility(View.VISIBLE);
+                leftImg.setVisibility(View.VISIBLE);
             }else{
-                leftBtn.setVisibility(View.GONE);
+                leftImg.setVisibility(View.GONE);
             }
         }
 
     }
 
     /**
-     * 设置右侧按钮显示与隐藏
+     * 设置右侧图片显示与隐藏
      * @param visible
      */
-    public void setRightBtnVisible(Boolean visible) {
-        if (rightBtn!=null) {
+    public void setRightImgVisible(Boolean visible) {
+        if (rightImg!=null) {
             if (visible) {
-                rightBtn.setVisibility(View.VISIBLE);
+                rightImg.setVisibility(View.VISIBLE);
             }else{
-                rightBtn.setVisibility(View.GONE);
+                rightImg.setVisibility(View.GONE);
             }
         }
 
+    }
+    /**
+     * 设置中间图片显示与隐藏
+     * @param visible
+     */
+    public void setMidImgVisible(Boolean visible) {
+        if (midImg!=null) {
+            if (visible) {
+                midImg.setVisibility(View.VISIBLE);
+            }else{
+                midImg.setVisibility(View.GONE);
+            }
+        }
     }
 
     /**
@@ -190,19 +219,7 @@ public abstract class AbsBaseActivity extends AppCompatActivity implements View.
         }
     }
 
-
-    /**
-     * 设置右边你按钮文字属性
-     * @param title
-     */
-    public void setRtTitle(String title){
-        if (rightBtn!=null) {
-            rightBtn.setText(title);
-        }
-    }
-
     public View getTitleBar(){
-
         return titlebar;
     }
 
