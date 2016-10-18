@@ -1,25 +1,26 @@
 package come.evernote.evernote.controler.activity;
 
-
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
 import come.evernote.evernote.R;
 
-public class MainActivity extends AbsBaseActivity implements View.OnClickListener {
-    private ImageView imageView;//菜单图片
-
-
+/**
+ * Created by dllo on 16/10/17.
+ * 文字笔记界面
+ * @author 杜显东
+ */
+public class TextNotesActivity extends AbsBaseActivity {
+    private ImageView windowIV;//圈I
     @Override
     protected int setLayout() {
-        return R.layout.activity_main;
+        return R.layout.activity_notes_text;
     }
 
     @Override
     protected void initView() {
-        imageView = byView(R.id.main_img);
-        imageView.setOnClickListener(this);
+
+
     }
 
     @Override
@@ -28,20 +29,13 @@ public class MainActivity extends AbsBaseActivity implements View.OnClickListene
     }
 
     @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.main_img:
-                goTo(this,TextNotesActivity.class);
-                break;
-        }
-    }
     protected void onClickDrawer() {
 
     }
 
     @Override
     protected void onClickRight() {
-        Log.d("aaaa", "zhixingle");
+
     }
 
     @Override
@@ -54,5 +48,8 @@ public class MainActivity extends AbsBaseActivity implements View.OnClickListene
 
     }
 
+    @Override
+    public void onClick(View view) {
 
+    }
 }
