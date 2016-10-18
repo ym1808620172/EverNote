@@ -12,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import come.evernote.evernote.R;
-import come.evernote.evernote.controler.fragment.TextNotesFragment;
 
 public class MainActivity extends AbsBaseActivity implements View.OnClickListener {
     private ImageView imageView;//菜单图片
@@ -46,7 +45,6 @@ public class MainActivity extends AbsBaseActivity implements View.OnClickListene
         transaction = manager.beginTransaction();
         switch (view.getId()) {
             case R.id.main_img:
-                transaction.replace(R.id.main_frame_layout, new TextNotesFragment()).commit();
                 break;
         }
     }
