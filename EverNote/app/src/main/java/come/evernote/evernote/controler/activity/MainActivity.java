@@ -27,6 +27,7 @@ public class MainActivity extends AbsBaseActivity implements View.OnClickListene
     private List<DrawerShowBean> datas;
     private  DrawerAdapter adapter ;
     private ListView drawerLv;
+    private  int index;
     @Override
     protected int setLayout() {
         return R.layout.activity_main;
@@ -47,7 +48,7 @@ public class MainActivity extends AbsBaseActivity implements View.OnClickListene
         datas = new ArrayList<>();
         datas.add(new DrawerShowBean(getResources().getString(R.string.first_page_drawer_all_notes),R.mipmap.note));
         datas.add(new DrawerShowBean(getResources().getString(R.string.first_page_drawer_note_book),R.mipmap.bijiben));
-        datas.add(new DrawerShowBean(getResources().getString(R.string.first_page_drawer_shortcut),R.mipmap.note));
+        datas.add(new DrawerShowBean(getResources().getString(R.string.first_page_drawer_shortcut),R.mipmap.wujiaoxing));
         datas.add(new DrawerShowBean(getResources().getString(R.string.first_page_drawer_group_chat),R.mipmap.work));
         datas.add(new DrawerShowBean(getResources().getString(R.string.first_page_drawer_waster_page),R.mipmap.laji));
         datas.add(new DrawerShowBean(getResources().getString(R.string.first_page_drawer_upgrade),R.mipmap.topgrade));
@@ -60,13 +61,18 @@ public class MainActivity extends AbsBaseActivity implements View.OnClickListene
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if(position == 0){
-                    Toast.makeText(MainActivity.this, "0", Toast.LENGTH_SHORT).show();
+
+                    Toast.makeText(MainActivity.this, "0"+position, Toast.LENGTH_SHORT).show();
+
                 }else if (position == 1){
                     Toast.makeText(MainActivity.this, "1", Toast.LENGTH_SHORT).show();
                 }
+                index = position;
+                adapter.setIndex(index);
+                adapter.notifyDataSetChanged();
+
             }
         });
-
 
     }
 

@@ -1,6 +1,8 @@
 package come.evernote.evernote.controler.activity;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,13 +21,21 @@ import come.evernote.evernote.model.bean.DrawerShowBean;
 public class DrawerAdapter extends BaseAdapter {
     private List<DrawerShowBean> datas;
     private Context context;
+    private int index;
+
+    public void setIndex(int index) {
+        this.index = index;
+        notifyDataSetChanged();
+    }
 
     public DrawerAdapter(Context context) {
+
         this.context = context;
     }
 
     public void setDatas(List<DrawerShowBean> datas) {
         this.datas = datas;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -54,11 +64,18 @@ public class DrawerAdapter extends BaseAdapter {
         }else {
             holder = (DrawerViewHolder) convertView.getTag();
         }
-
         holder.textView.setText(datas.get(position).getContent());
         holder.img.setImageResource(datas.get(position).getImg());
+
+        if (position == index){
+            holder.textView.setTextColor(Color.GREEN);
+        }else {
+            Log.d("DrawerAdapter", "呵呵");
+            holder.textView.setTextColor(Color.GRAY);
+        }
         return convertView;
     }
+
 
     class  DrawerViewHolder{
         TextView textView;
