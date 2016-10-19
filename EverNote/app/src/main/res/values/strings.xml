@@ -4,4 +4,13 @@
     <string name="text_Notes_editText_title">笔记标题</string>
     <string name="text_Notes_text_book">我的第一个笔记本</string>
     <string name="text_Notes_editText_idea">写下此刻的想法...</string>
+    <!--首页抽屉内容-->
+    <string name="first_page_drawer_all_notes">所有笔记</string>
+    <string name="first_page_drawer_note_book">笔记本</string>
+    <string name="first_page_drawer_shortcut">快捷方式</string>
+    <string name="first_page_drawer_group_chat">工作群聊</string>
+    <string name="first_page_drawer_waster_page">废纸篓</string>
+    <string name="first_page_drawer_upgrade">升级账户</string>
+    <string name="first_page_drawer_explore_note">探索印象笔记</string>
+    <string name="first_page_drawer_set_Up_the">设置</string>
 </resources>
