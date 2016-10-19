@@ -70,7 +70,6 @@ public class DrawerAdapter extends BaseAdapter {
         if (position == index){
             holder.textView.setTextColor(Color.GREEN);
         }else {
-            Log.d("DrawerAdapter", "呵呵");
             holder.textView.setTextColor(Color.GRAY);
         }
         return convertView;
