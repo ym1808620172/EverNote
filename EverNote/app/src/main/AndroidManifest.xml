@@ -18,6 +18,7 @@
         <activity android:name=".controler.activity.SettingActivity">
 
         </activity>
+        <activity android:name=".controler.activity.TextNotesActivity"/>
     </application>
 
 </manifest>

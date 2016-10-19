@@ -2,4 +2,27 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+    <!--文字笔记-->
+    <dimen name="notes_text_layout">10dp</dimen>
+    <!--文字标题-->
+    <dimen name="notes_text_edit_title">30dp</dimen>
+    <dimen name="notes_text_edit_size_title">20sp</dimen>
+    <!--图片书-->
+    <dimen name="notes_text_text_book">10dp</dimen>
+    <dimen name="notes_text_text_size_book">15sp</dimen>
+    <!--时钟-->
+    <dimen name="notes_text_clock">10dp</dimen>
+    <!--一条横线-->
+    <dimen name="notes_text_view">20dp</dimen>
+    <!--最大的EditText想法-->
+    <dimen name="notes_text_edit_idea">30dp</dimen>
+    <dimen name="notes_text_edit_size_idea">20sp</dimen>
+    <!--首页抽屉的内容-->
+    <dimen name="cirlc_view_height">60dp</dimen>
+    <dimen name="cirlc_view_weight">60dp</dimen>
+    <dimen name="cirlc_view_margin_left">15dp</dimen>
+    <dimen name="cirlc_view_margin_top">20dp</dimen>
+    <dimen name="cirlc_view_username_text_size">17sp</dimen>
+
+    
 </resources>
