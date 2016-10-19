@@ -145,7 +145,6 @@ public abstract class AbsBaseActivity extends AppCompatActivity implements View.
         Intent intent = new Intent(from, to);
         intent.putExtras(extras);
         startActivity(intent);
-
     }
 
     @Override

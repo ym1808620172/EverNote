@@ -30,6 +30,7 @@
         android:layout_weight="1"
         android:src="@mipmap/icon_attach_on"/>
     <ImageView
+        android:id="@+id/item_text_notes_pen_img"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -40,6 +41,7 @@
         android:layout_weight="1"
         android:src="@mipmap/ic_share_gray_enabled"/>
     <ImageView
+        android:id="@+id/item_text_notes_menu_img"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
