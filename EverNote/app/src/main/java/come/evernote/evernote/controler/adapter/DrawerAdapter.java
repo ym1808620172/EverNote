@@ -1,4 +1,4 @@
-package come.evernote.evernote.controler.activity;
+package come.evernote.evernote.controler.adapter;
 
 import android.content.Context;
 import android.graphics.Color;

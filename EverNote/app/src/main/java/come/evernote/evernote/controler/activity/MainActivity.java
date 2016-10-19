@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import come.evernote.evernote.R;
+import come.evernote.evernote.controler.adapter.DrawerAdapter;
 import come.evernote.evernote.model.bean.DrawerShowBean;
 
 public class MainActivity extends AbsBaseActivity implements View.OnClickListener {
@@ -25,7 +26,7 @@ public class MainActivity extends AbsBaseActivity implements View.OnClickListene
     private DrawerLayout rootView;// 整个页面的布局对象
     private LinearLayout layout;// 抽屉布局对象
     private List<DrawerShowBean> datas;
-    private  DrawerAdapter adapter ;
+    private DrawerAdapter adapter ;
     private ListView drawerLv;
     private  int index;
     @Override
