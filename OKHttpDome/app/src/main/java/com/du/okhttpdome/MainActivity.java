@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
      */
     private TextView textView;
     private OkHttpClient client;
-    private String theUrl = "http://c.3g.163.com/nc/article/list/T1348648517839/0-20.html";
+    private String getUrl = "http://c.3g.163.com/nc/article/list/T1348648517839/0-20.html";
     private String PostUrl = "http://appserver.jnwtv.com:8080/jnwtv-client/movie/getmoviedetail";
     String key1 = "account";
     String value1 = "26690576370";
@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
     private void douSyncGet() {
         //2.
         Request.Builder builder = new Request.Builder();
-        Request request = builder.url(theUrl).build();
+        Request request = builder.url(getUrl).build();
         //3.okHttp客服端利用 请求 发出一次呼叫
         //execute同步安排此次任务, 会获得到一个响应
 //        Call call = client.newCall(request);
@@ -140,8 +140,8 @@ public class MainActivity extends AppCompatActivity {
     private void doAsyncGet() {
         //1.初始化客户端
         //2.利用Builder类构造请求
-        Request request = new Request.Builder().url(theUrl).build();
-        //3.
+        Request request = new Request.Builder().url(getUrl).build();
+        //3.客户端发送一次请求
         Call call = client.newCall(request);
         //4.异步请求
         call.enqueue(new Callback() {
