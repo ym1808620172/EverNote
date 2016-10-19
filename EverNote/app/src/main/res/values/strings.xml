@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">EverNote</string>
+    <string-array name="set_activity_list">
+        <item>账户信息</item>
+        <item>拍照</item>
+        <item>笔记本</item>
+        <item>笔记</item>
+        <item>工作群聊</item>
+        <item>通知</item>
+        <item>教程</item>
+        <item>同步</item>
+        <item>推荐内容</item>
+        <item>搜索和存储</item>
+    </string-array>
 </resources>

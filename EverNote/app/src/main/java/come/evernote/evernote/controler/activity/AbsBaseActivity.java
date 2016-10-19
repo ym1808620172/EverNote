@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -39,16 +40,21 @@ public abstract class AbsBaseActivity extends AppCompatActivity implements View.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.item_tiitle);
         int titlebarResId = getTitlebarResId();
-        if (titlebarResId!=0) {
-            LinearLayout view=(LinearLayout) findViewById(R.id.base_view);
-            view.removeViewAt(0);
-            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
-            ViewGroup titleView=(ViewGroup) View.inflate(this, titlebarResId, null);
-            view.addView(titleView, 0,lp);
-            view.setBackgroundDrawable(titleView.getBackground());
-            titlebar=titleView;
-        }else {
-            titlebar=findViewById(R.id.base_titlebar);
+        setIfTitles(titlebarResId);
+        contentView = (ViewGroup) findViewById(R.id.base_contentview);
+        contentView.addView(View.inflate(this, setLayout(), null));
+        //制定流程
+        initView();
+        initDatas();
+
+    }
+
+    protected void setIfTitles(int titlebarResId) {
+        if (titlebarResId != 0) {
+            titlebar = findViewById(R.id.base_titlebar);
+            titlebar.setVisibility(View.GONE);
+        } else {
+            titlebar = findViewById(R.id.base_titlebar);
             leftImg = (ImageView) findViewById(R.id.base_title_msg_img);
             leftImg.setOnClickListener(new View.OnClickListener() {
 
@@ -79,17 +85,10 @@ public abstract class AbsBaseActivity extends AppCompatActivity implements View.
                     onClickDrawer();
                 }
             });
-            titltTv=(TextView) findViewById(R.id.base_title_tv);
+            titltTv = (TextView) findViewById(R.id.base_title_tv);
+            titlebar.setVisibility(View.VISIBLE);
         }
-
-        contentView=(ViewGroup) findViewById(R.id.base_contentview);
-        contentView.addView(View.inflate(this, setLayout(), null));
-        //制定流程
-        initView();
-        initDatas();
-
     }
-
 
 
     /**
@@ -118,6 +117,7 @@ public abstract class AbsBaseActivity extends AppCompatActivity implements View.
     protected <T extends View> T byView(int resId) {
         return (T) findViewById(resId);
     }
+
     /**
      * 打开抽屉的点击事件
      */
@@ -184,27 +184,30 @@ public abstract class AbsBaseActivity extends AppCompatActivity implements View.
 
     /**
      * 设置左侧图片显示与隐藏
+     *
      * @param visible
      */
     public void setLeftImgVisible(Boolean visible) {
-        if (leftImg!=null) {
+        if (leftImg != null) {
             if (visible) {
                 leftImg.setVisibility(View.VISIBLE);
-            }else{
+            } else {
                 leftImg.setVisibility(View.GONE);
             }
         }
 
     }
+
     /**
      * 设置左侧图片显示与隐藏
+     *
      * @param visible
      */
     public void setDrawerImgVisible(Boolean visible) {
-        if (drawerImg!=null) {
+        if (drawerImg != null) {
             if (visible) {
                 drawerImg.setVisibility(View.VISIBLE);
-            }else{
+            } else {
                 drawerImg.setVisibility(View.GONE);
             }
         }
@@ -213,27 +216,30 @@ public abstract class AbsBaseActivity extends AppCompatActivity implements View.
 
     /**
      * 设置右侧图片显示与隐藏
+     *
      * @param visible
      */
     public void setRightImgVisible(Boolean visible) {
-        if (rightImg!=null) {
+        if (rightImg != null) {
             if (visible) {
                 rightImg.setVisibility(View.VISIBLE);
-            }else{
+            } else {
                 rightImg.setVisibility(View.GONE);
             }
         }
 
     }
+
     /**
      * 设置中间图片显示与隐藏
+     *
      * @param visible
      */
     public void setMidImgVisible(Boolean visible) {
-        if (midImg!=null) {
+        if (midImg != null) {
             if (visible) {
                 midImg.setVisibility(View.VISIBLE);
-            }else{
+            } else {
                 midImg.setVisibility(View.GONE);
             }
         }
@@ -243,6 +249,7 @@ public abstract class AbsBaseActivity extends AppCompatActivity implements View.
      * 获取自定义标题栏
      * 如果子类复写并返回不等于0的布局文件，将会覆盖默认标题
      * 返回0 将会采用默认标题
+     *
      * @return
      */
     protected int getTitlebarResId() {
@@ -251,11 +258,12 @@ public abstract class AbsBaseActivity extends AppCompatActivity implements View.
 
     /**
      * 设置中间标题
+     *
      * @param title
      */
-    public void setTitle(String title){
-        if (titltTv!=null) {
-            if (titltTv!=null) {
+    public void setTitle(String title) {
+        if (titltTv != null) {
+            if (titltTv != null) {
                 titltTv.setText(title);
             }
         }
@@ -263,50 +271,57 @@ public abstract class AbsBaseActivity extends AppCompatActivity implements View.
 
     /**
      * 设置抽屉图片的样式
+     *
      * @param imgResource
      */
-    protected void setDrawerImg(int imgResource){
-        if (drawerImg!=null) {
-            if (drawerImg!=null) {
+    protected void setDrawerImg(int imgResource) {
+        if (drawerImg != null) {
+            if (drawerImg != null) {
                 drawerImg.setImageResource(imgResource);
             }
         }
     }
+
     /**
      * 设置左边图片的样式
+     *
      * @param imgResource
      */
-    protected void setLeftImg(int imgResource){
-        if (leftImg!=null) {
-            if (leftImg!=null) {
+    protected void setLeftImg(int imgResource) {
+        if (leftImg != null) {
+            if (leftImg != null) {
                 leftImg.setImageResource(imgResource);
             }
         }
     }
+
     /**
      * 设置右边图片的样式
+     *
      * @param imgResource
      */
-    protected void setRightImg(int imgResource){
-        if (rightImg!=null) {
-            if (rightImg!=null) {
+    protected void setRightImg(int imgResource) {
+        if (rightImg != null) {
+            if (rightImg != null) {
                 rightImg.setImageResource(imgResource);
             }
         }
     }
+
     /**
      * 设置中间图片的样式
+     *
      * @param imgResource
      */
-    protected void setMidImg(int imgResource){
-        if (midImg!=null) {
-            if (midImg!=null) {
+    protected void setMidImg(int imgResource) {
+        if (midImg != null) {
+            if (midImg != null) {
                 midImg.setImageResource(imgResource);
             }
         }
     }
 
-    public View getTitleBar(){
+    public View getTitleBar() {
         return titlebar;
     }
 
