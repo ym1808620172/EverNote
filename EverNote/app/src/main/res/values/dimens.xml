@@ -17,5 +17,12 @@
     <!--最大的EditText想法-->
     <dimen name="notes_text_edit_idea">30dp</dimen>
     <dimen name="notes_text_edit_size_idea">20sp</dimen>
+    <!--首页抽屉的内容-->
+    <dimen name="cirlc_view_height">60dp</dimen>
+    <dimen name="cirlc_view_weight">60dp</dimen>
+    <dimen name="cirlc_view_margin_left">15dp</dimen>
+    <dimen name="cirlc_view_margin_top">20dp</dimen>
+    <dimen name="cirlc_view_username_text_size">17sp</dimen>
+
     
 </resources>
