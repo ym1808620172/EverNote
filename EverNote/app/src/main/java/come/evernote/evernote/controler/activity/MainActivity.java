@@ -83,6 +83,7 @@ public class MainActivity extends AbsBaseActivity implements View.OnClickListene
         transaction = manager.beginTransaction();
         switch (view.getId()) {
             case R.id.main_img:
+                goTo(MainActivity.this,TextNotesActivity.class);
                 break;
         }
     }

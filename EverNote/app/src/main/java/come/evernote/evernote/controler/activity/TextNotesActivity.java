@@ -73,6 +73,7 @@ public class TextNotesActivity extends AbsBaseActivity {
         transaction = manager.beginTransaction();
         switch (view.getId()){
             case R.id.item_text_notes_menu_img:
+
                 transaction.replace(R.id.drawer_frame_layout,new TextNotesMenuFragment()).commit();
                 drawerLayout.openDrawer(layout);
                 break;
