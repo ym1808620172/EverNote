@@ -174,6 +174,10 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
         });
     }
 
+    @Override
+    public void onClick(View view) {
+
+    }
 
     protected void onClickDrawer() {
         rootView.openDrawer(layout);
@@ -199,6 +203,9 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
             case 0:
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(intent, CAMERA_WITH_DATA);
+                break;
+            case 5:
+                goTo(MainActivity.this, TextNotesActivity.class);
                 break;
         }
         rfabHelper.toggleContent();
@@ -240,11 +247,6 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
                 break;
         }
         rfabHelper.toggleContent();
-    }
-
-    @Override
-    public void onClick(View v) {
-
     }
 
 

@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import come.evernote.evernote.R;
 import come.evernote.evernote.model.bean.PhotoBean;
+
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
@@ -34,7 +35,7 @@ public class TextNotesActivity extends AbsBaseActivity {
     private DrawerLayout drawerLayout;//根布局
     private LinearLayout layout;//抽屉的布局
     private FragmentManager manager;
-   private FragmentTransaction transaction;
+    private FragmentTransaction transaction;
 
     @Override
     protected int setLayout() {
@@ -56,12 +57,13 @@ public class TextNotesActivity extends AbsBaseActivity {
     @Override
     protected void initDatas() {
         Intent intent = getIntent();
-        if (intent!=null){
+        if (intent != null) {
             PhotoBean bean = (PhotoBean) intent.getSerializableExtra("photo");
-            Log.d("TextNotesActivity", "bean:" + bean);
-            Log.d("photo", "bean.getBitmap():" + getBitmap(bean.getBitmap()));
-            Toast.makeText(this, "aaa", Toast.LENGTH_SHORT).show();
+            if (bean != null) {
+                Bitmap bitmap = getBitmap(bean.getBitmap());
+            }
         }
+        setIfTitles(1);
     }
 
     public static Bitmap getBitmap(byte[] data) {
@@ -92,13 +94,14 @@ public class TextNotesActivity extends AbsBaseActivity {
     public void onClick(View view) {
         manager = getSupportFragmentManager();
         transaction = manager.beginTransaction();
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.item_text_notes_menu_img:
-                transaction.replace(R.id.drawer_frame_layout,new TextNotesMenuFragment()).commit();
+
+                transaction.replace(R.id.drawer_frame_layout, new TextNotesMenuFragment()).commit();
                 drawerLayout.openDrawer(layout);
                 break;
             case R.id.notes_text_about_img:
-                transaction.replace(R.id.drawer_frame_layout,new TextNotesAboutFragment()).commit();
+                transaction.replace(R.id.drawer_frame_layout, new TextNotesAboutFragment()).commit();
                 drawerLayout.openDrawer(layout);
                 break;
 

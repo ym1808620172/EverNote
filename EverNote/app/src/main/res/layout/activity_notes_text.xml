@@ -7,8 +7,6 @@
     android:layout_weight="1"
     android:orientation="vertical">
 
-    <include layout="@layout/item_text_notes_title" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -79,7 +77,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
                         android:layout_marginRight="@dimen/notes_text_clock"
-                        android:layout_toLeftOf="@id/notes_text_window_img"
+                        android:layout_toLeftOf="@id/notes_text_about_img"
                         android:src="@mipmap/time" />
                 </RelativeLayout>
 
@@ -103,51 +101,23 @@
             </LinearLayout>
         </ScrollView>
 
-        <ImageView
-            android:id="@+id/notes_text_time_img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginRight="@dimen/notes_text_clock"
-            android:layout_toLeftOf="@id/notes_text_about_img"
-            android:src="@mipmap/time" />
-    </RelativeLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_marginTop="@dimen/notes_text_view"
-        android:background="@color/notes_text_view" />
-
-    <EditText
-        android:layout_width="match_parent"
+    </LinearLayout>
+    <!--抽屉-->
+    <LinearLayout
+        android:id="@+id/drawer_liner_layout"
+        android:layout_width="300dp"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/notes_text_edit_idea"
-        android:background="@null"
-        android:gravity="top"
-        android:hint="写下此刻的想法..."
-        android:textColor="@color/notes_text_edit_idea"
-        android:textCursorDrawable="@null"
-        android:textSize="@dimen/notes_text_edit_size_idea" />
+        android:layout_gravity="right"
+        android:orientation="vertical">
 
+        <FrameLayout
+            android:id="@+id/drawer_frame_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#ffffff">
 
-</LinearLayout>
-    </ScrollView>
-    </LinearLayout><!--抽屉-->
-<LinearLayout
-android:layout_width="300dp"
-android:layout_height="match_parent"
-android:layout_gravity="right"
-android:id="@+id/drawer_liner_layout"
-android:orientation="vertical">
-<FrameLayout
-    android:id="@+id/drawer_frame_layout"
-    android:layout_width="match_parent"
-    android:background="#ffffff"
-    android:layout_height="match_parent">
+        </FrameLayout>
 
-</FrameLayout>
+    </LinearLayout>
 
-</LinearLayout>
-
-    </android.support.v4.widget.DrawerLayout>
+</android.support.v4.widget.DrawerLayout>
