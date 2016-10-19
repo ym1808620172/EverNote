@@ -1,13 +1,13 @@
 package come.evernote.evernote.controler.activity;
 
 
+import android.widget.ImageView;
+
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -86,13 +86,11 @@ public class MainActivity extends AbsBaseActivity implements View.OnClickListene
         }
     }
     protected void onClickDrawer() {
-
         rootView.openDrawer(layout);
     }
 
     @Override
     protected void onClickRight() {
-        Log.d("aaaa", "zhixingle");
     }
 
     @Override
@@ -104,6 +102,4 @@ public class MainActivity extends AbsBaseActivity implements View.OnClickListene
     protected void onClickLeft() {
 
     }
-
-
 }
