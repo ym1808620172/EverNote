@@ -197,7 +197,6 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
                     Toast.makeText(MainActivity.this, "8", Toast.LENGTH_SHORT).show();
                     intent = new Intent(MainActivity.this, SettingActivity.class);
                     startActivity(intent);
-
                     if (position == 0) {
 
                         Toast.makeText(MainActivity.this, "0" + position, Toast.LENGTH_SHORT).show();
@@ -205,10 +204,10 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
                     } else if (position == 1) {
                         Toast.makeText(MainActivity.this, "1", Toast.LENGTH_SHORT).show();
                     }
-                    index = position - 1;
-                    adapter.setIndex(index);
-                    adapter.notifyDataSetChanged();
                 }
+                index = position ;
+                adapter.setIndex(index);
+                adapter.notifyDataSetChanged();
             }
         });
         // 定位跳转

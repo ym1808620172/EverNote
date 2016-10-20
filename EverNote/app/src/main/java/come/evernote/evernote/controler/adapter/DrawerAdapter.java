@@ -17,6 +17,7 @@ import come.evernote.evernote.model.bean.DrawerShowBean;
 
 /**
  * Created by dllo on 16/10/18.
+ * 抽屉界面适配器
  */
 public class DrawerAdapter extends BaseAdapter {
     private List<DrawerShowBean> datas;
@@ -29,7 +30,6 @@ public class DrawerAdapter extends BaseAdapter {
     }
 
     public DrawerAdapter(Context context) {
-
         this.context = context;
     }
 
@@ -56,6 +56,7 @@ public class DrawerAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         DrawerViewHolder holder = null;
+        Log.d("aaaa", "positionaaa:" + position);
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.item_drawer, parent, false);
             holder = new DrawerViewHolder(convertView);
@@ -66,7 +67,7 @@ public class DrawerAdapter extends BaseAdapter {
         }
         holder.textView.setText(datas.get(position).getContent());
         holder.img.setImageResource(datas.get(position).getImg());
-
+        Log.d("aaaa", "index:" + index);
         if (position == index) {
             holder.textView.setTextColor(Color.GREEN);
         } else {
