@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.wangjie.androidbucket.utils.ABTextUtil;
@@ -41,8 +42,9 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
     private LinearLayout layout;// 抽屉布局对象
     private List<DrawerShowBean> datas;
     private DrawerAdapter adapter;
-    private ListView drawerLv;
+    private ListView drawerLv;// 抽屉lv
     private int index;
+    private TextView forTv;
     private RapidFloatingActionButton rfaButton;
     private RapidFloatingActionHelper rfabHelper;
     private RapidFloatingActionLayout rfaLayout;
@@ -59,6 +61,7 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
         rootView = byView(R.id.root_view);
         layout = byView(R.id.drawer_view);
         drawerLv = byView(R.id.drawer_lv);
+        forTv = byView(R.id.for_tv);
         rfaLayout = byView(R.id.label_list_sample_rfal);
         rfaButton = byView(R.id.label_list_sample_rfab);
 
@@ -66,6 +69,9 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
 
     @Override
     protected void initDatas() {
+
+        // 头布局
+        getHead();
         adapter = new DrawerAdapter(this);
         //设置抽屉
         setDrawer();
@@ -144,6 +150,7 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
     }
 
     private void setDrawer() {
+
         datas = new ArrayList<>();
         datas.add(new DrawerShowBean(getResources().getString(R.string.first_page_drawer_all_notes), R.mipmap.note));
         datas.add(new DrawerShowBean(getResources().getString(R.string.first_page_drawer_note_book), R.mipmap.bijiben));
@@ -157,22 +164,70 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
         drawerLv.setAdapter(adapter);
 
         drawerLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            private Intent intent;
+
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Log.d("aaaaa", "position:" + position);
+
                 if (position == 0) {
-
-                    Toast.makeText(MainActivity.this, "0" + position, Toast.LENGTH_SHORT).show();
-
-                } else if (position == 1) {
-                    Toast.makeText(MainActivity.this, "1", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "点击头布局", Toast.LENGTH_SHORT).show();
                 }
-                index = position;
-                adapter.setIndex(index);
-                adapter.notifyDataSetChanged();
+                if (position == 1) {
+                    Toast.makeText(MainActivity.this, "所有笔记", Toast.LENGTH_SHORT).show();
+                }
 
+                if (position == 2) {
+
+                    Toast.makeText(MainActivity.this, "2", Toast.LENGTH_SHORT).show();
+
+                } else if (position == 3) {
+                    Toast.makeText(MainActivity.this, "3", Toast.LENGTH_SHORT).show();
+                } else if (position == 4) {
+                    Toast.makeText(MainActivity.this, "4", Toast.LENGTH_SHORT).show();
+                } else if (position == 5) {
+                    Toast.makeText(MainActivity.this, "5", Toast.LENGTH_SHORT).show();
+                } else if (position == 6) {
+                    Toast.makeText(MainActivity.this, "6", Toast.LENGTH_SHORT).show();
+                } else if (position == 7) {
+                    Toast.makeText(MainActivity.this, "7", Toast.LENGTH_SHORT).show();
+                } else if (position == 8) {
+                    Toast.makeText(MainActivity.this, "8", Toast.LENGTH_SHORT).show();
+                    intent = new Intent(MainActivity.this, SettingActivity.class);
+                    startActivity(intent);
+
+                    if (position == 0) {
+
+                        Toast.makeText(MainActivity.this, "0" + position, Toast.LENGTH_SHORT).show();
+
+                    } else if (position == 1) {
+                        Toast.makeText(MainActivity.this, "1", Toast.LENGTH_SHORT).show();
+                    }
+                    index = position - 1;
+                    adapter.setIndex(index);
+                    adapter.notifyDataSetChanged();
+                }
+            }
+        });
+        // 定位跳转
+        forTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, PositonActivity.class);
+                startActivity(intent);
             }
         });
     }
+
+
+    private void getHead() {
+
+        View view = getLayoutInflater().inflate(R.layout.first_page_drawer_header, null);
+        drawerLv.addHeaderView(view);
+    }
+
 
     @Override
     public void onClick(View view) {
