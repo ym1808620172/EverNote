@@ -68,6 +68,7 @@ public class DrawerAdapter extends BaseAdapter {
         holder.img.setImageResource(datas.get(position).getImg());
 
         if (position == index) {
+            Log.d("DrawerAdapter", "he");
             holder.textView.setTextColor(Color.GREEN);
         } else {
             holder.textView.setTextColor(Color.GRAY);
