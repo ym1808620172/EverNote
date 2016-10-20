@@ -61,6 +61,7 @@ public class TextNotesActivity extends AbsBaseActivity {
             PhotoBean bean = (PhotoBean) intent.getSerializableExtra("photo");
             if (bean != null) {
                 Bitmap bitmap = getBitmap(bean.getBitmap());
+                Log.d("aaaa", "bitmap:" + bitmap);
             }
         }
         setIfTitles(1);
