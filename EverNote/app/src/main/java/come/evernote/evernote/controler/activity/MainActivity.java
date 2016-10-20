@@ -178,11 +178,8 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
                 if (position == 1) {
                     Toast.makeText(MainActivity.this, "所有笔记", Toast.LENGTH_SHORT).show();
                 }
-
                 if (position == 2) {
-
                     Toast.makeText(MainActivity.this, "2", Toast.LENGTH_SHORT).show();
-
                 } else if (position == 3) {
                     Toast.makeText(MainActivity.this, "3", Toast.LENGTH_SHORT).show();
                 } else if (position == 4) {
@@ -197,15 +194,8 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
                     Toast.makeText(MainActivity.this, "8", Toast.LENGTH_SHORT).show();
                     intent = new Intent(MainActivity.this, SettingActivity.class);
                     startActivity(intent);
-                    if (position == 0) {
-
-                        Toast.makeText(MainActivity.this, "0" + position, Toast.LENGTH_SHORT).show();
-
-                    } else if (position == 1) {
-                        Toast.makeText(MainActivity.this, "1", Toast.LENGTH_SHORT).show();
-                    }
                 }
-                index = position ;
+                index = position - 1;
                 adapter.setIndex(index);
                 adapter.notifyDataSetChanged();
             }
