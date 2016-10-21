@@ -88,6 +88,7 @@
                 android:background="@color/notes_text_view" />
 
             <EditText
+                android:id="@+id/notes_text_content_et"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/notes_text_edit_idea"
