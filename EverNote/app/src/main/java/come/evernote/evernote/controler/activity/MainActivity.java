@@ -7,10 +7,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
-import android.widget.ImageView;
 
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.widget.AdapterView;
@@ -26,7 +23,6 @@ import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionHelper;
 import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout;
 import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RFACLabelItem;
 import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RapidFloatingActionContentLabelList;
-import com.wangjie.rapidfloatingactionbutton.rfabgroup.RapidFloatingActionButtonGroup;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
@@ -114,7 +110,7 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
                 .setIconNormalColor(0xff056f00)
                 .setIconPressedColor(0xff0d5302)
                 .setLabelColor(0xff056f00)
-                .setWrapper(2)
+                .setWrapper(3)
         );
 
         items.add(new RFACLabelItem<Integer>()
@@ -250,6 +246,10 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
                 break;
             case 5:
                 goTo(MainActivity.this, TextNotesActivity.class);
+                break;
+            case 3:
+                intent = new Intent(MainActivity.this, RemendPopActivity.class);
+                startActivity(intent);
                 break;
         }
         rfabHelper.toggleContent();

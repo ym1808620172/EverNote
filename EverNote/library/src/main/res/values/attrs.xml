@@ -1,29 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <declare-styleable name="RapidFloatingActionLayout">
-        <attr name="rfal_frame_color" format="color"/>
-        <attr name="rfal_frame_alpha" format="float"/>
-    </declare-styleable>
+    <declare-styleable name="MaterialCalendarView">
 
-    <declare-styleable name="RapidFloatingActionButton">
-        <attr name="rfab_size" format="enum">
-            <!-- 56dp -->
-            <enum name="normal" value="0"/>
-            <!-- 40dp -->
-            <enum name="mini" value="1"/>
+        <attr name="mcv_dateTextAppearance" format="reference"/>
+        <attr name="mcv_weekDayTextAppearance" format="reference"/>
+        <attr name="mcv_headerTextAppearance" format="reference"/>
+
+        <attr name="mcv_arrowColor" format="color"/>
+        <attr name="mcv_leftArrowMask" format="reference"/>
+        <attr name="mcv_rightArrowMask" format="reference"/>
+        <attr name="mcv_selectionColor" format="color"/>
+
+        <attr name="mcv_showOtherDates" format="boolean"/>
+
+        <attr name="mcv_weekDayLabels" format="reference" />
+        <attr name="mcv_monthLabels" format="reference" />
+
+        <attr name="mcv_tileSize" format="dimension"/>
+
+        <attr name="mcv_firstDayOfWeek" format="enum">
+            <enum name="sunday" value="1" />
+            <enum name="monday" value="2" />
+            <enum name="tuesday" value="3" />
+            <enum name="wednesday" value="4" />
+            <enum name="thursday" value="5" />
+            <enum name="friday" value="6" />
+            <enum name="saturday" value="7" />
         </attr>
-        <attr name="rfab_drawable" format="reference"/>
-        <attr name="rfab_color_normal" format="color"/>
-        <attr name="rfab_color_pressed" format="color"/>
-        <attr name="rfab_shadow_radius" format="dimension"/>
-        <attr name="rfab_shadow_color" format="color"/>
-        <attr name="rfab_shadow_dx" format="dimension"/>
-        <attr name="rfab_shadow_dy" format="dimension"/>
-        <!-- identificationCode用于确定唯一个RFAB，目前用在通过RapidFloatingActionButtonGroup中获取某一个RFAB -->
-        <attr name="rfab_identification_code" format="string"/>
+
     </declare-styleable>
-
-
 
 </resources>
