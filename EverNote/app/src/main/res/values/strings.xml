@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">EverNote</string>
+    <string name="app_name">印象笔记</string>
 
     <!--文字笔记-->
     <string name="text_Notes_editText_title">笔记标题</string>

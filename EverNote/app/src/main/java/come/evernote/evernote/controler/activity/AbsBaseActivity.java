@@ -2,11 +2,13 @@ package come.evernote.evernote.controler.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -28,6 +30,7 @@ public abstract class AbsBaseActivity extends AppCompatActivity implements View.
     private TextView titltTv;
     private View titlebar;
     private ImageView drawerImg;
+    private int index;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +43,13 @@ public abstract class AbsBaseActivity extends AppCompatActivity implements View.
         //制定流程
         initView();
         initDatas();
+    }
 
+    protected void electricQuantity() {
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                //透明状态栏
+                getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            }
     }
 
     protected void setIfTitles(int titlebarResId) {
@@ -83,6 +92,7 @@ public abstract class AbsBaseActivity extends AppCompatActivity implements View.
             titlebar.setVisibility(View.VISIBLE);
         }
     }
+
     /**
      * 加载布局
      *

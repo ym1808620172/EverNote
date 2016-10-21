@@ -80,7 +80,6 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
 
     @Override
     protected void initDatas() {
-
         // 头布局
         getHead();
         adapter = new DrawerAdapter(this);
@@ -348,6 +347,4 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
         }
         rfabHelper.toggleContent();
     }
-
-
 }
