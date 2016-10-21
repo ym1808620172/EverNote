@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+<!--无序列表-->
+    <item android:drawable="@mipmap/wuxuliebiao_on" android:state_selected="true"/>
+    <item android:drawable="@mipmap/wuxuliebiao"/>
+</selector>
