@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="come.evernote.evernote">
 
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+
     <!--用于进行网络定位-->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"></uses-permission>
     <!--用于访问GPS定位-->
@@ -50,6 +54,7 @@
 
         <activity android:name=".controler.activity.SettingActivity"/>
         <activity android:name=".controler.activity.TextNotesActivity" />
+        <activity android:name=".controler.activity.RecodingActivity"/>
     </application>
 
 </manifest>

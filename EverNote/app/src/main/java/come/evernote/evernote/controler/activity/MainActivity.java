@@ -324,6 +324,10 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
             case 5:
                 goTo(MainActivity.this, TextNotesActivity.class);
                 break;
+            case  2:
+                Intent intentRecoding = new Intent(MainActivity.this,RecodingActivity.class);
+                startActivity(intentRecoding);
+                break;
         }
         rfabHelper.toggleContent();
     }
@@ -362,6 +366,7 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(intent, CAMERA_WITH_DATA);
                 break;
+
         }
         rfabHelper.toggleContent();
     }

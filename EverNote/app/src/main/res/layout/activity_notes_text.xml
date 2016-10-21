@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -67,25 +68,10 @@
                         android:id="@+id/notes_text_about_img"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-<<<<<<< HEAD
                         android:layout_alignParentRight="true"
                         android:layout_centerInParent="true"
                         android:src="@mipmap/quan_i" />
-=======
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="@dimen/notes_text_text_book"
-                        android:text="@string/text_Notes_text_book"
-                        android:textColor="@color/notes_text_text_book"
-                        android:textSize="@dimen/notes_text_text_size_book" />
-                </LinearLayout>
 
-                <ImageView
-                    android:id="@+id/notes_text_about_img"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerInParent="true"
-                    android:src="@mipmap/quan_i" />
 
 
                 <ImageView
@@ -115,34 +101,7 @@
                 android:textColor="@color/notes_text_edit_idea"
                 android:textCursorDrawable="@null"
                 android:textSize="@dimen/notes_text_edit_size_idea" />
->>>>>>> feature/杜显东
 
-                    <ImageView
-                        android:id="@+id/notes_text_time_img"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:layout_marginRight="@dimen/notes_text_clock"
-                        android:layout_toLeftOf="@id/notes_text_about_img"
-                        android:src="@mipmap/time" />
-                </RelativeLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:layout_marginTop="@dimen/notes_text_view"
-                    android:background="@color/notes_text_view" />
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="@dimen/notes_text_edit_idea"
-                    android:background="@null"
-                    android:gravity="top"
-                    android:hint="写下此刻的想法..."
-                    android:textColor="@color/notes_text_edit_idea"
-                    android:textCursorDrawable="@null"
-                    android:textSize="@dimen/notes_text_edit_size_idea" />
 
             </LinearLayout>
         </ScrollView>
