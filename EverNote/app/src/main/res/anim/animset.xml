@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:duration="1000"
+    android:repeatMode="restart"
+    >
+    <rotate
+        android:fromDegrees="0"
+        android:pivotX="50%"
+        android:pivotY="50%"
+        android:repeatCount="0"
+        android:toDegrees="360" />
+    <!--在xml布局中-->
+    <!--用 百分之多少,代表 相对自身的比例-->
+    <!--加 p 代表相当于parent 不加p相对于自身-->
+
+</set>
