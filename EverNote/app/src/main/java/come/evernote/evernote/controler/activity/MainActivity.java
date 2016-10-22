@@ -325,8 +325,7 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
                 goTo(MainActivity.this, TextNotesActivity.class);
                 break;
             case  2:
-                Intent intentRecoding = new Intent(MainActivity.this,RecodingActivity.class);
-                startActivity(intentRecoding);
+                goTo(MainActivity.this,RecodingActivity.class);
                 break;
         }
         rfabHelper.toggleContent();

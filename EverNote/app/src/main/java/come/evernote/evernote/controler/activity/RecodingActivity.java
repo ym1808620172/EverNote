@@ -1,8 +1,10 @@
 package come.evernote.evernote.controler.activity;
 
+import android.app.ProgressDialog;
 import android.media.MediaRecorder;
 import android.os.Environment;
 import android.os.SystemClock;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.widget.Chronometer;
@@ -22,11 +24,14 @@ import come.evernote.evernote.R;
  */
 public class RecodingActivity  extends  AbsBaseActivity{
 
-    private ImageView btnStart,btnStop;
+    private ImageView btnStart;
     private Chronometer recordChronometer;
     private boolean isStart = false;
     private MediaRecorder mr = null;
     private long recordingTime = 0;// 记录下来的时间
+    // 进度对话框
+    private ProgressDialog progressDialog;
+
     @Override
     protected int setLayout() {
         return R.layout.activity_recoding;
@@ -42,10 +47,12 @@ public class RecodingActivity  extends  AbsBaseActivity{
 
     @Override
     protected void initDatas() {
-
+        setIfTitles(1);
         getOpen();
 
+
     }
+
 
     private void getOpen() {
         btnStart.setOnClickListener(new View.OnClickListener() {
@@ -60,6 +67,7 @@ public class RecodingActivity  extends  AbsBaseActivity{
                     recordChronometer.start();
                     isStart = true;
                 } else {
+                    showProgressDilog();
                     stopRecord();
                     btnStart.setImageResource(R.mipmap.btn_start_recoding);
                     Toast.makeText(RecodingActivity.this, "结束录音,并保存到本地", Toast.LENGTH_SHORT).show();
@@ -69,9 +77,31 @@ public class RecodingActivity  extends  AbsBaseActivity{
                 }
             }
         });
-
-
     }
+
+    private void showProgressDilog() {
+        progressDialog = new ProgressDialog(RecodingActivity.this);
+        // 设置对话框的图标
+        // 设置文字
+        progressDialog.setMessage("加载中....");
+        // 显示加载进度对话框
+
+        progressDialog.show();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                try {
+                    Log.d("aaaa", "sd");
+                    Thread.sleep(2000);
+                    progressDialog.dismiss();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
 
     private void stopRecord() {
 
