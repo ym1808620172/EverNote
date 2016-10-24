@@ -3,35 +3,167 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+
+      <RelativeLayout
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content">
+
+          <ImageView
+              android:id="@+id/recording_btn_start"
+              android:layout_width="30dp"
+              android:layout_height="30dp"
+              android:src="@mipmap/btn_start_recoding"
+              android:layout_margin="20dp"
+              />
+
+          <Chronometer
+              android:id="@+id/recoding_chronometer"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="20dp"
+              android:textColor="#06fa88"
+              android:textSize="25sp"
+              android:layout_toRightOf="@+id/recording_btn_start"
+              />
+
+      </RelativeLayout>
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:gravity="center_vertical"
+          android:orientation="horizontal"
+          android:layout_marginTop="21dp"
+          >
+
+          <ImageView
+              android:id="@+id/item_text_notes_formatting_img"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:src="@drawable/item_text_notes_title_the_formatting"/>
+          <ImageView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:src="@mipmap/icon_attach_on"/>
+          <ImageView
+              android:id="@+id/item_text_notes_pen_img"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:src="@mipmap/ab_ink_pen_thin_active"/>
+          <ImageView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:src="@mipmap/ic_share_gray_enabled"/>
+          <ImageView
+              android:id="@+id/item_text_notes_menu_img"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:src="@mipmap/ic_action_more"/>
+
+      </LinearLayout>
+
+  </LinearLayout>
+
+
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/notes_text_layout"
+            android:layout_marginRight="@dimen/notes_text_layout"
+            android:orientation="vertical">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:hint="@string/text_Notes_editText_title"
+                android:paddingBottom="@dimen/notes_text_edit_title"
+                android:textColor="@color/notes_text_edit_title"
+                android:textCursorDrawable="@null"
+                android:textSize="@dimen/notes_text_edit_size_title" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/notes_text_book_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:src="@mipmap/book" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="@dimen/notes_text_text_book"
+                        android:text="@string/text_Notes_text_book"
+                        android:textColor="@color/notes_text_text_book"
+                        android:textSize="@dimen/notes_text_text_size_book" />
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/notes_text_about_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerInParent="true"
+                    android:src="@mipmap/quan_i" />
 
 
-        <ImageView
-            android:id="@+id/recording_btn_start"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@mipmap/btn_start_recoding"
-            android:layout_margin="20dp"
-            />
 
-        <Chronometer
-            android:id="@+id/recoding_chronometer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:textColor="#06fa88"
-            android:textSize="25sp"
-            android:layout_toRightOf="@+id/recording_btn_start"
-            />
+                <ImageView
+                    android:id="@+id/notes_text_time_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginRight="@dimen/notes_text_clock"
+                    android:layout_toLeftOf="@id/notes_text_about_img"
+                    android:src="@mipmap/time" />
+            </RelativeLayout>
 
-    </RelativeLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="@dimen/notes_text_view"
+                android:background="@color/notes_text_view" />
+
+            <EditText
+                android:id="@+id/notes_text_content_et"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/notes_text_edit_idea"
+                android:background="@null"
+                android:gravity="top"
+                android:hint="写下此刻的想法..."
+                android:textColor="@color/notes_text_edit_idea"
+                android:textCursorDrawable="@null"
+                android:textSize="@dimen/notes_text_edit_size_idea" />
 
 
-
-
+        </LinearLayout>
+    </ScrollView>
 
 
 
