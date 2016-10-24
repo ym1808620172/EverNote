@@ -71,7 +71,6 @@ public class TextNotesActivity extends AbsBaseActivity {
     private LinearLayout layout;//抽屉的布局
     private FragmentManager manager;
     private FragmentTransaction transaction;
-    private EditText contentEt;//输入的内容
     private LinearLayout attachLayout;//附件Dialog
     private ListView listView;//附件Dialog的ListView
     private BottomSheetBehavior mBehavior;
@@ -96,6 +95,7 @@ public class TextNotesActivity extends AbsBaseActivity {
     private int index;
     private int pictureIndex;
     private SpannableString span;
+    private String editTextContent;
 
 
     @Override
@@ -112,7 +112,6 @@ public class TextNotesActivity extends AbsBaseActivity {
         layout = byView(R.id.drawer_liner_layout);
         rootLl = byView(R.id.notex_root_ll);
         formattingIv = byView(R.id.item_text_notes_formatting_img);
-        contentEt = byView(R.id.notes_text_content_et);
         doneIv = byView(R.id.item_text_notes_done_iv);
         underIv = byView(R.id.item_text_notes_left_undo_iv);
         redoIv = byView(R.id.item_text_notes_right_redo_iv);
@@ -137,6 +136,7 @@ public class TextNotesActivity extends AbsBaseActivity {
 
     @Override
     protected void initDatas() {
+        editTextContent = editorView.getText().toString();
         rootLl.setAnimation(new ViewAnimation(rootLl.getWidth(), rootLl.getHeight(), 1000));
         Intent intent = getIntent();
         if (intent != null) {
@@ -154,11 +154,10 @@ public class TextNotesActivity extends AbsBaseActivity {
                 Log.d("xxx", "bitmap:" + bitmap);
             }
             String content = intent.getStringExtra("text");
-            if (content!=null){
+            if (content != null) {
                 editorView.setText(content);
             }
         }
-        String editTextContent = editorView.getText().toString();
         setIfTitles(1);
         setSpeaking(editTextContent);
     }
@@ -253,9 +252,10 @@ public class TextNotesActivity extends AbsBaseActivity {
 
     @Override
     public void onClick(View view) {
+        editTextContent = editorView.getText().toString();
         manager = getSupportFragmentManager();
         transaction = manager.beginTransaction();
-        span = new SpannableString(contentEt.getText().toString());
+        span = new SpannableString(editTextContent);
         switch (view.getId()) {
             case R.id.item_text_notes_menu_img:
                 transaction.replace(R.id.drawer_frame_layout, new TextNotesMenuFragment()).commit();
@@ -279,9 +279,9 @@ public class TextNotesActivity extends AbsBaseActivity {
             case R.id.item_formatting_popup_window_bold_iv:
                 if (!isClick) {
                     boldIv.setSelected(true);
-                    span.setSpan(new StyleSpan(Typeface.BOLD), 0, contentEt.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                    contentEt.setText(span);
-                    contentEt.setMovementMethod(LinkMovementMethod.getInstance());
+                    span.setSpan(new StyleSpan(Typeface.BOLD), 0, editorView.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    setEdText();
+                    editorView.setMovementMethod(LinkMovementMethod.getInstance());
                     isClick = true;
                 } else if (isClick) {
                     boldIv.setSelected(false);
@@ -291,8 +291,8 @@ public class TextNotesActivity extends AbsBaseActivity {
             case R.id.item_formatting_popup_window_italic_iv:
                 if (!isClick) {
                     italicIv.setSelected(true);
-                    span.setSpan(new StyleSpan(Typeface.ITALIC), 0, contentEt.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-                    contentEt.setText(span);
+                    span.setSpan(new StyleSpan(Typeface.ITALIC), 0, editorView.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                    setEdText();
                     isClick = true;
                 } else if (isClick) {
                     italicIv.setSelected(false);
@@ -303,8 +303,8 @@ public class TextNotesActivity extends AbsBaseActivity {
             case R.id.item_formatting_popup_window_underline_iv:
                 if (!isClick) {
                     underlineIv.setSelected(true);
-                    span.setSpan(new UnderlineSpan(), 0, contentEt.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                    contentEt.setText(span);
+                    span.setSpan(new UnderlineSpan(), 0, editorView.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    setEdText();
                     isClick = true;
 
                 } else if (isClick) {
@@ -315,10 +315,10 @@ public class TextNotesActivity extends AbsBaseActivity {
             case R.id.item_formatting_popup_window_line_through_iv:
                 if (!isClick) {
                     lineThroughIv.setSelected(true);
-                    span.setSpan(new StrikethroughSpan(), 0, contentEt.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                    contentEt.setText(span);
+                    span.setSpan(new StrikethroughSpan(), 0, editorView.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    setEdText();
                     isClick = true;
-                    contentEt.setText(span);
+                    setEdText();
                 } else if (isClick) {
                     lineThroughIv.setSelected(false);
                     isClick = false;
@@ -327,8 +327,8 @@ public class TextNotesActivity extends AbsBaseActivity {
             case R.id.item_formatting_popup_window_background_iv:
                 if (!isClick) {
                     backgroundIv.setSelected(true);
-                    span.setSpan(new BackgroundColorSpan(Color.YELLOW), 0, contentEt.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-                    contentEt.setText(span);
+                    span.setSpan(new BackgroundColorSpan(Color.YELLOW), 0, editorView.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                    setEdText();
                     isClick = true;
 
                 } else if (isClick) {
@@ -436,6 +436,12 @@ public class TextNotesActivity extends AbsBaseActivity {
                 break;
         }
 
+    }
+
+    private void setEdText() {
+        if (editorView.length() > 0) {
+            editorView.setText(span);
+        }
     }
 
     /**
