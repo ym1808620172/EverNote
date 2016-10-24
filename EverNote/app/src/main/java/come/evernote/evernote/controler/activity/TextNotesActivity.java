@@ -153,15 +153,14 @@ public class TextNotesActivity extends AbsBaseActivity {
                 Bitmap bitmap = getBitmap(imgBean.getBitmap());
                 Log.d("xxx", "bitmap:" + bitmap);
             }
+            String content = intent.getStringExtra("text");
+            if (content!=null){
+                editorView.setText(content);
+            }
         }
         String editTextContent = editorView.getText().toString();
         setIfTitles(1);
         setSpeaking(editTextContent);
-
-        Intent intentAttachement = getIntent();
-        String content = intent.getStringExtra("text");
-        editorView.setText(content);
-
     }
 
     private void setSpeaking(String editTextContent) {
@@ -222,8 +221,6 @@ public class TextNotesActivity extends AbsBaseActivity {
         data.add(new AttachDrawerBean("手写",R.mipmap.shouxei));
         attachAdapter.setData(data);
         listView.setAdapter(attachAdapter);
-
-        Log.d("zzz", "mBehavior.getState():" + mBehavior);
     }
 
 
