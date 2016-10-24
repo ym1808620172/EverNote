@@ -62,7 +62,7 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
 
     public AMapLocationClientOption mLocationOption = null;
     private AMapLocationClient mlocationClient;
-    private  boolean is = false;
+    private boolean is = false;
 
     @Override
     protected int setLayout() {
@@ -92,7 +92,7 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
         //设置卫星菜单
         setFloatingBtn();
         // 设置定位
-       getPositon();
+        getPositon();
 
     }
 
@@ -272,8 +272,9 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
                 SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 Date date = new Date(amapLocation.getTime());
                 df.format(date);//定位时间
-                if (is = true){
-                forTv.setText( df.format(date));}
+                if (is = true) {
+                    forTv.setText(amapLocation.getCity()+ " " + df.format(date));
+                }
             } else {
                 //显示错误信息ErrCode是错误码，errInfo是错误信息，详见错误码表。
                 Log.d("aaaa", "location Error, ErrCode:"
@@ -324,8 +325,8 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
             case 5:
                 goTo(MainActivity.this, TextNotesActivity.class);
                 break;
-            case  2:
-                goTo(MainActivity.this,RecodingActivity.class);
+            case 2:
+                 goTo(MainActivity.this,RecodingActivity.class);
                 break;
         }
         rfabHelper.toggleContent();
