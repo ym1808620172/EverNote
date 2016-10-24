@@ -75,7 +75,6 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
         rfaLayout = byView(R.id.label_list_sample_rfal);
         rfaButton = byView(R.id.label_list_sample_rfab);
         forImg = byView(R.id.for_img);
-
     }
 
     @Override
@@ -87,8 +86,7 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
         setDrawer();
         //设置卫星菜单
         setFloatingBtn();
-        // 设置定位
-        getPositon();
+
 
     }
 
@@ -153,12 +151,8 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
                 .setIconShadowColor(0xff888888)
                 .setIconShadowDy(ABTextUtil.dip2px(this, 5))
         ;
-        rfabHelper = new RapidFloatingActionHelper(
-                this,
-                rfaLayout,
-                rfaButton,
-                rfaContent
-        ).build();
+        rfabHelper = new RapidFloatingActionHelper(this, rfaLayout, rfaButton, rfaContent).build();
+
     }
 
     private void setDrawer() {
@@ -177,14 +171,11 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
 
         drawerLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
-            private Intent intent;
-
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (position == 8) {
                     Toast.makeText(MainActivity.this, "8", Toast.LENGTH_SHORT).show();
-                    intent = new Intent(MainActivity.this, SettingActivity.class);
-                    startActivity(intent);
+                    goTo(MainActivity.this, SettingActivity.class);
                 }
                 index = position - 1;
                 adapter.setIndex(index);
@@ -203,10 +194,11 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
         forImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // 设置定位
+                getPositon();
                 Animation animation = AnimationUtils.loadAnimation(MainActivity.this, R.anim.animset);
                 forImg.startAnimation(animation);
                 forTv.setText("同步时间");
-                is = true;
             }
         });
 
@@ -214,7 +206,6 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
 
 
     private void getPositon() {
-
         //声明mLocationOption对象
         mlocationClient = new AMapLocationClient(this);
         //初始化定位参数
@@ -245,21 +236,19 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
                 SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 Date date = new Date(amapLocation.getTime());
                 df.format(date);//定位时间
-                if (is = true) {
-                    forTv.setText(df.format(date));
-                }
+                forTv.setText(df.format(date));
+                Log.d("aaa", amapLocation.getAddress());
+                mlocationClient.stopLocation();
             } else {
                 //显示错误信息ErrCode是错误码，errInfo是错误信息，详见错误码表。
-                Log.d("aaaa", "location Error, ErrCode:"
-                        + amapLocation.getErrorCode() + ", errInfo:"
-                        + amapLocation.getErrorInfo());
+                Log.d("aaaa", "location Error, ErrCode:" + amapLocation.getErrorCode() + ", errInfo:" + amapLocation.getErrorInfo());
+                mlocationClient.stopLocation();
             }
         }
     }
 
 
     private void getHead() {
-
         View view = getLayoutInflater().inflate(R.layout.first_page_drawer_header, null);
         drawerLv.addHeaderView(view);
     }
@@ -288,8 +277,11 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
 
     }
 
+
+
     @Override
     public void onRFACItemLabelClick(int position, RFACLabelItem item) {
+
         switch (position) {
             case 0:
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -304,6 +296,8 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
                 break;
             case 2:
                 goTo(MainActivity.this, RecodingActivity.class);
+                break;
+            case 1:
                 break;
         }
         rfabHelper.toggleContent();
@@ -338,6 +332,7 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
 
     @Override
     public void onRFACItemIconClick(int position, RFACLabelItem item) {
+        Log.d("aaa", "zhixing;e");
         switch (position) {
             case 0:
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -347,4 +342,5 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
         }
         rfabHelper.toggleContent();
     }
+
 }

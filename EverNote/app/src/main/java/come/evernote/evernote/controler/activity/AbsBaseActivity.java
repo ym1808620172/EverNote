@@ -149,6 +149,7 @@ public abstract class AbsBaseActivity extends AppCompatActivity implements View.
      */
     protected void goTo(Context from, Class<? extends AbsBaseActivity> to) {
         startActivity(new Intent(from, to));
+        overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
     }
 
     protected void goTo(Context from, Class<? extends AbsBaseActivity> to, Bundle extras) {
