@@ -149,7 +149,7 @@ public class TextNotesActivity extends AbsBaseActivity {
                 }
             }
             PhotoBean imgBean = (PhotoBean) intent.getSerializableExtra("img");
-            if (imgBean != null){
+            if (imgBean != null) {
                 Bitmap bitmap = getBitmap(imgBean.getBitmap());
                 Log.d("xxx", "bitmap:" + bitmap);
             }
@@ -191,9 +191,9 @@ public class TextNotesActivity extends AbsBaseActivity {
         pictureIndex = editorView.getPicture();
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-        String string = bundle.getString("key");
-            if (string != null && string.equals("1")){
-            goTo(TextNotesActivity.this, PenThinActivity.class);
+            String string = bundle.getString("key");
+            if (string != null && string.equals("1")) {
+                goTo(TextNotesActivity.this, PenThinActivity.class);
 
             }
 
@@ -212,13 +212,13 @@ public class TextNotesActivity extends AbsBaseActivity {
         });
         attachAdapter = new AttachDrawerAdapter(this);
         data = new ArrayList<>();
-        data.add(new AttachDrawerBean("相册",R.mipmap.xiangce));
-        data.add(new AttachDrawerBean("文件",R.mipmap.wenjian));
-        data.add(new AttachDrawerBean("视频文件",R.mipmap.shipin));
-        data.add(new AttachDrawerBean("录音文件",R.mipmap.luyin));
-        data.add(new AttachDrawerBean("拍摄照片",R.mipmap.xiangji));
-        data.add(new AttachDrawerBean("录制音频",R.mipmap.yinpin));
-        data.add(new AttachDrawerBean("手写",R.mipmap.shouxei));
+        data.add(new AttachDrawerBean("相册", R.mipmap.xiangce));
+        data.add(new AttachDrawerBean("文件", R.mipmap.wenjian));
+        data.add(new AttachDrawerBean("视频文件", R.mipmap.shipin));
+        data.add(new AttachDrawerBean("录音文件", R.mipmap.luyin));
+        data.add(new AttachDrawerBean("拍摄照片", R.mipmap.xiangji));
+        data.add(new AttachDrawerBean("录制音频", R.mipmap.yinpin));
+        data.add(new AttachDrawerBean("手写", R.mipmap.shouxei));
         attachAdapter.setData(data);
         listView.setAdapter(attachAdapter);
     }
@@ -280,7 +280,7 @@ public class TextNotesActivity extends AbsBaseActivity {
                 if (!isClick) {
                     boldIv.setSelected(true);
                     span.setSpan(new StyleSpan(Typeface.BOLD), 0, contentEt.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-//                        contentEt.setText(span);
+                    contentEt.setText(span);
                     contentEt.setMovementMethod(LinkMovementMethod.getInstance());
                     isClick = true;
                 } else if (isClick) {
@@ -316,6 +316,7 @@ public class TextNotesActivity extends AbsBaseActivity {
                 if (!isClick) {
                     lineThroughIv.setSelected(true);
                     span.setSpan(new StrikethroughSpan(), 0, contentEt.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    contentEt.setText(span);
                     isClick = true;
                     contentEt.setText(span);
                 } else if (isClick) {
@@ -417,7 +418,7 @@ public class TextNotesActivity extends AbsBaseActivity {
 //                Log.d("aaa", "mBehavior.111():" + mBehavior.getState()+"aa");
                 if (!isPopupClick) {
                     attachIv.setSelected(true);
-                    if (mBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED){
+                    if (mBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED) {
                         mBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
                     }
 
@@ -425,7 +426,7 @@ public class TextNotesActivity extends AbsBaseActivity {
                 } else if (isPopupClick) {
                     attachIv.setSelected(false);
                     isPopupClick = false;
-                        mBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                    mBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
                 }
                 break;
             case R.id.item_text_notes_pen_thin_img:
