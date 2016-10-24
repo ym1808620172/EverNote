@@ -8,14 +8,13 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
-
-import android.support.v4.widget.DrawerLayout;
-import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -291,6 +290,11 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(intent, CAMERA_WITH_DATA);
                 break;
+            case 4:
+                Bundle bundle = new Bundle();
+                bundle.putString("key", "1");
+                goTo(MainActivity.this,TextNotesActivity.class,bundle);
+                break;
             case 5:
                 goTo(MainActivity.this, TextNotesActivity.class);
                 break;
@@ -307,6 +311,7 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
                 intentActtchenment.addCategory(Intent.CATEGORY_OPENABLE);
                 startActivityForResult(intentActtchenment,1);
                 break;
+
         }
         rfabHelper.toggleContent();
     }
