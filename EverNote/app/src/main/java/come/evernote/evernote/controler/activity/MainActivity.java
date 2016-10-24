@@ -2,8 +2,10 @@ package come.evernote.evernote.controler.activity;
 
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.widget.DrawerLayout;
@@ -31,6 +33,8 @@ import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RFACLabelItem
 import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RapidFloatingActionContentLabelList;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -83,6 +87,8 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
         setDrawer();
         //设置卫星菜单
         setFloatingBtn();
+        // 设置定位
+        getPositon();
 
 
     }
@@ -233,6 +239,9 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
                 SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 Date date = new Date(amapLocation.getTime());
                 df.format(date);//定位时间
+                if (is = true) {
+                    forTv.setText(amapLocation.getCity()+ " " + df.format(date));
+                }
                 forTv.setText(df.format(date));
                 mlocationClient.stopLocation();
             } else {
@@ -291,14 +300,17 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
             case 5:
                 goTo(MainActivity.this, TextNotesActivity.class);
                 break;
+            case 2:
+                 goTo(MainActivity.this,RecodingActivity.class);
             case 3:
                 intent = new Intent(MainActivity.this, RemendPopActivity.class);
                 startActivity(intent);
                 break;
-            case 2:
-                goTo(MainActivity.this, RecodingActivity.class);
-                break;
             case 1:
+                Intent intentActtchenment = new Intent(Intent.ACTION_GET_CONTENT);
+                intentActtchenment.setType("*/*");//设置类型，我这里是任意类型，任意后缀的可以这样写。
+                intentActtchenment.addCategory(Intent.CATEGORY_OPENABLE);
+                startActivityForResult(intentActtchenment,1);
                 break;
 
         }
@@ -310,6 +322,28 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode != RESULT_OK)
             return;
+
+
+        Uri uri = data.getData();//得到uri，后面就是将uri转化成file的过程。
+        String[] proj = {MediaStore.Images.Media.DATA};
+        Cursor actualimagecursor = managedQuery(uri, proj, null, null, null);
+        int actual_image_column_index = actualimagecursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        actualimagecursor.moveToFirst();
+        String img_path = actualimagecursor.getString(actual_image_column_index);
+        if (img_path!=null){
+            File file = new File(img_path);
+            String path = getFileName(file.toString());
+            Log.d("Main2Activity", path);
+            Intent intent = new Intent(MainActivity.this, TextNotesActivity.class);
+            intent.putExtra("text", path);
+            startActivity(intent);
+        }
+
+
+
+
+
+
         switch (requestCode) {
             case CAMERA_WITH_DATA:
                 final Bitmap photo = data.getParcelableExtra("data");
@@ -322,8 +356,24 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
                 bundle.putSerializable("photo", bean);
                 goTo(MainActivity.this, TextNotesActivity.class, bundle);
                 break;
+
+        }
+
+
+
+
+
+    }
+
+    private String getFileName(String pathandname) {
+        int start = pathandname.lastIndexOf("/");
+        if (start != -1) {
+            return pathandname.substring(start + 1, pathandname.length());
+        } else {
+            return null;
         }
     }
+
 
     public static byte[] getBytes(Bitmap bitmap) {
         //实例化字节数组输出流

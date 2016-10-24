@@ -158,6 +158,10 @@ public class TextNotesActivity extends AbsBaseActivity {
         setIfTitles(1);
         setSpeaking(editTextContent);
 
+        Intent intentAttachement = getIntent();
+        String content = intent.getStringExtra("text");
+        editorView.setText(content);
+
     }
 
     private void setSpeaking(String editTextContent) {
@@ -343,6 +347,7 @@ public class TextNotesActivity extends AbsBaseActivity {
                 if (!isClick) {
                     orderlyIv.setSelected(true);
                     isClick = true;
+
 
                 } else if (isClick) {
                     orderlyIv.setSelected(false);
