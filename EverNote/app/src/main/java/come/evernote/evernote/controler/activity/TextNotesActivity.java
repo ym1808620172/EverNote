@@ -13,7 +13,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.text.SpannableString;
 import android.text.Spanned;
-import android.text.method.LinkMovementMethod;
 import android.text.style.BackgroundColorSpan;
 import android.text.style.StrikethroughSpan;
 import android.text.style.StyleSpan;
@@ -77,7 +76,6 @@ public class TextNotesActivity extends AbsBaseActivity {
     private BottomSheetBehavior mBehavior;
     private List<AttachDrawerBean> data;
     private AttachDrawerAdapter attachAdapter;
-
     //popupWindow
     private PopupWindow popupWindow;
     private ImageView boldIv;//加粗
@@ -96,6 +94,7 @@ public class TextNotesActivity extends AbsBaseActivity {
     private int index;
     private int pictureIndex;
     private SpannableString span;
+    private ImageView timeIv;//图片时钟
 
 
     @Override
@@ -121,6 +120,7 @@ public class TextNotesActivity extends AbsBaseActivity {
         shareIv = byView(R.id.item_text_notes_share_iv);
         attachLayout = byView(R.id.bottomSheet);
         listView = byView(R.id.attach_drawer_bottom_list_view);
+        timeIv = byView(R.id.notes_text_time_img);
         menuIv.setOnClickListener(this);
         aboutTv.setOnClickListener(this);
         formattingIv.setOnClickListener(this);
@@ -130,6 +130,7 @@ public class TextNotesActivity extends AbsBaseActivity {
         attachIv.setOnClickListener(this);
         penThinIv.setOnClickListener(this);
         shareIv.setOnClickListener(this);
+        timeIv.setOnClickListener(this);
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);//抽屉关闭手势滑动
         editorView = byView(R.id.notes_text_content_et);
 
@@ -282,22 +283,21 @@ public class TextNotesActivity extends AbsBaseActivity {
                     isPopupClick = false;
                 }
                 break;
-            case R.id.item_formatting_popup_window_bold_iv:
+            case R.id.item_formatting_popup_window_bold_iv://加粗
                 if (!isClick) {
                     boldIv.setSelected(true);
                     span.setSpan(new StyleSpan(Typeface.BOLD), 0, contentEt.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                     contentEt.setText(span);
-                    contentEt.setMovementMethod(LinkMovementMethod.getInstance());
                     isClick = true;
                 } else if (isClick) {
                     boldIv.setSelected(false);
                     isClick = false;
                 }
                 break;
-            case R.id.item_formatting_popup_window_italic_iv:
+            case R.id.item_formatting_popup_window_italic_iv://斜体
                 if (!isClick) {
                     italicIv.setSelected(true);
-                    span.setSpan(new StyleSpan(Typeface.ITALIC), 0, contentEt.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                    span.setSpan(new StyleSpan(Typeface.ITALIC),0, contentEt.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
                     contentEt.setText(span);
                     isClick = true;
                 } else if (isClick) {
@@ -306,7 +306,7 @@ public class TextNotesActivity extends AbsBaseActivity {
 
                 }
                 break;
-            case R.id.item_formatting_popup_window_underline_iv:
+            case R.id.item_formatting_popup_window_underline_iv://下划线
                 if (!isClick) {
                     underlineIv.setSelected(true);
                     span.setSpan(new UnderlineSpan(), 0, contentEt.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -318,7 +318,7 @@ public class TextNotesActivity extends AbsBaseActivity {
                     isClick = false;
                 }
                 break;
-            case R.id.item_formatting_popup_window_line_through_iv:
+            case R.id.item_formatting_popup_window_line_through_iv://中华线(删除)
                 if (!isClick) {
                     lineThroughIv.setSelected(true);
                     span.setSpan(new StrikethroughSpan(), 0, contentEt.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -330,10 +330,10 @@ public class TextNotesActivity extends AbsBaseActivity {
                     isClick = false;
                 }
                 break;
-            case R.id.item_formatting_popup_window_background_iv:
+            case R.id.item_formatting_popup_window_background_iv://添加背景
                 if (!isClick) {
                     backgroundIv.setSelected(true);
-                    span.setSpan(new BackgroundColorSpan(Color.YELLOW), 0, contentEt.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                    span.setSpan(new BackgroundColorSpan(Color.YELLOW),0, contentEt.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
                     contentEt.setText(span);
                     isClick = true;
 
@@ -343,11 +343,11 @@ public class TextNotesActivity extends AbsBaseActivity {
 
                 }
                 break;
-            case R.id.item_formatting_popup_window_checkbox_iv:
+            case R.id.item_formatting_popup_window_checkbox_iv://复选框
 
 
                 break;
-            case R.id.item_formatting_popup_window_orderly_iv:
+            case R.id.item_formatting_popup_window_orderly_iv://有序排列
                 if (!isClick) {
                     orderlyIv.setSelected(true);
                     isClick = true;
@@ -359,7 +359,7 @@ public class TextNotesActivity extends AbsBaseActivity {
 
                 }
                 break;
-            case R.id.item_formatting_popup_window_disorder_iv:
+            case R.id.item_formatting_popup_window_disorder_iv://无序排列
                 if (!isClick) {
                     disorderIv.setSelected(true);
                     isClick = true;
@@ -370,7 +370,7 @@ public class TextNotesActivity extends AbsBaseActivity {
 
                 }
                 break;
-            case R.id.item_formatting_popup_window_left_iv:
+            case R.id.item_formatting_popup_window_left_iv://左侧缩进
                 if (!isClick) {
                     leftIv.setSelected(true);
                     isClick = true;
@@ -381,7 +381,7 @@ public class TextNotesActivity extends AbsBaseActivity {
 
                 }
                 break;
-            case R.id.item_formatting_popup_window_right_iv:
+            case R.id.item_formatting_popup_window_right_iv://右侧缩进
                 if (!isClick) {
                     rightIv.setSelected(true);
                     isClick = true;
@@ -392,7 +392,7 @@ public class TextNotesActivity extends AbsBaseActivity {
 
                 }
                 break;
-            case R.id.item_text_notes_done_iv:
+            case R.id.item_text_notes_done_iv://完成返回
                 if (!isPopupClick) {
                     doneIv.setSelected(true);
                     isPopupClick = true;
@@ -401,7 +401,7 @@ public class TextNotesActivity extends AbsBaseActivity {
                     isPopupClick = false;
                 }
                 break;
-            case R.id.item_text_notes_left_undo_iv:
+            case R.id.item_text_notes_left_undo_iv://撤销
                 if (!isPopupClick) {
                     underIv.setSelected(true);
                     isPopupClick = true;
@@ -411,7 +411,7 @@ public class TextNotesActivity extends AbsBaseActivity {
                 }
 
                 break;
-            case R.id.item_text_notes_right_redo_iv:
+            case R.id.item_text_notes_right_redo_iv://撤销
                 if (!isPopupClick) {
                     redoIv.setSelected(true);
                     isPopupClick = true;
@@ -420,7 +420,7 @@ public class TextNotesActivity extends AbsBaseActivity {
                     isPopupClick = false;
                 }
                 break;
-            case R.id.item_text_notes_attach_iv:
+            case R.id.item_text_notes_attach_iv://附件
 //                Log.d("aaa", "mBehavior.111():" + mBehavior.getState()+"aa");
                 if (!isPopupClick) {
                     attachIv.setSelected(true);
@@ -435,10 +435,14 @@ public class TextNotesActivity extends AbsBaseActivity {
                     mBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
                 }
                 break;
-            case R.id.item_text_notes_pen_thin_img:
+            case R.id.item_text_notes_pen_thin_img://画笔
                 goTo(TextNotesActivity.this, PenThinActivity.class);
                 break;
-            case R.id.item_text_notes_share_iv:
+            case R.id.item_text_notes_share_iv://分享
+                break;
+            case R.id.notes_text_time_img://时钟
+                Intent intent = new Intent(TextNotesActivity.this,RemendPopActivity.class);
+                startActivity(intent);
                 break;
         }
 

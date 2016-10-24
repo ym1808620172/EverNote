@@ -34,7 +34,6 @@ import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RapidFloating
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -302,6 +301,7 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
                 break;
             case 2:
                 goTo(MainActivity.this, RecodingActivity.class);
+                break;
             case 3:
                 intent = new Intent(MainActivity.this, RemendPopActivity.class);
                 startActivity(intent);
