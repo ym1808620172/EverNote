@@ -147,7 +147,7 @@ public class TextNotesActivity extends AbsBaseActivity {
                 }
             }
             PhotoBean imgBean = (PhotoBean) intent.getSerializableExtra("img");
-            if (imgBean != null){
+            if (imgBean != null) {
                 Bitmap bitmap = getBitmap(imgBean.getBitmap());
                 Log.d("xxx", "bitmap:" + bitmap);
             }
@@ -174,12 +174,12 @@ public class TextNotesActivity extends AbsBaseActivity {
         //如果不需要保存合成音频，注释该行代码
         mTts.setParameter(SpeechConstant.TTS_AUDIO_PATH, "./sdcard/iflytek.pcm");
         //3.开始合成
-        mTts.startSpeaking(editTextContent.substring(index,editTextContent.length()), mSynListener);
+        mTts.startSpeaking(editTextContent.substring(index, editTextContent.length()), mSynListener);
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-        String string = bundle.getString("key");
-            if (string != null && string.equals("1")){
-            goTo(TextNotesActivity.this, PenThinActivity.class);
+            String string = bundle.getString("key");
+            if (string != null && string.equals("1")) {
+                goTo(TextNotesActivity.this, PenThinActivity.class);
 
             }
 
@@ -198,13 +198,13 @@ public class TextNotesActivity extends AbsBaseActivity {
         });
         attachAdapter = new AttachDrawerAdapter(this);
         data = new ArrayList<>();
-        data.add(new AttachDrawerBean("相册",R.mipmap.xiangce));
-        data.add(new AttachDrawerBean("文件",R.mipmap.wenjian));
-        data.add(new AttachDrawerBean("视频文件",R.mipmap.shipin));
-        data.add(new AttachDrawerBean("录音文件",R.mipmap.luyin));
-        data.add(new AttachDrawerBean("拍摄照片",R.mipmap.xiangji));
-        data.add(new AttachDrawerBean("录制音频",R.mipmap.yinpin));
-        data.add(new AttachDrawerBean("手写",R.mipmap.shouxei));
+        data.add(new AttachDrawerBean("相册", R.mipmap.xiangce));
+        data.add(new AttachDrawerBean("文件", R.mipmap.wenjian));
+        data.add(new AttachDrawerBean("视频文件", R.mipmap.shipin));
+        data.add(new AttachDrawerBean("录音文件", R.mipmap.luyin));
+        data.add(new AttachDrawerBean("拍摄照片", R.mipmap.xiangji));
+        data.add(new AttachDrawerBean("录制音频", R.mipmap.yinpin));
+        data.add(new AttachDrawerBean("手写", R.mipmap.shouxei));
         attachAdapter.setData(data);
         listView.setAdapter(attachAdapter);
 
@@ -268,7 +268,7 @@ public class TextNotesActivity extends AbsBaseActivity {
                 if (!isClick) {
                     boldIv.setSelected(true);
                     span.setSpan(new StyleSpan(Typeface.BOLD), 0, contentEt.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-//                        contentEt.setText(span);
+                    contentEt.setText(span);
                     contentEt.setMovementMethod(LinkMovementMethod.getInstance());
                     isClick = true;
                 } else if (isClick) {
@@ -280,7 +280,7 @@ public class TextNotesActivity extends AbsBaseActivity {
                 if (!isClick) {
                     italicIv.setSelected(true);
                     span.setSpan(new StyleSpan(Typeface.ITALIC), 0, contentEt.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-//                    contentEt.setText(span);
+                    contentEt.setText(span);
                     isClick = true;
                 } else if (isClick) {
                     italicIv.setSelected(false);
@@ -292,7 +292,7 @@ public class TextNotesActivity extends AbsBaseActivity {
                 if (!isClick) {
                     underlineIv.setSelected(true);
                     span.setSpan(new UnderlineSpan(), 0, contentEt.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-//                    contentEt.setText(span);
+                    contentEt.setText(span);
                     isClick = true;
 
                 } else if (isClick) {
@@ -304,6 +304,7 @@ public class TextNotesActivity extends AbsBaseActivity {
                 if (!isClick) {
                     lineThroughIv.setSelected(true);
                     span.setSpan(new StrikethroughSpan(), 0, contentEt.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    contentEt.setText(span);
                     isClick = true;
 
                 } else if (isClick) {
@@ -315,7 +316,7 @@ public class TextNotesActivity extends AbsBaseActivity {
                 if (!isClick) {
                     backgroundIv.setSelected(true);
                     span.setSpan(new BackgroundColorSpan(Color.YELLOW), 0, contentEt.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-//                    contentEt.setText(span);
+                    contentEt.setText(span);
                     isClick = true;
 
                 } else if (isClick) {
@@ -404,7 +405,7 @@ public class TextNotesActivity extends AbsBaseActivity {
 //                Log.d("aaa", "mBehavior.111():" + mBehavior.getState()+"aa");
                 if (!isPopupClick) {
                     attachIv.setSelected(true);
-                    if (mBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED){
+                    if (mBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED) {
                         mBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
                     }
 
@@ -412,7 +413,7 @@ public class TextNotesActivity extends AbsBaseActivity {
                 } else if (isPopupClick) {
                     attachIv.setSelected(false);
                     isPopupClick = false;
-                        mBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                    mBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
                 }
                 break;
             case R.id.item_text_notes_pen_thin_img:
@@ -421,7 +422,6 @@ public class TextNotesActivity extends AbsBaseActivity {
             case R.id.item_text_notes_share_iv:
                 break;
         }
-        contentEt.setText(span);
 
     }
 
