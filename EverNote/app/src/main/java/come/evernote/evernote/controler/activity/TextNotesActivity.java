@@ -160,7 +160,10 @@ public class TextNotesActivity extends AbsBaseActivity {
 
         Intent intentAttachement = getIntent();
         String content = intent.getStringExtra("text");
+        if (content != null){
         editorView.setText(content);
+
+        }
 
     }
 
