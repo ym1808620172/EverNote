@@ -57,7 +57,6 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
     private RapidFloatingActionButton rfaButton;
     private RapidFloatingActionHelper rfabHelper;
     private RapidFloatingActionLayout rfaLayout;
-    private static final int PHOTO_PICKED_WITH_DATA = 3021;
     private static final int CAMERA_WITH_DATA = 3023;
 
     public AMapLocationClientOption mLocationOption = null;
@@ -242,10 +241,9 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
                 Date date = new Date(amapLocation.getTime());
                 df.format(date);//定位时间
                 if (is = true) {
-                    forTv.setText(amapLocation.getCity()+ " " + df.format(date));
+                    forTv.setText(amapLocation.getCity() + " " + df.format(date));
                 }
                 forTv.setText(df.format(date));
-                Log.d("aaa", amapLocation.getAddress());
                 mlocationClient.stopLocation();
             } else {
                 //显示错误信息ErrCode是错误码，errInfo是错误信息，详见错误码表。
@@ -286,7 +284,6 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
     }
 
 
-
     @Override
     public void onRFACItemLabelClick(int position, RFACLabelItem item) {
 
@@ -298,13 +295,13 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
             case 4:
                 Bundle bundle = new Bundle();
                 bundle.putString("key", "1");
-                goTo(MainActivity.this,TextNotesActivity.class,bundle);
+                goTo(MainActivity.this, TextNotesActivity.class, bundle);
                 break;
             case 5:
                 goTo(MainActivity.this, TextNotesActivity.class);
                 break;
             case 2:
-                 goTo(MainActivity.this,RecodingActivity.class);
+                goTo(MainActivity.this, RecodingActivity.class);
             case 3:
                 intent = new Intent(MainActivity.this, RemendPopActivity.class);
                 startActivity(intent);
@@ -313,7 +310,7 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
                 Intent intentActtchenment = new Intent(Intent.ACTION_GET_CONTENT);
                 intentActtchenment.setType("*/*");//设置类型，我这里是任意类型，任意后缀的可以这样写。
                 intentActtchenment.addCategory(Intent.CATEGORY_OPENABLE);
-                startActivityForResult(intentActtchenment,1);
+                startActivityForResult(intentActtchenment, 1);
                 break;
 
         }
@@ -333,7 +330,7 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
         int actual_image_column_index = actualimagecursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
         actualimagecursor.moveToFirst();
         String img_path = actualimagecursor.getString(actual_image_column_index);
-        if (img_path!=null){
+        if (img_path != null) {
             File file = new File(img_path);
             String path = getFileName(file.toString());
             Log.d("Main2Activity", path);
@@ -341,10 +338,6 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
             intent.putExtra("text", path);
             startActivity(intent);
         }
-
-
-
-
 
 
         switch (requestCode) {
@@ -361,9 +354,6 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
                 break;
 
         }
-
-
-
 
 
     }
@@ -387,15 +377,12 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
 
     @Override
     public void onRFACItemIconClick(int position, RFACLabelItem item) {
-        Log.d("aaa", "zhixing;e");
         switch (position) {
             case 0:
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(intent, CAMERA_WITH_DATA);
                 break;
-
         }
         rfabHelper.toggleContent();
     }
-
 }

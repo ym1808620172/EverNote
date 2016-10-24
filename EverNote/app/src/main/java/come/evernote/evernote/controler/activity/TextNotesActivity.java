@@ -93,6 +93,8 @@ public class TextNotesActivity extends AbsBaseActivity {
     private LinearLayout rootLl;
     private PictureAndTextEditorView editorView;
     private File file;
+    private int index;
+    private int pictureIndex;
     private SpannableString span;
 
 
@@ -151,24 +153,23 @@ public class TextNotesActivity extends AbsBaseActivity {
                 Bitmap bitmap = getBitmap(imgBean.getBitmap());
                 Log.d("xxx", "bitmap:" + bitmap);
             }
+            String content = intent.getStringExtra("text");
+            if (content!=null){
+                editorView.setText(content);
+            }
         }
         String editTextContent = editorView.getText().toString();
         setIfTitles(1);
-        Log.d("zzz", "editorView.getSelectionStart():" + editorView.getSelectionStart());
-        Log.d("zzz", "editorView.length():" + editTextContent.length());
         setSpeaking(editTextContent);
-
         Intent intentAttachement = getIntent();
         String content = intent.getStringExtra("text");
         if (content != null){
         editorView.setText(content);
 
         }
-
     }
 
     private void setSpeaking(String editTextContent) {
-        int index = editorView.getSelectionStart();
         //1.创建SpeechSynthesizer对象, 第二个参数：本地合成时传InitListener
         SpeechSynthesizer mTts = SpeechSynthesizer.createSynthesizer(TextNotesActivity.this, null);
         //2.合成参数设置，详见《科大讯飞MSC API手册(Android)》SpeechSynthesizer 类
@@ -181,7 +182,19 @@ public class TextNotesActivity extends AbsBaseActivity {
         //如果不需要保存合成音频，注释该行代码
         mTts.setParameter(SpeechConstant.TTS_AUDIO_PATH, "./sdcard/iflytek.pcm");
         //3.开始合成
-        mTts.startSpeaking(editTextContent.substring(index, editTextContent.length()), mSynListener);
+        if (pictureIndex > 0) {
+            String picture = editTextContent.substring(index, pictureIndex);
+            mTts.startSpeaking(editTextContent.replace("", picture), mSynListener);
+        } else {
+            mTts.startSpeaking(editTextContent, mSynListener);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        index = editorView.getIndex();
+        pictureIndex = editorView.getPicture();
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             String string = bundle.getString("key");
@@ -214,8 +227,6 @@ public class TextNotesActivity extends AbsBaseActivity {
         data.add(new AttachDrawerBean("手写", R.mipmap.shouxei));
         attachAdapter.setData(data);
         listView.setAdapter(attachAdapter);
-
-        Log.d("zzz", "mBehavior.getState():" + mBehavior);
     }
 
 
@@ -313,7 +324,7 @@ public class TextNotesActivity extends AbsBaseActivity {
                     span.setSpan(new StrikethroughSpan(), 0, contentEt.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                     contentEt.setText(span);
                     isClick = true;
-
+                    contentEt.setText(span);
                 } else if (isClick) {
                     lineThroughIv.setSelected(false);
                     isClick = false;

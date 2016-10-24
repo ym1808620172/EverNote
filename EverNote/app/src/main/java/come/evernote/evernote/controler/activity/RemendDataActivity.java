@@ -2,6 +2,8 @@ package come.evernote.evernote.controler.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +12,14 @@ import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 
+import com.prolificinteractive.materialcalendarview.CalendarDay;
+import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
+import com.prolificinteractive.materialcalendarview.OnDateChangedListener;
+import com.prolificinteractive.materialcalendarview.OnMonthChangedListener;
+
 import org.greenrobot.eventbus.EventBus;
+
+import java.util.Date;
 
 import come.evernote.evernote.R;
 import come.evernote.evernote.model.bean.ClockSizeBean;
@@ -26,11 +35,13 @@ public class RemendDataActivity extends Activity implements CompoundButton.OnChe
     private LinearLayout rootLl;
     private ISetClockSize clockSize;
     private ClockView clockView;
+    private MaterialCalendarView calendarView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_remend_data_acticity);
+        calendarView = (MaterialCalendarView) findViewById(R.id.calendarView);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL, WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
         getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
         radioButton = (RadioButton) findViewById(R.id.remend_data_radio_btn);
@@ -41,6 +52,14 @@ public class RemendDataActivity extends Activity implements CompoundButton.OnChe
         radioButton.setOnCheckedChangeListener(this);
         radioButton.setChecked(true);
         clockSize =  clockView;
+        calendarView.setOnDateChangedListener(new OnDateChangedListener() {
+            @Override
+            public void onDateChanged(@NonNull MaterialCalendarView widget, @Nullable CalendarDay date) {
+                Date nowTime = new Date(System.currentTimeMillis());
+                Log.d("zzz", "nowTime:" + nowTime);
+                Log.d("zzz", widget.getSelectedDate().getDate()+"");
+            }
+        });
     }
 
     @Override
