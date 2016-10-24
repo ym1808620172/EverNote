@@ -43,6 +43,8 @@ public class PictureAndTextEditorView extends EditText {
 
     public static final String mBitmapTag = "☆";
     private String mNewLineTag = "\n";
+    private int picture;
+    private int index;
 
     public PictureAndTextEditorView(Context context) {
         super(context);
@@ -97,7 +99,7 @@ public class PictureAndTextEditorView extends EditText {
     private SpannableString insertBitmap(String path, Bitmap bitmap) {
         Editable edit_text = getEditableText();
         // 获取光标所在位置
-        int index = getSelectionStart();
+        index = getSelectionStart();
         //插入换行符，使图片单独占一行
         SpannableString newLine = new SpannableString("\n");
         edit_text.insert(index, newLine);//插入图片前换行
@@ -115,12 +117,17 @@ public class PictureAndTextEditorView extends EditText {
             edit_text.insert(index, spannableString);
         }
         edit_text.insert(index, newLine);//插入图片后换行
+        picture = getSelectionStart();
         return spannableString;
     }
-    private void getIndex(){
-        getSelectionStart();
+
+    public int getPicture() {
+        return picture;
     }
 
+    public int getIndex(){
+        return index;
+    }
     /**
      * 插入图片
      *
@@ -233,7 +240,6 @@ public class PictureAndTextEditorView extends EditText {
         addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                Log.d("aaa", "执行了");
             }
 
             @Override
@@ -264,7 +270,7 @@ public class PictureAndTextEditorView extends EditText {
         contentContainer.addView(textView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         textView.measure(0, 0);
         Layout layout = getLayout();
-        if (layout!=null) {
+        if (layout != null) {
             int pos = getSelectionStart();
             int line = layout.getLineForOffset(pos);
             int baseline = layout.getLineBaseline(line);
@@ -310,7 +316,6 @@ public class PictureAndTextEditorView extends EditText {
     }
 
     private void initEdit() {
-        Log.d("aaa", "执行了该方法");
         contentContainer = (ViewGroup) ((Activity) getContext()).findViewById(android.R.id.content);
         WindowManager windowManager = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
         height = windowManager.getDefaultDisplay().getHeight();

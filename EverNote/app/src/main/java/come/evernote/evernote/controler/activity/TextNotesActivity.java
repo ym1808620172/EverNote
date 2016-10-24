@@ -16,7 +16,6 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 
 
-import com.iflytek.cloud.InitListener;
 import com.iflytek.cloud.SpeechConstant;
 import com.iflytek.cloud.SpeechError;
 import com.iflytek.cloud.SpeechSynthesizer;
@@ -64,6 +63,8 @@ public class TextNotesActivity extends AbsBaseActivity {
     private LinearLayout rootLl;
     private PictureAndTextEditorView editorView;
     private File file;
+    private int index;
+    private int pictureIndex;
 
 
     @Override
@@ -104,14 +105,11 @@ public class TextNotesActivity extends AbsBaseActivity {
         }
         String editTextContent = editorView.getText().toString();
         setIfTitles(1);
-        Log.d("zzz", "editorView.getSelectionStart():" + editorView.getSelectionStart());
-        Log.d("zzz", "editorView.length():" + editTextContent.length());
         setSpeaking(editTextContent);
 
     }
 
     private void setSpeaking(String editTextContent) {
-        int index = editorView.getSelectionStart();
         //1.创建SpeechSynthesizer对象, 第二个参数：本地合成时传InitListener
         SpeechSynthesizer mTts = SpeechSynthesizer.createSynthesizer(TextNotesActivity.this, null);
         //2.合成参数设置，详见《科大讯飞MSC API手册(Android)》SpeechSynthesizer 类
@@ -124,7 +122,19 @@ public class TextNotesActivity extends AbsBaseActivity {
         //如果不需要保存合成音频，注释该行代码
         mTts.setParameter(SpeechConstant.TTS_AUDIO_PATH, "./sdcard/iflytek.pcm");
         //3.开始合成
-        mTts.startSpeaking(editTextContent.substring(index,editTextContent.length()), mSynListener);
+        if (pictureIndex > 0) {
+            String picture = editTextContent.substring(index, pictureIndex);
+            mTts.startSpeaking(editTextContent.replace("", picture), mSynListener);
+        } else {
+            mTts.startSpeaking(editTextContent, mSynListener);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        index = editorView.getIndex();
+        pictureIndex = editorView.getPicture();
     }
 
     public static Bitmap getBitmap(byte[] data) {

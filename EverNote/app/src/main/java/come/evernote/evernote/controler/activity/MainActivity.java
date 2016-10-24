@@ -54,12 +54,10 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
     private RapidFloatingActionButton rfaButton;
     private RapidFloatingActionHelper rfabHelper;
     private RapidFloatingActionLayout rfaLayout;
-    private static final int PHOTO_PICKED_WITH_DATA = 3021;
     private static final int CAMERA_WITH_DATA = 3023;
 
     public AMapLocationClientOption mLocationOption = null;
     private AMapLocationClient mlocationClient;
-    private boolean is = false;
 
     @Override
     protected int setLayout() {
@@ -237,7 +235,6 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
                 Date date = new Date(amapLocation.getTime());
                 df.format(date);//定位时间
                 forTv.setText(df.format(date));
-                Log.d("aaa", amapLocation.getAddress());
                 mlocationClient.stopLocation();
             } else {
                 //显示错误信息ErrCode是错误码，errInfo是错误信息，详见错误码表。
@@ -332,15 +329,12 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
 
     @Override
     public void onRFACItemIconClick(int position, RFACLabelItem item) {
-        Log.d("aaa", "zhixing;e");
         switch (position) {
             case 0:
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(intent, CAMERA_WITH_DATA);
                 break;
-
         }
         rfabHelper.toggleContent();
     }
-
 }
