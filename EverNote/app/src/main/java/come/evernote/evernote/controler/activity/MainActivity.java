@@ -6,12 +6,8 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
-import android.widget.ImageView;
-
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
@@ -26,7 +22,6 @@ import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionHelper;
 import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout;
 import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RFACLabelItem;
 import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RapidFloatingActionContentLabelList;
-import com.wangjie.rapidfloatingactionbutton.rfabgroup.RapidFloatingActionButtonGroup;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
@@ -249,9 +244,15 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(intent, CAMERA_WITH_DATA);
                 break;
+            case 4:
+                Bundle bundle = new Bundle();
+                bundle.putString("key", "1");
+                goTo(MainActivity.this,TextNotesActivity.class,bundle);
+                break;
             case 5:
                 goTo(MainActivity.this, TextNotesActivity.class);
                 break;
+
         }
         rfabHelper.toggleContent();
     }
