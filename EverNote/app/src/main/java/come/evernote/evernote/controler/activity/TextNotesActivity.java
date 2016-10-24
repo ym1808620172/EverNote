@@ -151,17 +151,14 @@ public class TextNotesActivity extends AbsBaseActivity {
                 Bitmap bitmap = getBitmap(imgBean.getBitmap());
                 Log.d("xxx", "bitmap:" + bitmap);
             }
+            String content = intent.getStringExtra("text");
+            if (content!=null){
+                editorView.setText(content);
+            }
         }
         String editTextContent = editorView.getText().toString();
         setIfTitles(1);
-        Log.d("zzz", "editorView.getSelectionStart():" + editorView.getSelectionStart());
-        Log.d("zzz", "editorView.length():" + editTextContent.length());
         setSpeaking(editTextContent);
-
-        Intent intentAttachement = getIntent();
-        String content = intent.getStringExtra("text");
-        editorView.setText(content);
-
     }
 
     private void setSpeaking(String editTextContent) {
@@ -272,7 +269,7 @@ public class TextNotesActivity extends AbsBaseActivity {
                 if (!isClick) {
                     boldIv.setSelected(true);
                     span.setSpan(new StyleSpan(Typeface.BOLD), 0, contentEt.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-//                        contentEt.setText(span);
+                        contentEt.setText(span);
                     contentEt.setMovementMethod(LinkMovementMethod.getInstance());
                     isClick = true;
                 } else if (isClick) {
@@ -284,7 +281,7 @@ public class TextNotesActivity extends AbsBaseActivity {
                 if (!isClick) {
                     italicIv.setSelected(true);
                     span.setSpan(new StyleSpan(Typeface.ITALIC), 0, contentEt.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-//                    contentEt.setText(span);
+                    contentEt.setText(span);
                     isClick = true;
                 } else if (isClick) {
                     italicIv.setSelected(false);
@@ -296,7 +293,7 @@ public class TextNotesActivity extends AbsBaseActivity {
                 if (!isClick) {
                     underlineIv.setSelected(true);
                     span.setSpan(new UnderlineSpan(), 0, contentEt.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-//                    contentEt.setText(span);
+                    contentEt.setText(span);
                     isClick = true;
 
                 } else if (isClick) {
@@ -309,6 +306,7 @@ public class TextNotesActivity extends AbsBaseActivity {
                     lineThroughIv.setSelected(true);
                     span.setSpan(new StrikethroughSpan(), 0, contentEt.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                     isClick = true;
+                    contentEt.setText(span);
 
                 } else if (isClick) {
                     lineThroughIv.setSelected(false);
@@ -319,7 +317,7 @@ public class TextNotesActivity extends AbsBaseActivity {
                 if (!isClick) {
                     backgroundIv.setSelected(true);
                     span.setSpan(new BackgroundColorSpan(Color.YELLOW), 0, contentEt.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-//                    contentEt.setText(span);
+                    contentEt.setText(span);
                     isClick = true;
 
                 } else if (isClick) {
@@ -426,7 +424,6 @@ public class TextNotesActivity extends AbsBaseActivity {
             case R.id.item_text_notes_share_iv:
                 break;
         }
-        contentEt.setText(span);
 
     }
 
