@@ -302,6 +302,7 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
                 break;
             case 2:
                 goTo(MainActivity.this, RecodingActivity.class);
+                break;
             case 3:
                 intent = new Intent(MainActivity.this, RemendPopActivity.class);
                 startActivity(intent);
