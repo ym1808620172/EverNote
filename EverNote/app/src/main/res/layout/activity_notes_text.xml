@@ -1,61 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/drawer_layout"
+
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="10dp"
-    android:layout_weight="1"
+    android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/notex_root_ll"
+
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_margin="10dp"
+        android:layout_weight="1">
 
-
-        <include layout="@layout/item_text_notes_title" />
-
-        <ScrollView
+        <LinearLayout
+            android:id="@+id/notex_root_ll"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <LinearLayout
+
+            <include layout="@layout/item_text_notes_title" />
+
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/notes_text_layout"
-                android:layout_marginRight="@dimen/notes_text_layout"
-                android:orientation="vertical">
+                android:layout_height="match_parent">
 
-                <come.evernote.evernote.view.BiuEditText
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:hint="@string/text_Notes_editText_title"
-                    android:paddingBottom="@dimen/notes_text_edit_title"
-                    android:textColor="@color/notes_text_edit_title"
-                    android:textCursorDrawable="@null"
-                    android:textSize="@dimen/notes_text_edit_size_title" />
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/notes_text_layout"
+                    android:layout_marginRight="@dimen/notes_text_layout"
+                    android:orientation="vertical">
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    <come.evernote.evernote.view.BiuEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:hint="@string/text_Notes_editText_title"
+                        android:paddingBottom="@dimen/notes_text_edit_title"
+                        android:textColor="@color/notes_text_edit_title"
+                        android:textColorHint="#b3b3b3"
+                        android:textCursorDrawable="@null"
+                        android:textSize="@dimen/notes_text_edit_size_title" />
 
-                    <LinearLayout
-                        android:id="@+id/notes_text_book_layout"
-                        android:layout_width="wrap_content"
+                    <RelativeLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                        <ImageView
+                        <LinearLayout
+                            android:id="@+id/notes_text_book_layout"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:src="@mipmap/book" />
+                            android:orientation="horizontal">
 
-                        <TextView
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:src="@mipmap/book" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="@dimen/notes_text_text_book"
+                                android:text="@string/text_Notes_text_book"
+                                android:textColor="@color/notes_text_text_book"
+                                android:textSize="@dimen/notes_text_text_size_book" />
+                        </LinearLayout>
+
+                        <ImageView
+                            android:id="@+id/notes_text_about_img"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerInParent="true"
+                            android:src="@mipmap/quan_i" />
+
+
+                        <ImageView
+                            android:id="@+id/notes_text_time_img"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
@@ -63,26 +93,7 @@
                             android:text="@string/text_Notes_text_book"
                             android:textColor="@color/notes_text_text_book"
                             android:textSize="@dimen/notes_text_text_size_book" />
-                    </LinearLayout>
 
-                    <ImageView
-                        android:id="@+id/notes_text_about_img"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerInParent="true"
-                        android:src="@mipmap/quan_i" />
-
-
-
-                <ImageView
-                    android:id="@+id/notes_text_time_img"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:layout_marginRight="@dimen/notes_text_clock"
-                    android:layout_toLeftOf="@id/notes_text_about_img"
-                    android:src="@mipmap/time" />
             </RelativeLayout>
 
             <View
@@ -103,27 +114,50 @@
                 android:textCursorDrawable="@null"
                 android:textSize="@dimen/notes_text_edit_size_idea" />
 
+                </LinearLayout>
+            </ScrollView>
 
-            </LinearLayout>
-        </ScrollView>
-
-    </LinearLayout>
-    <!--抽屉-->
-    <LinearLayout
-        android:id="@+id/drawer_liner_layout"
-        android:layout_width="300dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="right"
-        android:orientation="vertical">
-
-        <FrameLayout
-            android:id="@+id/drawer_frame_layout"
-            android:layout_width="match_parent"
+        </LinearLayout>
+        <!--抽屉-->
+        <LinearLayout
+            android:id="@+id/drawer_liner_layout"
+            android:layout_width="300dp"
             android:layout_height="match_parent"
-            android:background="#ffffff">
+            android:layout_gravity="right"
+            android:orientation="vertical">
 
-        </FrameLayout>
+            <FrameLayout
+                android:id="@+id/drawer_frame_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#ffffff">
+
+            </FrameLayout>
+
+
+        </LinearLayout>
+
+    </android.support.v4.widget.DrawerLayout>
+
+    <LinearLayout
+        android:id="@+id/bottomSheet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@android:color/white"
+        android:elevation="4dp"
+        android:orientation="vertical"
+        app:behavior_hideable="true"
+        app:behavior_peekHeight="0dp"
+        app:layout_behavior="@string/bottom_sheet_behavior"
+        tools:ignore="UnusedAttribute">
+
+        <ListView
+            android:id="@+id/attach_drawer_bottom_list_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
 
     </LinearLayout>
 
-</android.support.v4.widget.DrawerLayout>
+</android.support.design.widget.CoordinatorLayout>
