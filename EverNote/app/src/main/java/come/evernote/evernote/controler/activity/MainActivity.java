@@ -11,8 +11,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.widget.AdapterView;
@@ -32,7 +30,6 @@ import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionHelper;
 import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout;
 import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RFACLabelItem;
 import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RapidFloatingActionContentLabelList;
-import com.wangjie.rapidfloatingactionbutton.rfabgroup.RapidFloatingActionButtonGroup;
 
 import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
@@ -62,7 +59,7 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
 
     public AMapLocationClientOption mLocationOption = null;
     private AMapLocationClient mlocationClient;
-    private  boolean is = false;
+    private boolean is = false;
 
     @Override
     protected int setLayout() {
@@ -78,12 +75,10 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
         rfaLayout = byView(R.id.label_list_sample_rfal);
         rfaButton = byView(R.id.label_list_sample_rfab);
         forImg = byView(R.id.for_img);
-
     }
 
     @Override
     protected void initDatas() {
-
         // 头布局
         getHead();
         adapter = new DrawerAdapter(this);
@@ -91,8 +86,7 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
         setDrawer();
         //设置卫星菜单
         setFloatingBtn();
-        // 设置定位
-       getPositon();
+
 
     }
 
@@ -130,7 +124,7 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
                 .setIconNormalColor(0xff056f00)
                 .setIconPressedColor(0xff0d5302)
                 .setLabelColor(0xff056f00)
-                .setWrapper(2)
+                .setWrapper(3)
         );
 
         items.add(new RFACLabelItem<Integer>()
@@ -157,12 +151,8 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
                 .setIconShadowColor(0xff888888)
                 .setIconShadowDy(ABTextUtil.dip2px(this, 5))
         ;
-        rfabHelper = new RapidFloatingActionHelper(
-                this,
-                rfaLayout,
-                rfaButton,
-                rfaContent
-        ).build();
+        rfabHelper = new RapidFloatingActionHelper(this, rfaLayout, rfaButton, rfaContent).build();
+
     }
 
     private void setDrawer() {
@@ -181,41 +171,16 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
 
         drawerLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
-            private Intent intent;
-
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                Log.d("aaaaa", "position:" + position);
-
-                if (position == 0) {
-                    Toast.makeText(MainActivity.this, "点击头布局", Toast.LENGTH_SHORT).show();
-                }
-                if (position == 1) {
-                    Toast.makeText(MainActivity.this, "所有笔记", Toast.LENGTH_SHORT).show();
-                }
-                if (position == 2) {
-                    Toast.makeText(MainActivity.this, "2", Toast.LENGTH_SHORT).show();
-                } else if (position == 3) {
-                    Toast.makeText(MainActivity.this, "3", Toast.LENGTH_SHORT).show();
-                } else if (position == 4) {
-                    Toast.makeText(MainActivity.this, "4", Toast.LENGTH_SHORT).show();
-                } else if (position == 5) {
-                    Toast.makeText(MainActivity.this, "5", Toast.LENGTH_SHORT).show();
-                } else if (position == 6) {
-                    Toast.makeText(MainActivity.this, "6", Toast.LENGTH_SHORT).show();
-                } else if (position == 7) {
-                    Toast.makeText(MainActivity.this, "7", Toast.LENGTH_SHORT).show();
-                } else if (position == 8) {
+                if (position == 8) {
                     Toast.makeText(MainActivity.this, "8", Toast.LENGTH_SHORT).show();
-                    intent = new Intent(MainActivity.this, SettingActivity.class);
-                    startActivity(intent);
+                    goTo(MainActivity.this, SettingActivity.class);
                 }
                 index = position - 1;
                 adapter.setIndex(index);
                 adapter.notifyDataSetChanged();
             }
-
         });
         // 定位跳转
         forTv.setOnClickListener(new View.OnClickListener() {
@@ -229,10 +194,11 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
         forImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // 设置定位
+                getPositon();
                 Animation animation = AnimationUtils.loadAnimation(MainActivity.this, R.anim.animset);
                 forImg.startAnimation(animation);
                 forTv.setText("同步时间");
-                is = true;
             }
         });
 
@@ -240,7 +206,6 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
 
 
     private void getPositon() {
-
         //声明mLocationOption对象
         mlocationClient = new AMapLocationClient(this);
         //初始化定位参数
@@ -263,7 +228,6 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
     public void onLocationChanged(AMapLocation amapLocation) {
         if (amapLocation != null) {
             if (amapLocation.getErrorCode() == 0) {
-                Log.d("aaaa", "amapLocation.getAccuracy():" + amapLocation.getCity());
                 //定位成功回调信息，设置相关消息
                 amapLocation.getLocationType();//获取当前定位结果来源，如网络定位结果，详见定位类型表
                 amapLocation.getLatitude();//获取纬度
@@ -272,20 +236,19 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
                 SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 Date date = new Date(amapLocation.getTime());
                 df.format(date);//定位时间
-                if (is = true){
-                forTv.setText( df.format(date));}
+                forTv.setText(df.format(date));
+                Log.d("aaa", amapLocation.getAddress());
+                mlocationClient.stopLocation();
             } else {
                 //显示错误信息ErrCode是错误码，errInfo是错误信息，详见错误码表。
-                Log.d("aaaa", "location Error, ErrCode:"
-                        + amapLocation.getErrorCode() + ", errInfo:"
-                        + amapLocation.getErrorInfo());
+                Log.d("aaaa", "location Error, ErrCode:" + amapLocation.getErrorCode() + ", errInfo:" + amapLocation.getErrorInfo());
+                mlocationClient.stopLocation();
             }
         }
     }
 
 
     private void getHead() {
-
         View view = getLayoutInflater().inflate(R.layout.first_page_drawer_header, null);
         drawerLv.addHeaderView(view);
     }
@@ -314,8 +277,11 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
 
     }
 
+
+
     @Override
     public void onRFACItemLabelClick(int position, RFACLabelItem item) {
+
         switch (position) {
             case 0:
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -324,8 +290,14 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
             case 5:
                 goTo(MainActivity.this, TextNotesActivity.class);
                 break;
-            case  2:
-                goTo(MainActivity.this,RecodingActivity.class);
+            case 3:
+                intent = new Intent(MainActivity.this, RemendPopActivity.class);
+                startActivity(intent);
+                break;
+            case 2:
+                goTo(MainActivity.this, RecodingActivity.class);
+                break;
+            case 1:
                 break;
         }
         rfabHelper.toggleContent();
@@ -360,6 +332,7 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
 
     @Override
     public void onRFACItemIconClick(int position, RFACLabelItem item) {
+        Log.d("aaa", "zhixing;e");
         switch (position) {
             case 0:
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -369,6 +342,5 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
         }
         rfabHelper.toggleContent();
     }
-
 
 }

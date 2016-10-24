@@ -9,6 +9,7 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/notex_root_ll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -27,7 +28,7 @@
                 android:layout_marginRight="@dimen/notes_text_layout"
                 android:orientation="vertical">
 
-                <EditText
+                <come.evernote.evernote.view.BiuEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@null"
@@ -90,7 +91,7 @@
                 android:layout_marginTop="@dimen/notes_text_view"
                 android:background="@color/notes_text_view" />
 
-            <EditText
+            <come.evernote.evernote.view.PictureAndTextEditorView
                 android:id="@+id/notes_text_content_et"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
