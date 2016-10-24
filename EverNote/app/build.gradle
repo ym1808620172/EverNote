@@ -17,6 +17,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
 }
 
 dependencies {
@@ -27,7 +32,11 @@ dependencies {
     compile 'de.hdodenhof:circleimageview:2.1.0'
     compile 'org.greenrobot:eventbus:3.0.0'
     compile 'com.android.support:cardview-v7:24.1.1'
-    compile files('libs/AMap_Location_V3.0.0_20160922.jar')
     compile 'com.github.wangjiegulu:ShadowViewHelper:1.0.0'
+    compile project(':librarys')
     compile project(':library')
+    compile 'com.jakewharton:butterknife:7.0.1'
+    compile files('libs/Msc.jar')
+    compile files('libs/Sunflower.jar')
+    compile files('libs/AMap_Location_V3.0.0_20160922.jar')
 }
