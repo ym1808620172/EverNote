@@ -321,24 +321,6 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode != RESULT_OK)
-            return;
-
-
-        Uri uri = data.getData();//得到uri，后面就是将uri转化成file的过程。
-        String[] proj = {MediaStore.Images.Media.DATA};
-        Cursor actualimagecursor = managedQuery(uri, proj, null, null, null);
-        int actual_image_column_index = actualimagecursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-        actualimagecursor.moveToFirst();
-        String img_path = actualimagecursor.getString(actual_image_column_index);
-        if (img_path != null) {
-            File file = new File(img_path);
-            String path = getFileName(file.toString());
-            Log.d("Main2Activity", path);
-            Intent intent = new Intent(MainActivity.this, TextNotesActivity.class);
-            intent.putExtra("text", path);
-            startActivity(intent);
-        }
 
 
         switch (requestCode) {
@@ -353,10 +335,24 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
                 bundle.putSerializable("photo", bean);
                 goTo(MainActivity.this, TextNotesActivity.class, bundle);
                 break;
-
+            case 1:
+                Log.d("zzz", "执行了");
+                Uri uri = data.getData();//得到uri，后面就是将uri转化成file的过程。
+                String[] proj = {MediaStore.Images.Media.DATA};
+                Cursor actualimagecursor = managedQuery(uri, proj, null, null, null);
+                int actual_image_column_index = actualimagecursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                actualimagecursor.moveToFirst();
+                String img_path = actualimagecursor.getString(actual_image_column_index);
+                if (img_path != null) {
+                    File file = new File(img_path);
+                    String path = getFileName(file.toString());
+                    Log.d("Main2Activity", path);
+                    Intent intent = new Intent(MainActivity.this, TextNotesActivity.class);
+                    intent.putExtra("text", path);
+                    startActivity(intent);
+                }
+                break;
         }
-
-
     }
 
     private String getFileName(String pathandname) {
