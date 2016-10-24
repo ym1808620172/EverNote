@@ -4,19 +4,19 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <!--文字笔记-->
     <dimen name="notes_text_layout">10dp</dimen>
-    <!--文字标题-->
+    <!--文字笔记文字标题-->
     <dimen name="notes_text_edit_title">30dp</dimen>
-    <dimen name="notes_text_edit_size_title">20sp</dimen>
-    <!--图片书-->
+    <dimen name="notes_text_edit_size_title">17sp</dimen>
+    <!--文字笔记图片书-->
     <dimen name="notes_text_text_book">10dp</dimen>
-    <dimen name="notes_text_text_size_book">15sp</dimen>
-    <!--时钟-->
+    <dimen name="notes_text_text_size_book">12sp</dimen>
+    <!--文字笔记时钟-->
     <dimen name="notes_text_clock">10dp</dimen>
-    <!--一条横线-->
+    <!--文字笔记一条横线-->
     <dimen name="notes_text_view">20dp</dimen>
-    <!--最大的EditText想法-->
+    <!--文字笔记最大的EditText想法-->
     <dimen name="notes_text_edit_idea">30dp</dimen>
-    <dimen name="notes_text_edit_size_idea">20sp</dimen>
+    <dimen name="notes_text_edit_size_idea">17sp</dimen>
     <!--首页抽屉的内容-->
     <dimen name="cirlc_view_height">50dp</dimen>
     <dimen name="cirlc_view_weight">50dp</dimen>

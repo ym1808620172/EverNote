@@ -60,6 +60,7 @@
             android:theme="@style/translucent"
             />
         <activity android:name=".controler.activity.RecodingActivity"/>
+        <activity android:name=".controler.activity.PenThinActivity"/>
     </application>
 
 </manifest>
