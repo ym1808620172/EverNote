@@ -160,12 +160,6 @@ public class TextNotesActivity extends AbsBaseActivity {
         }
         setIfTitles(1);
         setSpeaking(editTextContent);
-        Intent intentAttachement = getIntent();
-        String content = intent.getStringExtra("text");
-        if (content != null) {
-            editorView.setText(content);
-
-        }
     }
 
     private void setSpeaking(String editTextContent) {
