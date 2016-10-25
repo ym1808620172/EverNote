@@ -162,8 +162,8 @@ public class TextNotesActivity extends AbsBaseActivity {
         setSpeaking(editTextContent);
         Intent intentAttachement = getIntent();
         String content = intent.getStringExtra("text");
-        if (content != null){
-        editorView.setText(content);
+        if (content != null) {
+            editorView.setText(content);
 
         }
     }
@@ -285,10 +285,6 @@ public class TextNotesActivity extends AbsBaseActivity {
             case R.id.item_formatting_popup_window_bold_iv://加粗
                 if (!isClick) {
                     boldIv.setSelected(true);
-                    span.setSpan(new StyleSpan(Typeface.BOLD), 0, contentEt.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                        contentEt.setText(span);
-                    contentEt.setText(span);
-                    contentEt.setMovementMethod(LinkMovementMethod.getInstance());
                     span.setSpan(new StyleSpan(Typeface.BOLD), 0, editorView.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                     setEdText();
                     isClick = true;
@@ -444,7 +440,7 @@ public class TextNotesActivity extends AbsBaseActivity {
             case R.id.item_text_notes_share_iv://分享
                 break;
             case R.id.notes_text_time_img://时钟
-                Intent intent = new Intent(TextNotesActivity.this,RemendPopActivity.class);
+                Intent intent = new Intent(TextNotesActivity.this, RemendPopActivity.class);
                 startActivity(intent);
                 break;
         }

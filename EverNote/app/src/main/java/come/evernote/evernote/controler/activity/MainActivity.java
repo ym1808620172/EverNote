@@ -326,13 +326,15 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
             case CAMERA_WITH_DATA:
                 final Bitmap photo = data.getParcelableExtra("data");
                 //实例化字节数组输出流
-                getBytes(photo);
-                //实现字节流序列化你并传值
-                Bundle bundle = new Bundle();
-                PhotoBean bean = new PhotoBean();
-                bean.setBitmap(getBytes(photo));
-                bundle.putSerializable("photo", bean);
-                goTo(MainActivity.this, TextNotesActivity.class, bundle);
+                if (photo!=null){
+                    getBytes(photo);
+                    //实现字节流序列化你并传值
+                    Bundle bundle = new Bundle();
+                    PhotoBean bean = new PhotoBean();
+                    bean.setBitmap(getBytes(photo));
+                    bundle.putSerializable("photo", bean);
+                    goTo(MainActivity.this, TextNotesActivity.class, bundle);
+                }
                 break;
             case 1:
                 if (data != null && data.getData() != null) {
