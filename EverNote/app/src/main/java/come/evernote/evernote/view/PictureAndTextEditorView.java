@@ -145,7 +145,7 @@ public class PictureAndTextEditorView extends EditText {
      */
     public List<String> getmContentList() {
         if (mContentList == null) {
-            mContentList = new ArrayList<String>();
+            mContentList = new ArrayList<>();
         }
         String content = getText().toString().replaceAll(mNewLineTag, "");
         if (content.length() > 0 && content.contains(mBitmapTag)) {
