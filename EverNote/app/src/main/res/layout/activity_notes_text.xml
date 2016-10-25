@@ -88,11 +88,12 @@
                             android:id="@+id/notes_text_time_img"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="@dimen/notes_text_text_book"
-                            android:text="@string/text_Notes_text_book"
-                            android:textColor="@color/notes_text_text_book"
-                            android:textSize="@dimen/notes_text_text_size_book" />
+                            android:layout_marginRight="@dimen/notes_text_clock"
+                            android:layout_toLeftOf="@id/notes_text_about_img"
+                            android:layout_centerInParent="true"
+                            android:src="@mipmap/time"
+                            />
+
 
             </RelativeLayout>
 
