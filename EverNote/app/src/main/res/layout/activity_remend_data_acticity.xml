@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:background="#fff"
+    android:background="@color/set_activity_toolbar_tv_color"
     android:orientation="vertical"
     tools:context=".controler.activity.RemendDataActivity">
 

@@ -37,8 +37,6 @@
                 android:textSize="@dimen/cirlc_view_username_text_size" />
 
         </RelativeLayout>
-
-
     </LinearLayout>
 
 

@@ -32,6 +32,6 @@
         android:layout_width="match_parent"
         android:layout_height="12dp"
         android:layout_below="@+id/item_drawer_img"
-        ></View>
+        />
 </RelativeLayout>
 </LinearLayout>
