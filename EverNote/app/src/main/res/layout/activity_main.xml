@@ -41,7 +41,7 @@
     <!--抽屉内容-->
     <LinearLayout
         android:id="@+id/drawer_view"
-        android:layout_width="270dp"
+        android:layout_width="@dimen/layout_drawer_width"
         android:layout_height="match_parent"
         android:layout_gravity="left"
         android:clipToPadding="true"
@@ -67,14 +67,14 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="2dp"
+            android:layout_height="@dimen/bottom_view"
             android:background="#dfdfdf"
             >
         </View>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="@dimen/anima_layout"
             android:orientation="vertical"
             android:background="#ffff"
             >
@@ -84,14 +84,13 @@
 
                 <ImageView
                     android:id="@+id/for_img"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="@dimen/anima_img_height"
+                    android:layout_height="@dimen/anima_img_width"
                     android:src="@mipmap/refrsh"
                     android:layout_centerInParent="true"
                     android:layout_alignParentLeft="true"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginLeft="@dimen/anima_left"
                     />
-
 
                 <TextView
                     android:id="@+id/for_tv"
@@ -99,7 +98,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:text="开始同步"
-                    android:textSize="12sp"
+                    android:textSize="@dimen/anima_tv"
                     />
 
             </RelativeLayout>

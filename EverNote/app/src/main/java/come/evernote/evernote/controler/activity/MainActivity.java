@@ -61,6 +61,7 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
     public AMapLocationClientOption mLocationOption = null;
     private AMapLocationClient mlocationClient;
     private boolean is = false;
+    private Animation animation;
 
     @Override
     protected int setLayout() {
@@ -178,6 +179,7 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (position == 8) {
                     Toast.makeText(MainActivity.this, "8", Toast.LENGTH_SHORT).show();
+                    // 跳转设置页面
                     goTo(MainActivity.this, SettingActivity.class);
                 }
                 index = position - 1;
@@ -199,7 +201,7 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
             public void onClick(View v) {
                 // 设置定位
                 getPositon();
-                Animation animation = AnimationUtils.loadAnimation(MainActivity.this, R.anim.animset);
+                animation = AnimationUtils.loadAnimation(MainActivity.this, R.anim.animset);
                 forImg.startAnimation(animation);
                 forTv.setText("同步时间");
             }
@@ -244,6 +246,7 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
                 }
                 forTv.setText(df.format(date));
                 mlocationClient.stopLocation();
+                forImg.clearAnimation();
             } else {
                 //显示错误信息ErrCode是错误码，errInfo是错误信息，详见错误码表。
                 Log.d("aaaa", "location Error, ErrCode:" + amapLocation.getErrorCode() + ", errInfo:" + amapLocation.getErrorInfo());
