@@ -17,7 +17,7 @@
     <!--文字笔记最大的EditText想法-->
     <dimen name="notes_text_edit_idea">30dp</dimen>
     <dimen name="notes_text_edit_size_idea">17sp</dimen>
-    <!--首页抽屉的内容-->
+    <!--首页抽屉头布局的内容-->
     <dimen name="cirlc_view_height">50dp</dimen>
     <dimen name="cirlc_view_weight">50dp</dimen>
     <dimen name="cirlc_view_margin_left">15dp</dimen>
@@ -40,5 +40,15 @@
 
 
 
+    <!--首页抽屉的内容列表-->
+    <dimen name="layout_drawer_width">270dp</dimen>
+    <dimen name="bottom_view">1dp</dimen>
+    <!--首页抽屉的内容底边内容-->
+    <dimen name="anima_img_width">20dp</dimen>
+    <dimen name="anima_img_height">20dp</dimen>
+    <dimen name="anima_left">20dp</dimen>
+    <dimen name="anima_tv">12sp</dimen>
+    <!--首页抽屉的内容底边内容布局的高度-->
+    <dimen name="anima_layout">30dp</dimen>
 
 </resources>

@@ -40,7 +40,6 @@ public class RecodingActivity  extends  AbsBaseActivity{
     @Override
     protected void initView() {
         btnStart = byView(R.id.recording_btn_start);
-      //  btnStop = byView(R.id.recording_btn_stop);
         recordChronometer =byView(R.id.recoding_chronometer);
 
     }
@@ -79,13 +78,13 @@ public class RecodingActivity  extends  AbsBaseActivity{
         });
     }
 
+    // 弹出进度框
     private void showProgressDilog() {
         progressDialog = new ProgressDialog(RecodingActivity.this);
         // 设置对话框的图标
         // 设置文字
         progressDialog.setMessage("加载中....");
         // 显示加载进度对话框
-
         progressDialog.show();
         new Thread(new Runnable() {
             @Override
