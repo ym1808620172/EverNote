@@ -9,4 +9,16 @@
     <color name="notes_text_edit_idea">#000000</color>
     <color name="notes_text_view">#c1c1c1</color>
     <color name="translucent_background">#807b7878</color>
+    <!--设置界面-->
+    <color name="set_activity_toolbar_back">#859599</color>
+    <color name="set_activity_toolbar_tv_color">#fff</color>
+    <color name="set_activity_card_top_view_color">#b3b0b0</color>
+    <color name="set_activity_card_mid_view_color">#868484</color>
+    <!--标题栏-->
+    <color name="item_title_back_color">#45AD42</color>
+    <!--主界面-->
+    <color name="main_activity_label_rfal_back_color">#000</color>
+    <color name="main_activity_label_normal_back_color">#37474f</color>
+    <color name="main_activity_label_pressed_back_color">#263238</color>
+    <color name="main_activity_rfab_shadow_color_color">#999999</color>
 </resources>

@@ -9,11 +9,12 @@
     android:orientation="vertical"
     tools:context=".controler.activity.RemendDataActivity">
 
+    <!--提醒的日期界面-->
     <RadioGroup
-        android:padding="10dp"
+        android:padding="@dimen/set_activity_card_free_tv_padding"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#45AD42"
+        android:background="@color/item_title_back_color"
         android:orientation="horizontal">
 
         <RadioButton
@@ -23,7 +24,7 @@
             android:layout_weight="1"
             android:button="@null"
             android:gravity="center"
-            android:text="日期" />
+            android:text="@string/remend_data_day" />
 
         <RadioButton
             android:layout_width="0dp"
@@ -31,15 +32,15 @@
             android:layout_weight="1"
             android:button="@null"
             android:gravity="center"
-            android:text="时间" />
+            android:text="@string/remend_data_time" />
     </RadioGroup>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp">
+        android:paddingLeft="@dimen/set_activity_card_margin"
+        android:paddingRight="@dimen/set_activity_card_margin">
 
         <LinearLayout
             android:id="@+id/remend_data_day"

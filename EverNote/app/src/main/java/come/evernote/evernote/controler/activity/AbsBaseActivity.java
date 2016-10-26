@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -23,14 +24,13 @@ import come.evernote.evernote.R;
  * @author sunhongxu
  */
 public abstract class AbsBaseActivity extends AppCompatActivity implements View.OnClickListener {
-    public ViewGroup contentView;
-    private ImageView rightImg;
-    private ImageView leftImg;
-    private ImageView midImg;
-    private TextView titltTv;
-    private View titlebar;
-    private ImageView drawerImg;
-    private int index;
+    public FrameLayout contentView;//标题栏里的占位布局
+    private ImageView rightImg;//标题栏右侧图片
+    private ImageView leftImg;//标题栏左侧图片
+    private ImageView midImg;//标题栏中间图片
+    private TextView titltTv;//标题栏文字
+    private View titlebar;//标题栏布局
+    private ImageView drawerImg;//打开抽屉的图片
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +38,7 @@ public abstract class AbsBaseActivity extends AppCompatActivity implements View.
         setContentView(R.layout.item_tiitle);
         int titlebarResId = getTitlebarResId();
         setIfTitles(titlebarResId);
-        contentView = (ViewGroup) findViewById(R.id.base_contentview);
+        contentView = (FrameLayout) findViewById(R.id.base_contentview);
         contentView.addView(View.inflate(this, setLayout(), null));
         //制定流程
         initView();

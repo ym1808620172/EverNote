@@ -24,5 +24,21 @@
     <dimen name="cirlc_view_margin_top">15dp</dimen>
     <dimen name="cirlc_view_username_text_size">17sp</dimen>
 
+    <!--设置界面-->
+    <dimen name="set_activity_card_margin">20dp</dimen>
+    <dimen name="set_activity_card_margin_bottom">40dp</dimen>
+    <dimen name="set_activity_card_free_tv_padding">10dp</dimen>
+    <dimen name="set_activity_toolbar_expanded">50dp</dimen>
+    <dimen name="set_activity_toolbar_tv_name_size">16sp</dimen>
+    <dimen name="set_activity_toolbar_tv_time_size">13sp</dimen>
+    <!--标题栏-->
+    <dimen name="item_title_tv_size">20sp</dimen>
+    <!--主界面-->
+    <dimen name="main_activity_rfab_shadow_dy">5dp</dimen>
+    <dimen name="main_activity_rfab_shadow_radius">7dp</dimen>
+    <!--主界面抽屉-->
+
+
+
 
 </resources>
