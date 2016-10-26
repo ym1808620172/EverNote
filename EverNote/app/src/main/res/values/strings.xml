@@ -29,5 +29,33 @@
         <item>"10"</item>
         <item>"11"</item>
     </array>
+    <!--设置界面-->
+    <string name="set_activity_card_free_tv">免费账户</string>
+    <string name="set_activity_card_standard_tv">标准账户</string>
+    <string name="set_activity_card_senior_tv">高级账户</string>
+    <string name="set_activity_card_explore_tv">探索印象笔记不同的账户级别</string>
+    <string name="set_activity_card_user_tv">账户信息</string>
+    <string name="set_activity_card_camera_tv">拍照</string>
+    <string name="set_activity_card_note_tv">笔记</string>
+    <string name="set_activity_card_note_book_tv">笔记本</string>
+    <string name="set_activity_card_action_message_tv">工作群聊</string>
+    <string name="set_activity_card_noti_tv">通知</string>
+    <string name="set_activity_card_courseset_tv">教程</string>
+    <string name="set_activity_card_synchronization_tv">同步</string>
+    <string name="set_activity_card_recommend_tv">推荐内容</string>
+    <string name="set_activity_card_action_search_tv">搜索和存储</string>
+    <string name="set_activity_card_support_tv">技术支持</string>
+    <string name="set_activity_card_clause_tv">法律条款</string>
+    <!--标题栏-->
+    <string name="item_title_tv">标题</string>
+    <!--提醒的日期界面-->
+    <string name="remend_data_day">日期</string>
+    <string name="remend_data_time">时间</string>
+    <!--主界面-->
+    <string name="main_activity_drawer_view_for_tv">开始同步</string>
+    <string name="notes_text_content_et_hint">写下此刻的想法...</string>
+    <!--提醒界面-->
+    <string name="remend_pop_biu_et_hint">添加提醒...</string>
+    <string name="remend_pop_tv">我是一个笔记本</string>
 
 </resources>

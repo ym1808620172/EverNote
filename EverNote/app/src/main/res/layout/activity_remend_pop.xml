@@ -4,14 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:background="#fff"
+    android:background="@color/set_activity_toolbar_tv_color"
     android:orientation="vertical"
     tools:context=".controler.activity.RemendPopActivity">
-
+    <!--提醒界面的-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_margin="@dimen/set_activity_card_free_tv_padding"
         android:orientation="horizontal">
 
         <come.evernote.evernote.view.BiuEditText
@@ -19,29 +19,29 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@null"
-            android:hint="添加提醒..."
-            android:textColorHint="#36ac15"
+            android:hint="@string/remend_pop_biu_et_hint"
+            android:textColorHint="@color/notes_text_edit_title"
             android:textCursorDrawable="@null" />
 
         <ImageView
             android:id="@+id/data_pop_img"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="@dimen/set_activity_card_free_tv_padding"
             android:src="@mipmap/ic_options_calendar" />
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="0.01dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp"
-        android:background="#767373" />
+        android:layout_marginBottom="@dimen/set_activity_card_free_tv_padding"
+        android:layout_marginTop="@dimen/set_activity_card_free_tv_padding"
+        android:background="@color/set_activity_card_top_view_color" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp">
+        android:layout_margin="@dimen/set_activity_card_free_tv_padding">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -51,14 +51,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
-            android:text="我的第一个笔记本" />
+            android:layout_marginLeft="@dimen/set_activity_card_free_tv_padding"
+            android:text="@string/remend_pop_tv" />
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="0.01dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp"
-        android:background="#767373" />
+        android:layout_marginBottom="@dimen/set_activity_card_free_tv_padding"
+        android:layout_marginTop="@dimen/set_activity_card_free_tv_padding"
+        android:background="@color/set_activity_card_top_view_color" />
 </LinearLayout>

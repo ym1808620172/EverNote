@@ -5,16 +5,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="10dp"
+    android:layout_margin="@dimen/notes_text_layout"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
-
+    <!--文字笔记界面-->
 
     <android.support.v4.widget.DrawerLayout
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="10dp"
+        android:layout_margin="@dimen/notes_text_layout"
         android:layout_weight="1">
 
         <LinearLayout
@@ -44,7 +44,7 @@
                         android:hint="@string/text_Notes_editText_title"
                         android:paddingBottom="@dimen/notes_text_edit_title"
                         android:textColor="@color/notes_text_edit_title"
-                        android:textColorHint="#b3b3b3"
+                        android:textColorHint="@color/set_activity_card_top_view_color"
                         android:textCursorDrawable="@null"
                         android:textSize="@dimen/notes_text_edit_size_title" />
 
@@ -88,32 +88,29 @@
                             android:id="@+id/notes_text_time_img"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
                             android:layout_marginRight="@dimen/notes_text_clock"
                             android:layout_toLeftOf="@id/notes_text_about_img"
-                            android:layout_centerInParent="true"
-                            android:src="@mipmap/time"
-                            />
+                            android:src="@mipmap/time" />
+                    </RelativeLayout>
 
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginTop="@dimen/notes_text_view"
+                        android:background="@color/notes_text_view" />
 
-            </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_marginTop="@dimen/notes_text_view"
-                android:background="@color/notes_text_view" />
-
-            <come.evernote.evernote.view.PictureAndTextEditorView
-                android:id="@+id/notes_text_content_et"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/notes_text_edit_idea"
-                android:background="@null"
-                android:gravity="top"
-                android:hint="写下此刻的想法..."
-                android:textColor="@color/notes_text_edit_idea"
-                android:textCursorDrawable="@null"
-                android:textSize="@dimen/notes_text_edit_size_idea" />
+                    <come.evernote.evernote.view.PictureAndTextEditorView
+                        android:id="@+id/notes_text_content_et"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/notes_text_edit_idea"
+                        android:background="@null"
+                        android:gravity="top"
+                        android:hint="@string/notes_text_content_et_hint"
+                        android:textColor="@color/notes_text_edit_idea"
+                        android:textCursorDrawable="@null"
+                        android:textSize="@dimen/notes_text_edit_size_idea" />
 
                 </LinearLayout>
             </ScrollView>
@@ -131,10 +128,9 @@
                 android:id="@+id/drawer_frame_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#ffffff">
+                android:background="@color/set_activity_toolbar_tv_color">
 
             </FrameLayout>
-
 
         </LinearLayout>
 
@@ -157,8 +153,6 @@
             android:id="@+id/attach_drawer_bottom_list_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-
-
     </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>

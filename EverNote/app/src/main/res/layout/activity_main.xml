@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         rfal:rfal_frame_alpha="0.7"
-        rfal:rfal_frame_color="#000">
+        rfal:rfal_frame_color="@color/main_activity_label_rfal_back_color">
 
         <FrameLayout
             android:id="@+id/main_frame_layout"
@@ -25,15 +25,15 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:layout_marginBottom="15dp"
-            android:layout_marginRight="15dp"
-            rfab:rfab_color_normal="#37474f"
-            rfab:rfab_color_pressed="#263238"
+            android:layout_marginBottom="@dimen/cirlc_view_margin_left"
+            android:layout_marginRight="@dimen/cirlc_view_margin_left"
+            rfab:rfab_color_normal="@color/main_activity_label_normal_back_color"
+            rfab:rfab_color_pressed="@color/main_activity_label_pressed_back_color"
             rfab:rfab_drawable="@drawable/rfab__drawable_rfab_default"
-            rfab:rfab_shadow_color="#999999"
+            rfab:rfab_shadow_color="@color/main_activity_rfab_shadow_color_color"
             rfab:rfab_shadow_dx="0dp"
-            rfab:rfab_shadow_dy="5dp"
-            rfab:rfab_shadow_radius="7dp"
+            rfab:rfab_shadow_dy="@dimen/main_activity_rfab_shadow_dy"
+            rfab:rfab_shadow_radius="@dimen/main_activity_rfab_shadow_radius"
             rfab:rfab_size="normal" />
 
     </com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout>
@@ -49,18 +49,17 @@
         android:orientation="vertical">
 
 
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="4"
-            android:background="#fff">
+            android:background="@color/set_activity_toolbar_tv_color">
 
             <ListView
                 android:id="@+id/drawer_lv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:divider="#fff"
+                android:divider="@color/set_activity_toolbar_tv_color"
                 android:scrollbars="none" />
 
         </LinearLayout>
@@ -68,16 +67,14 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/bottom_view"
-            android:background="#dfdfdf"
-            >
-        </View>
+            android:background="@color/set_activity_card_top_view_color" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/anima_layout"
-            android:orientation="vertical"
-            android:background="#ffff"
-            >
+            android:background="@color/set_activity_toolbar_tv_color"
+            android:orientation="vertical">
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -86,11 +83,10 @@
                     android:id="@+id/for_img"
                     android:layout_width="@dimen/anima_img_height"
                     android:layout_height="@dimen/anima_img_width"
-                    android:src="@mipmap/refrsh"
-                    android:layout_centerInParent="true"
                     android:layout_alignParentLeft="true"
+                    android:layout_centerInParent="true"
                     android:layout_marginLeft="@dimen/anima_left"
-                    />
+                    android:src="@mipmap/refrsh" />
 
                 <TextView
                     android:id="@+id/for_tv"
@@ -98,8 +94,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:text="开始同步"
-                    android:textSize="@dimen/anima_tv"
-                    />
+                    android:textSize="@dimen/anima_tv" />
 
             </RelativeLayout>
 
