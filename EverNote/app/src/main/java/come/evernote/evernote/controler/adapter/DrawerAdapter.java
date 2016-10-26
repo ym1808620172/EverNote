@@ -71,6 +71,24 @@ public class DrawerAdapter extends BaseAdapter {
         if (position == index) {
             Log.d("DrawerAdapter", "he");
             holder.textView.setTextColor(Color.GREEN);
+            if (position == 0){
+                holder.img.setImageResource(R.mipmap.article);
+            }else if (position == 1){
+                holder.img.setImageResource(R.mipmap.greennote);
+            }else if (position == 2){
+                holder.img.setImageResource(R.mipmap.greenwujiaoxing);
+            }else  if (position == 3){
+                holder.img.setImageResource(R.mipmap.greenwork);
+            }else if (position == 4){
+                holder.img.setImageResource(R.mipmap.greenlaji);
+            }else  if (position == 5){
+                holder.img.setImageResource(R.mipmap.grenntop);
+            }else if (position == 6){
+                holder.img.setImageResource(R.mipmap.greendiqiu);
+            }else  if (position == 7){
+                holder.img.setImageResource(R.mipmap.greenseting);
+            }
+
         } else {
             holder.textView.setTextColor(Color.GRAY);
         }

@@ -187,14 +187,7 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
                 adapter.notifyDataSetChanged();
             }
         });
-        // 定位跳转
-        forTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, PositonActivity.class);
-                startActivity(intent);
-            }
-        });
+
         // 动画旋转
         forImg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -288,14 +281,14 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
 
     @Override
     public void onRFACItemLabelClick(int position, RFACLabelItem item) {
-
+        Bundle bundle = new Bundle();
         switch (position) {
             case 0:
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(intent, CAMERA_WITH_DATA);
                 break;
             case 4:
-                Bundle bundle = new Bundle();
+
                 bundle.putString("key", "1");
                 goTo(MainActivity.this, TextNotesActivity.class, bundle);
                 break;
@@ -303,7 +296,8 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
                 goTo(MainActivity.this, TextNotesActivity.class);
                 break;
             case 2:
-                goTo(MainActivity.this, RecodingActivity.class);
+                bundle.putInt("index", 2);
+                goTo(MainActivity.this, TextNotesActivity.class, bundle);
                 break;
             case 3:
                 intent = new Intent(MainActivity.this, RemendPopActivity.class);
@@ -329,7 +323,7 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
             case CAMERA_WITH_DATA:
                 final Bitmap photo = data.getParcelableExtra("data");
                 //实例化字节数组输出流
-                if (photo!=null){
+                if (photo != null) {
                     getBytes(photo);
                     //实现字节流序列化你并传值
                     Bundle bundle = new Bundle();

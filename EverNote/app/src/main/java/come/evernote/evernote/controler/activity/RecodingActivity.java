@@ -60,7 +60,7 @@ public class RecodingActivity  extends  AbsBaseActivity{
 
                 if (isStart==false) {
                     startRecord();
-                    btnStart.setImageResource(R.mipmap.btn_stop_recording);
+                    btnStart.setImageResource(R.mipmap.btn_stop_recoding);
                     Toast.makeText(RecodingActivity.this, "开始录音", Toast.LENGTH_SHORT).show();
                     recordChronometer.setBase(SystemClock.elapsedRealtime() - recordingTime);// 跳过已经记录了的时间，起到继续计时的作用
                     recordChronometer.start();
@@ -99,6 +99,7 @@ public class RecodingActivity  extends  AbsBaseActivity{
                 }
             }
         }).start();
+
     }
 
 

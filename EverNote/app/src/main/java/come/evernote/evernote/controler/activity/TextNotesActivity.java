@@ -1,11 +1,15 @@
 package come.evernote.evernote.controler.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.media.MediaRecorder;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.FragmentManager;
@@ -21,10 +25,13 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Chronometer;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.iflytek.cloud.SpeechConstant;
 import com.iflytek.cloud.SpeechError;
@@ -44,6 +51,7 @@ import come.evernote.evernote.controler.fragment.TextNotesAboutFragment;
 import come.evernote.evernote.controler.fragment.TextNotesMenuFragment;
 import come.evernote.evernote.model.bean.AttachDrawerBean;
 import come.evernote.evernote.model.bean.PhotoBean;
+import come.evernote.evernote.model.db.G;
 import come.evernote.evernote.view.PictureAndTextEditorView;
 import come.evernote.evernote.view.ViewAnimation;
 
@@ -64,6 +72,10 @@ public class TextNotesActivity extends AbsBaseActivity {
     private ImageView attachIv;//附加
     private ImageView penThinIv;//笔薄
     private ImageView shareIv;//分享
+
+    private ImageView doImg;
+
+
     //抽屉
     private DrawerLayout drawerLayout;//根布局
     private LinearLayout layout;//抽屉的布局
@@ -94,8 +106,18 @@ public class TextNotesActivity extends AbsBaseActivity {
     private SpannableString span;
     private ImageView timeIv;//图片时钟
     private String editTextContent;
+    private TextView textView;
+
+    // 录音
+    private ImageView btnStart;
+    private Chronometer recordChronometer;
+    private boolean isStart = false;
+    private MediaRecorder mr = null;
+    private long recordingTime = 0;// 记录下来的时间
 
 
+    // 进度对话框
+    private ProgressDialog progressDialog;
     @Override
     protected int setLayout() {
         electricQuantity();
@@ -119,6 +141,7 @@ public class TextNotesActivity extends AbsBaseActivity {
         attachLayout = byView(R.id.bottomSheet);
         listView = byView(R.id.attach_drawer_bottom_list_view);
         timeIv = byView(R.id.notes_text_time_img);
+        textView = byView(R.id.recoding_chronometer);
         menuIv.setOnClickListener(this);
         aboutTv.setOnClickListener(this);
         formattingIv.setOnClickListener(this);
@@ -132,6 +155,9 @@ public class TextNotesActivity extends AbsBaseActivity {
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);//抽屉关闭手势滑动
         editorView = byView(R.id.notes_text_content_et);
 
+        btnStart = byView(R.id.recording_btn_start);
+        recordChronometer =byView(R.id.recoding_chronometer);
+
     }
 
     @Override
@@ -140,6 +166,17 @@ public class TextNotesActivity extends AbsBaseActivity {
         rootLl.setAnimation(new ViewAnimation(rootLl.getWidth(), rootLl.getHeight(), 1000));
         Intent intent = getIntent();
         if (intent != null) {
+            int index = intent.getIntExtra("index", 100);
+            if (index == 2) {
+                recordChronometer.setVisibility(View.VISIBLE);
+                doneIv.setImageResource(R.mipmap.btn_start_recoding);
+                setIfTitles(1);
+                getOpen();
+
+            }else {
+                textView.setVisibility(View.GONE);
+                doneIv.setImageResource(R.drawable.item_text_notes_title_done);
+            }
             PhotoBean bean = (PhotoBean) intent.getSerializableExtra("photo");
             if (bean != null) {
                 Bitmap bitmap = getBitmap(bean.getBitmap());
@@ -160,6 +197,102 @@ public class TextNotesActivity extends AbsBaseActivity {
         }
         setIfTitles(1);
         setSpeaking(editTextContent);
+    }
+
+    private void getOpen() {
+
+
+        doneIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (isStart==false) {
+                    startRecord();
+                   doneIv.setImageResource(R.mipmap.btn_stop_recoding);
+                    Toast.makeText(TextNotesActivity.this, "开始录音", Toast.LENGTH_SHORT).show();
+                    recordChronometer.setBase(SystemClock.elapsedRealtime() - recordingTime);// 跳过已经记录了的时间，起到继续计时的作用
+                    recordChronometer.start();
+                    isStart = true;
+                } else {
+                    showProgressDilog();
+                    Toast.makeText(TextNotesActivity.this, "结束录音,并保存到本地", Toast.LENGTH_SHORT).show();
+                    stopRecord();
+                    doneIv.setImageResource(R.mipmap.btn_start_recoding);
+                    recordChronometer.stop();
+                    recordChronometer.setBase(SystemClock.elapsedRealtime());
+                    isStart = false;
+                }
+            }
+        });
+
+
+
+
+    }
+
+    private void stopRecord() {
+
+        if (mr == null) {
+            File dir = new File(Environment.getExternalStorageDirectory(),"/sdcards/recodrsongs");
+            Log.d("MainActivity", "Environment.getExternalStorageDirectory():" + Environment.getExternalStorageDirectory());
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
+            File soundFile = new File(dir, System.currentTimeMillis() + ".amr");
+            if (!soundFile.exists()) {
+                try {
+                    soundFile.createNewFile();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+            mr = new MediaRecorder();
+            mr.setAudioSource(MediaRecorder.AudioSource.MIC);  //音频输入源
+            mr.setOutputFormat(MediaRecorder.OutputFormat.AMR_WB);   //设置输出格式
+            mr.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_WB);   //设置编码格式
+            mr.setOutputFile(soundFile.getAbsolutePath());
+            try {
+                mr.prepare();
+                mr.start();  //开始录制
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+    }
+
+    private void showProgressDilog() {
+
+        progressDialog = new ProgressDialog(TextNotesActivity.this);
+        // 设置对话框的图标
+        // 设置文字
+        progressDialog.setMessage("加载中....");
+        // 显示加载进度对话框
+        progressDialog.show();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                try {
+                    Log.d("aaaa", "sd");
+                    Thread.sleep(2000);
+                    progressDialog.dismiss();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
+    }
+
+    private void startRecord() {
+        if (mr != null) {
+            mr.stop();
+            mr.release();
+            mr = null;
+        }
     }
 
     private void setSpeaking(String editTextContent) {
@@ -220,6 +353,7 @@ public class TextNotesActivity extends AbsBaseActivity {
         data.add(new AttachDrawerBean("手写", R.mipmap.shouxei));
         attachAdapter.setData(data);
         listView.setAdapter(attachAdapter);
+
     }
 
 
