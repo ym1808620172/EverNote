@@ -27,6 +27,7 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
+import com.lljjcoder.citypickerview.widget.CityPicker;
 import com.wangjie.androidbucket.utils.ABTextUtil;
 import com.wangjie.androidbucket.utils.imageprocess.ABShape;
 import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionButton;
@@ -85,6 +86,7 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
         rfaButton = byView(R.id.label_list_sample_rfab);
         forImg = byView(R.id.for_img);
         mainFl = byView(R.id.main_frame_layout);
+        forTv.setOnClickListener(this);
     }
 
     @Override
@@ -269,7 +271,32 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
 
     @Override
     public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.for_tv:
+                CityPicker cityPicker = new CityPicker.Builder(MainActivity.this).textSize(20)
+                        .onlyShowProvinceAndCity(true)
+                        .confirTextColor("#000000")
+                        .cancelTextColor("#000000")
+                        .province("江苏省")
+                        .city("常州市")
+                        .district("新北区")
+                        .textColor(Color.parseColor("#000000"))
+                        .provinceCyclic(true)
+                        .cityCyclic(true)
+                        .districtCyclic(true)
+                        .visibleItemsCount(7)
+                        .itemPadding(10)
+                        .build();
 
+                cityPicker.show();
+                cityPicker.setOnCityItemClickListener(new CityPicker.OnCityItemClickListener() {
+                    @Override
+                    public void onSelected(String... citySelected) {
+                        forTv.setText("省：" + citySelected[0] + "市：" + citySelected[1]  );
+                    }
+                });
+                break;
+        }
     }
 
     protected void onClickDrawer() {
