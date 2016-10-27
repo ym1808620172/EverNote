@@ -10,6 +10,7 @@ import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.SystemClock;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.FragmentManager;
@@ -25,6 +26,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Chronometer;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -37,6 +39,10 @@ import com.iflytek.cloud.SpeechConstant;
 import com.iflytek.cloud.SpeechError;
 import com.iflytek.cloud.SpeechSynthesizer;
 import com.iflytek.cloud.SynthesizerListener;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -54,13 +60,14 @@ import come.evernote.evernote.model.bean.PhotoBean;
 import come.evernote.evernote.view.PictureAndTextEditorView;
 import come.evernote.evernote.view.ViewAnimation;
 
+
 /**
  * Created by dllo on 16/10/17.
  * 文字笔记界面
  *
  * @author 杜显东
  */
-public class TextNotesActivity extends AbsBaseActivity {
+public class TextNotesActivity extends AbsBaseActivity implements AdapterView.OnItemClickListener {
     //标题栏
     private ImageView aboutTv;//介绍(圈I)
     private ImageView menuIv;//菜单(三个点)
@@ -106,6 +113,7 @@ public class TextNotesActivity extends AbsBaseActivity {
     private ImageView timeIv;//图片时钟
     private String editTextContent;
     private TextView textView;
+    private Intent intent;
 
     // 录音
     private ImageView btnStart;
@@ -153,6 +161,7 @@ public class TextNotesActivity extends AbsBaseActivity {
         timeIv.setOnClickListener(this);
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);//抽屉关闭手势滑动
         editorView = byView(R.id.notes_text_content_et);
+        EventBus.getDefault().register(this);//注册Eventbus
 
         btnStart = byView(R.id.recording_btn_start);
         recordChronometer =byView(R.id.recoding_chronometer);
@@ -163,7 +172,7 @@ public class TextNotesActivity extends AbsBaseActivity {
     protected void initDatas() {
         editTextContent = editorView.getText().toString();
         rootLl.setAnimation(new ViewAnimation(rootLl.getWidth(), rootLl.getHeight(), 1000));
-        Intent intent = getIntent();
+        intent = getIntent();
         if (intent != null) {
             int index = intent.getIntExtra("index", 100);
             if (index == 2) {
@@ -172,7 +181,7 @@ public class TextNotesActivity extends AbsBaseActivity {
                 setIfTitles(1);
                 getOpen();
 
-            }else {
+            } else {
                 textView.setVisibility(View.GONE);
                 doneIv.setImageResource(R.drawable.item_text_notes_title_done);
             }
@@ -185,20 +194,26 @@ public class TextNotesActivity extends AbsBaseActivity {
                 }
             }
             String photoUrl = intent.getStringExtra("photoUrl");
-            Log.d("zzz", photoUrl+"");
+            Log.d("zzz", photoUrl + "");
             if (photoUrl != null) {
                 if (photoUrl.endsWith(".png") || photoUrl.endsWith(".jpg")) {
                     editorView.insertBitmap(photoUrl);
                 }
+
+                String content = intent.getStringExtra("text");
+                if (content != null) {
+                    editorView.setText(content);
+                }
+
             }
-        }
-        setIfTitles(1);
-        setSpeaking(editTextContent);
-        Bundle bundle = getIntent().getExtras();
-        if (bundle != null) {
-            String string = bundle.getString("key");
-            if (string != null && string.equals("1")) {
-                goTo(TextNotesActivity.this, PenThinActivity.class);
+            setIfTitles(1);
+            setSpeaking(editTextContent);
+            Bundle bundle = getIntent().getExtras();
+            if (bundle != null) {
+                String string = bundle.getString("key");
+                if (string != null && string.equals("1")) {
+                    goTo(TextNotesActivity.this, PenThinActivity.class);
+                }
             }
         }
     }
@@ -323,7 +338,6 @@ public class TextNotesActivity extends AbsBaseActivity {
         super.onResume();
         index = editorView.getIndex();
         pictureIndex = editorView.getPicture();
-
         mBehavior = BottomSheetBehavior.from(attachLayout);
         mBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override
@@ -347,9 +361,19 @@ public class TextNotesActivity extends AbsBaseActivity {
         data.add(new AttachDrawerBean("手写", R.mipmap.shouxei));
         attachAdapter.setData(data);
         listView.setAdapter(attachAdapter);
-
+        listView.setOnItemClickListener(this);
     }
 
+    /**
+     * Eventbus
+     * @param bean
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void getData (PhotoBean bean){
+        Bitmap bitmap = getBitmap(bean.getBitmap());
+        saveCroppedImage(bitmap);
+        editorView.insertBitmap(file.getPath());
+    }
 
     public static Bitmap getBitmap(byte[] data) {
         return BitmapFactory.decodeByteArray(data, 0, data.length);//从字节数组解码位图
@@ -617,6 +641,7 @@ public class TextNotesActivity extends AbsBaseActivity {
         if (popupWindow != null && popupWindow.isShowing()) {
             popupWindow.dismiss();
         }
+        EventBus.getDefault().unregister(this);//解除注册
     }
 
     private void saveCroppedImage(Bitmap bmp) {
@@ -637,7 +662,7 @@ public class TextNotesActivity extends AbsBaseActivity {
         try {
             file.createNewFile();
             FileOutputStream fos = new FileOutputStream(file);
-            bmp.compress(Bitmap.CompressFormat.JPEG, 50, fos);
+            bmp.compress(Bitmap.CompressFormat.PNG, 100, fos);
             fos.flush();
             fos.close();
         } catch (IOException e) {
@@ -679,4 +704,48 @@ public class TextNotesActivity extends AbsBaseActivity {
         }
     };
 
+    /**
+     * listView的行点击事件
+     *
+     * @param adapterView
+     * @param view
+     * @param i
+     * @param l
+     */
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intentActtchenment = new Intent(Intent.ACTION_GET_CONTENT);
+        switch (i){
+            case 0:
+                intentActtchenment.setType("image/*");//设置类型，我这里是任意类型，任意后缀的可以这样写。
+                intentActtchenment.addCategory(Intent.CATEGORY_OPENABLE);
+                startActivityForResult(intentActtchenment, 0);
+                break;
+            case 1:
+                intentActtchenment.setType("image/*");
+                intentActtchenment.addCategory(Intent.CATEGORY_OPENABLE);
+                startActivityForResult(intentActtchenment, 1);
+                break;
+            case 2:
+                intentActtchenment.setType("video/*");
+                intentActtchenment.addCategory(Intent.CATEGORY_OPENABLE);
+                startActivityForResult(intentActtchenment, 1);
+                break;
+            case 3:
+                intentActtchenment.setType("audio/media/*");
+                intentActtchenment.addCategory(Intent.CATEGORY_OPENABLE);
+                startActivityForResult(intentActtchenment, 1);
+                break;
+            case 4:
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(intent, 4);
+                break;
+            case 5:
+
+                break;
+            case 6:
+                goTo(TextNotesActivity.this,PenThinActivity.class);
+                break;
+        }
+    }
 }

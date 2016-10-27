@@ -1,13 +1,14 @@
 package come.evernote.evernote.controler.activity;
 
 import android.graphics.Bitmap;
-import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.ByteArrayOutputStream;
 
@@ -22,7 +23,15 @@ import come.evernote.evernote.view.PaintView;
 public class PenThinActivity extends AbsBaseActivity {
     private PaintView mPaintView;
     private LinearLayout linearLayout;
-    private Button mBtnOk, mBtnClear, mBtnCancel;
+    private ImageView returnIv;//退出
+    private ImageView penIv;//笔
+    private ImageView eraserIv;//橡皮擦
+    private ImageView cutIv;//切口
+    private ImageView undoIv;//左撤销
+    private ImageView redoIv;//右撤销
+    private int Pen = 1;
+    private int Eraser = 2;
+    private EventBus eventBus;
 
     @Override
     protected int setLayout() {
@@ -31,13 +40,20 @@ public class PenThinActivity extends AbsBaseActivity {
 
     @Override
     protected void initView() {
-        mBtnOk = (Button) findViewById(R.id.write_pad_ok);
-        mBtnClear = byView(R.id.write_pad_clear);
-        mBtnCancel = byView(R.id.write_pad_cancel);
         linearLayout = byView(R.id.thin_pen_layout);
-        mBtnOk.setOnClickListener(this);
-        mBtnClear.setOnClickListener(this);
-        mBtnCancel.setOnClickListener(this);
+        returnIv = byView(R.id.item_pen_thin_return);
+        penIv = byView(R.id.item_pen_thin_pen);
+        eraserIv = byView(R.id.item_pen_thin_eraser);
+        cutIv = byView(R.id.item_pen_thin_cut);
+        undoIv = byView(R.id.item_pen_thin_undo);
+        redoIv = byView(R.id.item_pen_thin_redo);
+        returnIv.setOnClickListener(this);
+        penIv.setOnClickListener(this);
+        eraserIv.setOnClickListener(this);
+        cutIv.setOnClickListener(this);
+        undoIv.setOnClickListener(this);
+        redoIv.setOnClickListener(this);
+
 
     }
 
@@ -48,10 +64,11 @@ public class PenThinActivity extends AbsBaseActivity {
         DisplayMetrics mDisplayMetrics = new DisplayMetrics();
         getWindow().getWindowManager().getDefaultDisplay().getMetrics(mDisplayMetrics);
         int screenWidth = mDisplayMetrics.widthPixels;
-        int screenHeight = mDisplayMetrics.heightPixels;
+        int screenHeight = mDisplayMetrics.heightPixels ;
         mPaintView = new PaintView(this, screenWidth, screenHeight);
         linearLayout.addView(mPaintView);
         mPaintView.requestFocus();
+        eventBus = EventBus.getDefault();//初始化Eventbus
 
     }
 
@@ -75,22 +92,71 @@ public class PenThinActivity extends AbsBaseActivity {
 
     }
 
+    private boolean isClick = false;
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.write_pad_ok:
+
+            case R.id.item_pen_thin_return:
                 if (mPaintView.getPath().isEmpty()) {
                     Toast.makeText(this, "请写下大名", Toast.LENGTH_SHORT).show();
 
                 } else {
                     Bitmap bitmap = mPaintView.getPaintBitmap();
-                    
+                    PhotoBean bean = new PhotoBean();
+                    bean.setBitmap(getBytes(bitmap));
+                    eventBus.post(bean);
+                }
+                finish();
+                break;
+            case R.id.item_pen_thin_pen:
+                if (!isClick) {
+                    mPaintView.setmMode(Pen);
+                    penIv.setSelected(true);
+                    isClick = true;
+
+                } else if (isClick) {
+                    penIv.setSelected(false);
+                    isClick = false;
                 }
                 break;
-            case R.id.write_pad_clear:
-                mPaintView.clear();
+            case R.id.item_pen_thin_eraser:
+                if (!isClick) {
+                    eraserIv.setSelected(true);
+                    isClick = true;
+                    mPaintView.setmMode(Eraser);
+                } else if (isClick) {
+                    eraserIv.setSelected(false);
+                    isClick = false;
+                }
                 break;
-            case R.id.write_pad_cancel:
+            case R.id.item_pen_thin_cut:
+                if (!isClick) {
+                    cutIv.setSelected(true);
+                    isClick = true;
+                } else if (isClick) {
+                    cutIv.setSelected(false);
+                    isClick = false;
+                }
+                break;
+            case R.id.item_pen_thin_undo:
+                if (!isClick) {
+                    undoIv.setSelected(true);
+                    isClick = true;
+                } else if (isClick) {
+                    undoIv.setSelected(false);
+                    isClick = false;
+                }
+                break;
+            case R.id.item_pen_thin_redo:
+                if (!isClick) {
+                    redoIv.setSelected(true);
+                    isClick = true;
+                } else if (isClick) {
+                    redoIv.setSelected(false);
+                    isClick = false;
+                }
                 break;
         }
 

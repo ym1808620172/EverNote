@@ -23,4 +23,15 @@
     <color name="main_activity_rfab_shadow_color_color">#999999</color>
 
     <color name="transparent">#fff</color>
+    <!--文字笔记圈i的抽屉-->
+    <color name="about_updated">#c9c9c9</color>
+    <color name="about_create_time">#c9c9c9</color>
+    <color name="about_view_background">#b4b4b4</color>
+    <color name="about_note_text">#01b12a</color>
+    <color name="about_label_text">#01b12a</color>
+    <color name="about_location_text">#01b12a</color>
+    <!--文件笔记小点的抽屉-->
+    <color name="menu_view">#cfcfcf</color>
+    <!--手写的标题-->
+    <color name="pen_thin_background">#ffffff</color>
 </resources>

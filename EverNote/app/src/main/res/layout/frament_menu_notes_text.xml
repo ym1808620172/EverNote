@@ -5,9 +5,10 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/menu_save"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_margin="@dimen/menu_save_layout"
         android:layout_weight="1"
         android:orientation="horizontal">
 
@@ -21,20 +22,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="20dp"
-            android:text="保存笔记"
-            android:textSize="15sp" />
+            android:layout_marginLeft="@dimen/menu_save_text_left"
+            android:text="@string/menu_asve_text"
+            android:textSize="@dimen/menu_save_text_size" />
 
     </LinearLayout>
     <View
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_margin="5dp"
-        android:background="#cfcfcf"/>
+        android:layout_height="0.01dp"
+        android:layout_margin="@dimen/menu_view"
+        android:background="@color/menu_view"/>
     <LinearLayout
+        android:id="@+id/menu_share"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_margin="@dimen/menu_share_layout"
         android:layout_weight="1"
         android:orientation="horizontal">
 
@@ -48,16 +50,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="20dp"
-            android:text="共享笔记"
-            android:textSize="15sp" />
+            android:layout_marginLeft="@dimen/menu_share_text_left"
+            android:text="@string/menu_shape_text"
+            android:textSize="@dimen/menu_share_text_size" />
 
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/menu_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_margin="@dimen/menu_search_layout"
         android:layout_weight="1"
         android:orientation="horizontal">
 
@@ -71,20 +74,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="20dp"
-            android:text="笔记内搜索"
-            android:textSize="15sp" />
+            android:layout_marginLeft="@dimen/menu_search_text_left"
+            android:text="@string/menu_search_text"
+            android:textSize="@dimen/menu_search_text_size" />
 
     </LinearLayout>
     <View
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_margin="5dp"
-        android:background="#cfcfcf"/>
+        android:layout_height="0.01dp"
+        android:layout_margin="@dimen/menu_view"
+        android:background="@color/menu_view"/>
     <LinearLayout
+        android:id="@+id/menu_connection"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_margin="@dimen/menu_connection_layout"
         android:layout_weight="1"
         android:orientation="horizontal">
 
@@ -98,16 +102,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="20dp"
-            android:text="复制笔记连接"
-            android:textSize="15sp" />
+            android:layout_marginLeft="@dimen/menu_connection_text_left"
+            android:text="@string/menu_connection_text"
+            android:textSize="@dimen/menu_connection_text_size" />
 
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/menu_duplicate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_margin="@dimen/menu_duplicate_layout"
         android:layout_weight="1"
         android:orientation="horizontal">
 
@@ -121,20 +126,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="20dp"
-            android:text="复制"
-            android:textSize="15sp" />
+            android:layout_marginLeft="@dimen/menu_duplicate_text_left"
+            android:text="@string/menu_duplicate_text"
+            android:textSize="@dimen/menu_duplicate_text_size" />
 
     </LinearLayout>
     <View
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_margin="5dp"
-        android:background="#cfcfcf"/>
+        android:layout_height="0.01dp"
+        android:layout_margin="@dimen/menu_view"
+        android:background="@color/menu_view"/>
     <LinearLayout
+        android:id="@+id/menu_shortcuts"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_margin="@dimen/menu_shortcuts_layout"
         android:layout_weight="1"
         android:orientation="horizontal">
 
@@ -148,16 +154,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="20dp"
-            android:text="添加到快捷方式"
-            android:textSize="15sp" />
+            android:layout_marginLeft="@dimen/menu_shortcuts_text_left"
+            android:text="@string/menu_shortcuts_text"
+            android:textSize="@dimen/menu_shortcuts_text_size" />
 
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/menu_screen"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_margin="@dimen/menu_screen_layout"
         android:layout_weight="1"
         android:orientation="horizontal">
 
@@ -171,20 +178,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="20dp"
-            android:text="添加到手机主屏"
-            android:textSize="15sp" />
+            android:layout_marginLeft="@dimen/menu_screen_text_left"
+            android:text="@string/menu_screen_text"
+            android:textSize="@dimen/menu_screen_text_size" />
 
     </LinearLayout>
     <View
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_margin="5dp"
-        android:background="#cfcfcf"/>
+        android:layout_height="0.01dp"
+        android:layout_margin="@dimen/menu_view"
+        android:background="@color/menu_view"/>
     <LinearLayout
+        android:id="@+id/menu_simplified_form"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_margin="@dimen/menu_simplified_form_layout"
         android:layout_weight="1"
         android:orientation="horizontal">
 
@@ -198,16 +206,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="20dp"
-            android:text="简化格式"
-            android:textSize="15sp" />
+            android:layout_marginLeft="@dimen/menu_simplified_form_text_left"
+            android:text="@string/menu_simplified_form_text"
+            android:textSize="@dimen/menu_simplified_form_text_size" />
 
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/menu_setting"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_margin="@dimen/menu_setting_layout"
         android:layout_weight="1"
         android:orientation="horizontal">
 
@@ -221,21 +230,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="20dp"
-            android:text="设置"
-            android:textSize="15sp" />
+            android:layout_marginLeft="@dimen/menu_setting_text_left"
+            android:text="@string/menu_setting_text"
+            android:textSize="@dimen/menu_setting_text_size" />
 
     </LinearLayout>
     <View
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_margin="5dp"
-        android:background="#cfcfcf"/>
+        android:layout_height="0.01dp"
+        android:layout_margin="@dimen/menu_view"
+        android:background="@color/menu_view"/>
     <LinearLayout
+        android:id="@+id/menu_delete"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:layout_margin="10dp"
+        android:layout_margin="@dimen/menu_delete_layout"
         android:layout_weight="1"
         android:orientation="horizontal">
 
@@ -249,15 +259,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="20dp"
-            android:text="删除笔记"
-            android:textSize="15sp" />
+            android:layout_marginLeft="@dimen/menu_delete_text_left"
+            android:text="@string/menu_delete_text"
+            android:textSize="@dimen/menu_delete_text_size" />
 
     </LinearLayout>
     <View
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="#cfcfcf"/>
+        android:layout_height="0.01dp"
+        android:background="@color/menu_view"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

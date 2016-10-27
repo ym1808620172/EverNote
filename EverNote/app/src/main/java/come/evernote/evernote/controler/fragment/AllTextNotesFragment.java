@@ -3,12 +3,8 @@ package come.evernote.evernote.controler.fragment;
 
 
 import android.os.Bundle;
-import android.text.StaticLayout;
-import android.util.Log;
-import android.util.StateSet;
 
 import come.evernote.evernote.R;
-import come.evernote.evernote.view.CenterTextView;
 
 
 public class AllTextNotesFragment extends ABSBaseFragment {

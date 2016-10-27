@@ -12,12 +12,10 @@ import android.text.Editable;
 import android.text.Layout;
 import android.text.Spannable;
 import android.text.SpannableString;
-import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.style.ImageSpan;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
@@ -98,7 +96,6 @@ public class PictureAndTextEditorView extends EditText {
      */
     private SpannableString insertBitmap(String path, Bitmap bitmap) {
         Editable edit_text = getEditableText();
-        Log.d("aaa", "zhixingle ");
         // 获取光标所在位置
         index = getSelectionStart();
         //插入换行符，使图片单独占一行
@@ -135,7 +132,7 @@ public class PictureAndTextEditorView extends EditText {
      * @param path
      */
     public void insertBitmap(String path) {
-        Bitmap bitmap = getSmallBitmap(path, 480, 800);
+        Bitmap bitmap = getSmallBitmap(path, 480, 500);
         insertBitmap(path, bitmap);
     }
 
@@ -216,8 +213,6 @@ public class PictureAndTextEditorView extends EditText {
         DisplayMetrics dm = mContext.getResources().getDisplayMetrics();
         int w_screen = dm.widthPixels;
         int w_width = w_screen;
-        Log.d("www", "bitmap.getHeight():" + bitmap.getHeight());
-        Log.d("www", "bitmap.getWidth():" + bitmap.getWidth());
         int b_width = bitmap.getWidth();
         int b_height = bitmap.getHeight();
         int w_height = w_width * b_height / b_width;
@@ -323,4 +318,6 @@ public class PictureAndTextEditorView extends EditText {
         WindowManager windowManager = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
         height = windowManager.getDefaultDisplay().getHeight();
     }
+
+
 }
