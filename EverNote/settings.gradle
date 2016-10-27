@@ -1,5 +1,1 @@
-<<<<<<< HEAD
-include ':app', ':librarys', ':libraryData', ':library', ':citypickerview'
-=======
 include ':app', ':librarys', ':library', ':citypickerview'
->>>>>>> feature/胡兴华_本地分支
