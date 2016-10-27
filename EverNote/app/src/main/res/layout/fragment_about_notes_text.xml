@@ -12,22 +12,22 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/about_back"
             android:src="@mipmap/amsc_ic_action_back_cab" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginLeft="@dimen/about_layout_left"
+            android:layout_marginTop="@dimen/about_layout_top"
             android:orientation="vertical">
 
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="已更新"
-                android:textColor="#c9c9c9" />
+                android:text="@string/about_updated"
+                android:textColor="@color/about_updated" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -38,8 +38,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="创建时间"
-                android:textColor="#c9c9c9" />
+                android:text="@string/about_create_time"
+                android:textColor="@color/about_create_time" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -54,7 +54,7 @@
         android:layout_width="match_parent"
         android:layout_height="0.01dp"
         android:layout_marginLeft="40dp"
-        android:background="#b4b4b4" />
+        android:background="@color/about_view_background" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -75,16 +75,16 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="20dp"
-            android:text="我的第一个笔记本"
-            android:textColor="#01b12a"
-            android:textSize="15sp" />
+            android:text="@string/about_note"
+            android:textColor="@color/about_note_text"
+            android:textSize="@dimen/about_note_font_size" />
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="0.01dp"
-        android:layout_marginLeft="40dp"
-        android:background="#b4b4b4" />
+        android:layout_marginLeft="@dimen/about_view_left"
+        android:background="@color/about_view_background" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -105,23 +105,23 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="15dp"
-            android:text="编辑标签"
-            android:textColor="#01b12a"
-            android:textSize="15sp" />
+            android:text="@string/about_label"
+            android:textColor="@color/about_label_text"
+            android:textSize="@dimen/about_label_font_size" />
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="0.01dp"
-        android:layout_marginLeft="40dp"
-        android:background="#b4b4b4" />
+        android:layout_marginLeft="@dimen/about_view_left"
+        android:background="@color/about_view_background" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="@dimen/about_location_layout_left"
+        android:layout_marginTop="@dimen/about_location_layout_top"
+        android:layout_marginBottom="@dimen/about_location_layout_bottom"
         android:orientation="horizontal">
 
         <ImageView
@@ -135,14 +135,14 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="20dp"
-            android:text="位置信息未找到"
-            android:textColor="#01b12a"
-            android:textSize="15sp" />
+            android:text="@string/about_location"
+            android:textColor="@color/about_location_text"
+            android:textSize="@dimen/about_location_font_size" />
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="0.01dp"
-        android:layout_marginLeft="40dp"
-        android:background="#b4b4b4" />
+        android:layout_marginLeft="@dimen/about_view_left"
+        android:background="@color/about_view_background" />
 </LinearLayout>

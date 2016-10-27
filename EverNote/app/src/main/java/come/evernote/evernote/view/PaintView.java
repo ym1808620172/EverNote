@@ -9,6 +9,7 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -23,6 +24,16 @@ public class PaintView extends View {
 
     private int screenWidth, screenHeight;
     private float currentX, currentY;
+    private float x ,y;
+    private Paint paint;
+    private int mMode = 1;
+    private int Pen = 1;
+    private int Eraser = 2;
+    private static final float TOUCH_TOLERANCE = 4;
+
+    public void setmMode(int mMode) {
+        this.mMode = mMode;
+    }
 
     public PaintView(Context context, int screenWidth, int screenHeight) {
         super(context);
@@ -38,41 +49,87 @@ public class PaintView extends View {
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setColor(Color.BLACK);
 
-        mPath = new Path();
 
+        paint = new Paint();
+        paint.setAlpha(0);
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN));
+        paint.setAntiAlias(true);
+        paint.setDither(true);
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeJoin(Paint.Join.ROUND);
+        paint.setStrokeCap(Paint.Cap.ROUND);
+        paint.setStrokeWidth(20);
+        mPath = new Path();
         mBitmap = Bitmap.createBitmap(screenWidth, screenHeight, Config.ARGB_8888);
         mCanvas = new Canvas(mBitmap);
-//      mCanvas.drawColor(Color.WHITE);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
-        canvas.drawBitmap(mBitmap, 0, 0, null);
-        canvas.drawPath(mPath, mPaint);
+        if (mBitmap != null) {
+            canvas.drawBitmap(mBitmap, 0, 0, mPaint);
+        }
+        super.onDraw(canvas);
     }
-
+    private void touch_start(float x,float y){
+        mPath.reset();
+        mPath.moveTo(x,y);
+        currentX = x;
+        currentY = y;
+        if (mMode == Pen){
+            mCanvas.drawPath(mPath,mPaint);
+        }
+        if (mMode == Eraser){
+            mCanvas.drawPath(mPath,paint);
+        }
+    }
+    private void touch_move(float x, float y) {
+        float dx = Math.abs(x - currentX);
+        float dy = Math.abs(y - currentY);
+        if (dx >= TOUCH_TOLERANCE || dy >= TOUCH_TOLERANCE) {
+            mPath.quadTo(currentX, currentY, (x + currentX) / 2, (y + currentY) / 2);
+            currentX = x;
+            currentY = y;
+            if (mMode == Pen) {
+                mCanvas.drawPath(mPath, mPaint);
+            }
+            if (mMode == Eraser) {
+                mCanvas.drawPath(mPath, paint);
+            }
+        }
+    }
+    private void touch_up() {
+        mPath.lineTo(currentX, currentY);
+        if (mMode == Pen) {
+            mCanvas.drawPath(mPath, mPaint);
+        }
+        if (mMode == Eraser) {
+            mCanvas.drawPath(mPath, paint);
+        }
+    }
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        float x = event.getX();
-        float y = event.getY();
+        x = event.getX();
+        y = event.getY();
 
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                currentX = x;
-                currentY = y;
-                mPath.moveTo(currentX, currentY);
+                touch_start(x,y);
+                invalidate();
+
                 break;
             case MotionEvent.ACTION_MOVE:
-                currentX = x;
-                currentY = y;
-                mPath.quadTo(currentX, currentY, x, y); // 画线
+                touch_move(x,y);
+                invalidate();
+
                 break;
             case MotionEvent.ACTION_UP:
-                mCanvas.drawPath(mPath, mPaint);
+                touch_up();
+                invalidate();
+
                 break;
         }
 
-        invalidate();
         return true;
     }
 
@@ -80,19 +137,17 @@ public class PaintView extends View {
         return resizeImage(mBitmap, 320, 480);
     }
 
-
     public Path getPath() {
         return mPath;
     }
 
     // 缩放
-    public static Bitmap resizeImage(Bitmap bitmap, int width, int height) {
+    public  Bitmap resizeImage(Bitmap bitmap, int width, int height) {
         int originWidth = bitmap.getWidth();
         int originHeight = bitmap.getHeight();
 
         float scaleWidth = ((float) width) / originWidth;
         float scaleHeight = ((float) height) / originHeight;
-
 
         Matrix matrix = new Matrix();
         matrix.postScale(scaleWidth, scaleHeight);

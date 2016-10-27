@@ -3,6 +3,9 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <!--文字笔记-->
+    <dimen name="notes_text_CoordinatorLayout">10dp</dimen>
+    <dimen name="notes_text_DrawerLayout">10dp</dimen>
+    <!--文字笔记-->
     <dimen name="notes_text_layout">10dp</dimen>
     <!--文字笔记文字标题-->
     <dimen name="notes_text_edit_title">30dp</dimen>
@@ -23,6 +26,73 @@
     <dimen name="cirlc_view_margin_left">15dp</dimen>
     <dimen name="cirlc_view_margin_top">15dp</dimen>
     <dimen name="cirlc_view_username_text_size">17sp</dimen>
+    <!--文字笔记界面的抽屉圈i的-->
+    <!--退出按钮-->
+    <dimen name="about_back">10dp</dimen>
+    <dimen name="about_layout_left">10dp</dimen>
+    <dimen name="about_layout_top">20dp</dimen>
+    <!--第一个笔记薄的字体大小-->
+    <dimen name="about_note_font_size">15sp</dimen>
+    <!--view-->
+    <dimen name="about_view_left">40dp</dimen>
+    <!--编辑标签-->
+    <dimen name="about_label_layout_top">20dp</dimen>
+    <dimen name="about_label_layout_left">5dp</dimen>
+    <dimen name="about_label_font_size">15sp</dimen>
+    <!--位置-->
+    <dimen name="about_location_layout_top">20dp</dimen>
+    <dimen name="about_location_layout_bottom">20dp</dimen>
+    <dimen name="about_location_layout_left">10dp</dimen>
+    <dimen name="about_location_font_size">15sp</dimen>
+    <!--文字笔记页面menu 三个小点的抽屉-->
+    <!--保存-->
+    <dimen name="menu_save_layout">10dp</dimen>
+    <dimen name="menu_save_text_left">20dp</dimen>
+    <dimen name="menu_save_text_size">15sp</dimen>
+    <!--共享笔记-->
+    <dimen name="menu_share_layout">10dp</dimen>
+    <dimen name="menu_share_text_left">20dp</dimen>
+    <dimen name="menu_share_text_size">15sp</dimen>
+    <!--笔记内搜索-->
+    <dimen name="menu_search_layout">10dp</dimen>
+    <dimen name="menu_search_text_left">20dp</dimen>
+    <dimen name="menu_search_text_size">15sp</dimen>
+    <!--复制笔记连接-->
+    <dimen name="menu_connection_layout">10dp</dimen>
+    <dimen name="menu_connection_text_left">20dp</dimen>
+    <dimen name="menu_connection_text_size">15sp</dimen>
+    <!--复制-->
+    <dimen name="menu_duplicate_layout">10dp</dimen>
+    <dimen name="menu_duplicate_text_left">20dp</dimen>
+    <dimen name="menu_duplicate_text_size">15sp</dimen>
+    <!--快捷方式-->
+    <dimen name="menu_shortcuts_layout">10dp</dimen>
+    <dimen name="menu_shortcuts_text_left">20dp</dimen>
+    <dimen name="menu_shortcuts_text_size">15sp</dimen>
+    <!--添加到手机主屏幕-->
+    <dimen name="menu_screen_layout">10dp</dimen>
+    <dimen name="menu_screen_text_left">20dp</dimen>
+    <dimen name="menu_screen_text_size">15sp</dimen>
+    <!--简化格式-->
+    <dimen name="menu_simplified_form_layout">10dp</dimen>
+    <dimen name="menu_simplified_form_text_left">20dp</dimen>
+    <dimen name="menu_simplified_form_text_size">15sp</dimen>
+    <!--设置-->
+    <dimen name="menu_setting_layout">10dp</dimen>
+    <dimen name="menu_setting_text_left">20dp</dimen>
+    <dimen name="menu_setting_text_size">15sp</dimen>
+    <!--删除笔记-->
+    <dimen name="menu_delete_layout">10dp</dimen>
+    <dimen name="menu_delete_text_left">20dp</dimen>
+    <dimen name="menu_delete_text_size">15sp</dimen>
+    <!--view-->
+    <dimen name="menu_view">5dp</dimen>
+
+
+
+
+
+
 
 
 </resources>
