@@ -11,6 +11,7 @@ import come.evernote.evernote.model.bean.SaveBean;
 
 /**
  * Created by dllo on 16/10/26.
+ *
  */
 public class LiteOrmInstance {
 
@@ -50,7 +51,7 @@ public class LiteOrmInstance {
      */
     public List<SaveBean> queryByName(String title) {
         QueryBuilder<SaveBean> sb = new QueryBuilder<>(SaveBean.class);
-        sb.where("name = ? ", new String[]{title});
+        sb.where("name = ? ", new Object[]{title});
         return liteOrm.query(sb);
     }
 
@@ -59,7 +60,7 @@ public class LiteOrmInstance {
      */
     public void delateByName(String title) {
         WhereBuilder wb = new WhereBuilder(SaveBean.class);
-        wb.where("name = ?", new String[]{title});
+        wb.where("name = ?", new Object[]{title});
         liteOrm.delete(wb);
     }
 

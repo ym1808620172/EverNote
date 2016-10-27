@@ -3,6 +3,7 @@ package come.evernote.evernote.controler.activity;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -21,7 +22,8 @@ import come.evernote.evernote.view.PaintView;
 public class PenThinActivity extends AbsBaseActivity {
     private PaintView mPaintView;
     private LinearLayout linearLayout;
-    private Button mBtnOk,mBtnClear,mBtnCancel;
+    private Button mBtnOk, mBtnClear, mBtnCancel;
+
     @Override
     protected int setLayout() {
         return R.layout.activity_thin_pen;
@@ -75,18 +77,14 @@ public class PenThinActivity extends AbsBaseActivity {
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.write_pad_ok:
-                if (mPaintView.getPath().isEmpty()){
+                if (mPaintView.getPath().isEmpty()) {
                     Toast.makeText(this, "请写下大名", Toast.LENGTH_SHORT).show();
 
-                }else {
-                Bitmap bitmap = mPaintView.getPaintBitmap();
-                    Bundle bundle = new Bundle();
-                    PhotoBean bean = new PhotoBean();
-                    bean.setBitmap(getBytes(bitmap));
-                    bundle.putSerializable("img",bean);
-                    goTo(PenThinActivity.this,TextNotesActivity.class,bundle);
+                } else {
+                    Bitmap bitmap = mPaintView.getPaintBitmap();
+                    
                 }
                 break;
             case R.id.write_pad_clear:
@@ -100,6 +98,7 @@ public class PenThinActivity extends AbsBaseActivity {
 
     /**
      * 图片转换为流
+     *
      * @param bitmap
      * @return
      */

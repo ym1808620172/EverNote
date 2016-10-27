@@ -3,6 +3,7 @@ package come.evernote.evernote.controler.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -15,6 +16,7 @@ public class RemendPopActivity extends Activity implements View.OnClickListener 
 
     private ImageView dataImg;
     private LinearLayout rooLl;
+    public static boolean ISSHOW = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +33,9 @@ public class RemendPopActivity extends Activity implements View.OnClickListener 
     @Override
     protected void onResume() {
         super.onResume();
+        if (!ISSHOW){
+            rooLl.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -39,6 +44,7 @@ public class RemendPopActivity extends Activity implements View.OnClickListener 
             case R.id.data_pop_img:
                 Intent intent = new Intent(RemendPopActivity.this, RemendDataActivity.class);
                 startActivity(intent);
+                rooLl.setVisibility(View.INVISIBLE);
                 break;
         }
     }

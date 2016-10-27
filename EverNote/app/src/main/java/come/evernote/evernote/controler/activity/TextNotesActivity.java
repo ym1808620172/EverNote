@@ -194,11 +194,16 @@ public class TextNotesActivity extends AbsBaseActivity {
         }
         setIfTitles(1);
         setSpeaking(editTextContent);
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            String string = bundle.getString("key");
+            if (string != null && string.equals("1")) {
+                goTo(TextNotesActivity.this, PenThinActivity.class);
+            }
+        }
     }
 
     private void getOpen() {
-
-
         doneIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -318,13 +323,7 @@ public class TextNotesActivity extends AbsBaseActivity {
         super.onResume();
         index = editorView.getIndex();
         pictureIndex = editorView.getPicture();
-        Bundle bundle = getIntent().getExtras();
-        if (bundle != null) {
-            String string = bundle.getString("key");
-            if (string != null && string.equals("1")) {
-                goTo(TextNotesActivity.this, PenThinActivity.class);
-            }
-        }
+
         mBehavior = BottomSheetBehavior.from(attachLayout);
         mBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override

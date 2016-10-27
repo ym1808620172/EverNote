@@ -202,7 +202,6 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
 
     }
 
-
     private void getPositon() {
         //声明mLocationOption对象
         mlocationClient = new AMapLocationClient(this);
@@ -288,7 +287,6 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
                 startActivityForResult(intent, CAMERA_WITH_DATA);
                 break;
             case 4:
-
                 bundle.putString("key", "1");
                 goTo(MainActivity.this, TextNotesActivity.class, bundle);
                 break;
