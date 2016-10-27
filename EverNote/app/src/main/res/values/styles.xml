@@ -20,7 +20,7 @@
 
     </style>
 
-    <style name="translucent" parent="android:Theme.Dialog">
+    <style name="translucent" parent="android:Theme.Material.Light.Dialog.NoActionBar">
         <!--是否悬浮-->
         <item name="android:windowIsFloating">
             true
@@ -38,10 +38,5 @@
         </item>
 
     </style>
-    <style name="Transparent">
-        <item name="android:windowBackground">@color/transparent</item>
-
-    </style>
-
 
 </resources>

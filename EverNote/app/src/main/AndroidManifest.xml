@@ -44,7 +44,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".controler.activity.PositonActivity" />
 
         <meta-data
             android:name="com.amap.api.v2.apikey"
@@ -59,7 +58,7 @@
             android:theme="@style/translucent" />
         <activity
             android:name=".controler.activity.RemendDataActivity"
-            android:theme="AppCompat"
+            android:theme="@style/translucent"
             />
         <activity android:name=".controler.activity.RecodingActivity"/>
         <activity android:name=".controler.activity.PenThinActivity"/>

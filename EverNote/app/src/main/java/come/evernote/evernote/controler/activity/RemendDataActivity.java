@@ -29,8 +29,8 @@ import come.evernote.evernote.model.db.AlarmSQLiteSave;
 public class RemendDataActivity extends Activity {
     private AlarmData alarmData;
     private Calendar calendar;
-    TimePickerDialog timePickerDialog;
-    DatePickerDialog datePickerDialog;
+    private TimePickerDialog timePickerDialog;
+    private DatePickerDialog datePickerDialog;
     private AlarmManager alarmMyManager;
     private AlarmSQLiteSave alarmSQLiteSave;
     private List<AlarmData> alarmDatas;
@@ -43,7 +43,7 @@ public class RemendDataActivity extends Activity {
         alarmData = new AlarmData();
         calendar = Calendar.getInstance();
 
-        datePickerDialog = new DatePickerDialog(this,new DatePickerDialog.OnDateSetListener() {
+        datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
 
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
@@ -62,6 +62,12 @@ public class RemendDataActivity extends Activity {
                 }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true);
                 timePickerDialog.show();
                 timePickerDialog.setCanceledOnTouchOutside(false);
+                timePickerDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialog) {
+                        finish();
+                    }
+                });
             }
         }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
         datePickerDialog.show();
@@ -93,5 +99,10 @@ public class RemendDataActivity extends Activity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         finish();
         return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
     }
 }

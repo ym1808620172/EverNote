@@ -51,7 +51,6 @@ import come.evernote.evernote.controler.fragment.TextNotesAboutFragment;
 import come.evernote.evernote.controler.fragment.TextNotesMenuFragment;
 import come.evernote.evernote.model.bean.AttachDrawerBean;
 import come.evernote.evernote.model.bean.PhotoBean;
-import come.evernote.evernote.model.db.G;
 import come.evernote.evernote.view.PictureAndTextEditorView;
 import come.evernote.evernote.view.ViewAnimation;
 
