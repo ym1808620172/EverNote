@@ -57,5 +57,23 @@
     <!--提醒界面-->
     <string name="remend_pop_biu_et_hint">添加提醒...</string>
     <string name="remend_pop_tv">我是一个笔记本</string>
+    <!--文字笔记圈i的抽屉-->
+    <string name="about_updated">已更新</string>
+    <string name="about_create_time">创建时间</string>
+    <string name="about_note">我的第一个笔记本</string>
+    <string name="about_label">编辑标签</string>
+    <string name="about_location">位置信息未找到</string>
+    <!--文字界面menu三个小点-->
+    <string name="menu_asve_text">保存笔记</string>
+    <string name="menu_shape_text">共享笔记</string>
+    <string name="menu_search_text">笔记内搜索</string>
+    <string name="menu_connection_text">复制笔记连接</string>
+    <string name="menu_duplicate_text">复制</string>
+    <string name="menu_shortcuts_text">添加快捷方式</string>
+    <string name="menu_screen_text">添加到手机主屏幕</string>
+    <string name="menu_simplified_form_text">简化格式</string>
+    <string name="menu_setting_text">设置</string>
+    <string name="menu_delete_text">删除笔记</string>
+
 
 </resources>
