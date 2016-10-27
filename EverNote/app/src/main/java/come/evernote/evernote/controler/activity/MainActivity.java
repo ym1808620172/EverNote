@@ -8,12 +8,15 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -41,6 +44,7 @@ import java.util.List;
 
 import come.evernote.evernote.R;
 import come.evernote.evernote.controler.adapter.DrawerAdapter;
+import come.evernote.evernote.controler.fragment.AllTextNotesFragment;
 import come.evernote.evernote.model.bean.DrawerShowBean;
 import come.evernote.evernote.model.bean.PhotoBean;
 
@@ -62,6 +66,9 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
     private AMapLocationClient mlocationClient;
     private boolean is = false;
     private Animation animation;
+    private FrameLayout mainFl;
+    private FragmentManager manager;
+    private FragmentTransaction transaction;
 
     @Override
     protected int setLayout() {
@@ -77,6 +84,7 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
         rfaLayout = byView(R.id.label_list_sample_rfal);
         rfaButton = byView(R.id.label_list_sample_rfab);
         forImg = byView(R.id.for_img);
+        mainFl = byView(R.id.main_frame_layout);
     }
 
     @Override
@@ -90,7 +98,10 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
         setFloatingBtn();
         // 设置定位
         getPositon();
-
+        manager = getSupportFragmentManager();
+        transaction = manager.beginTransaction();
+        transaction.replace(R.id.main_frame_layout, AllTextNotesFragment.newInstance());
+        transaction.commit();
 
     }
 
@@ -181,6 +192,8 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
                     Toast.makeText(MainActivity.this, "8", Toast.LENGTH_SHORT).show();
                     // 跳转设置页面
                     goTo(MainActivity.this, SettingActivity.class);
+                } else if (position == 1) {
+
                 }
                 index = position - 1;
                 adapter.setIndex(index);
