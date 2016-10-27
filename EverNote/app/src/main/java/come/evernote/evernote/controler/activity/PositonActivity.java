@@ -37,13 +37,13 @@ public class PositonActivity extends AppCompatActivity implements AMapLocationLi
 
         textView = (TextView) findViewById(R.id.positon_tv);
 
-//声明mLocationOption对象
+        //声明mLocationOption对象
         mlocationClient = new AMapLocationClient(this);
-//初始化定位参数
+        //初始化定位参数
         mLocationOption = new AMapLocationClientOption();
-//设置定位监听
+        //设置定位监听
         mlocationClient.setLocationListener(this);
-//设置定位模式为高精度模式，Battery_Saving为低功耗模式，Device_Sensors是仅设备模式
+        //设置定位模式为高精度模式，Battery_Saving为低功耗模式，Device_Sensors是仅设备模式
         mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
 //设置定位参数
         mlocationClient.setLocationOption(mLocationOption);

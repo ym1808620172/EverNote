@@ -27,6 +27,8 @@
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
     <!--读取联系人权限，上传联系人需要用到此权限 -->
     <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
         android:allowBackup="true"
@@ -57,10 +59,20 @@
             android:theme="@style/translucent" />
         <activity
             android:name=".controler.activity.RemendDataActivity"
-            android:theme="@style/translucent"
+            android:theme="AppCompat"
             />
         <activity android:name=".controler.activity.RecodingActivity"/>
         <activity android:name=".controler.activity.PenThinActivity"/>
+        <receiver android:name=".controler.alarm.BootInitAlarmReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <service android:name=".controler.alarm.AlarmService" >
+        </service>
+        <service android:name=".controler.alarm.AlarmBootService" >
+        </service>
     </application>
 
 </manifest>

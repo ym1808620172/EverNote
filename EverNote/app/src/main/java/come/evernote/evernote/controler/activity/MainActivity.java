@@ -329,7 +329,7 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
             case CAMERA_WITH_DATA:
                 final Bitmap photo = data.getParcelableExtra("data");
                 //实例化字节数组输出流
-                if (photo!=null){
+                if (photo != null) {
                     getBytes(photo);
                     //实现字节流序列化你并传值
                     Bundle bundle = new Bundle();
@@ -351,7 +351,7 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
                         File file = new File(img_path);
                         String path = getFileName(file.toString());
                         Intent intent = new Intent(MainActivity.this, TextNotesActivity.class);
-                        intent.putExtra("text", path);
+                        intent.putExtra("photoUrl", img_path);
                         startActivity(intent);
                     }
                 }

@@ -21,4 +21,6 @@
     <color name="main_activity_label_normal_back_color">#37474f</color>
     <color name="main_activity_label_pressed_back_color">#263238</color>
     <color name="main_activity_rfab_shadow_color_color">#999999</color>
+
+    <color name="transparent">#fff</color>
 </resources>

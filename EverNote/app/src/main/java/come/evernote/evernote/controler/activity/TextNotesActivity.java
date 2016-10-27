@@ -148,14 +148,12 @@ public class TextNotesActivity extends AbsBaseActivity {
                     editorView.insertBitmap(file.getPath());
                 }
             }
-            PhotoBean imgBean = (PhotoBean) intent.getSerializableExtra("img");
-            if (imgBean != null) {
-                Bitmap bitmap = getBitmap(imgBean.getBitmap());
-                Log.d("xxx", "bitmap:" + bitmap);
-            }
-            String content = intent.getStringExtra("text");
-            if (content != null) {
-                editorView.setText(content);
+            String photoUrl = intent.getStringExtra("photoUrl");
+            Log.d("zzz", photoUrl+"");
+            if (photoUrl != null) {
+                if (photoUrl.endsWith(".png") || photoUrl.endsWith(".jpg")) {
+                    editorView.insertBitmap(photoUrl);
+                }
             }
         }
         setIfTitles(1);
@@ -193,9 +191,7 @@ public class TextNotesActivity extends AbsBaseActivity {
             String string = bundle.getString("key");
             if (string != null && string.equals("1")) {
                 goTo(TextNotesActivity.this, PenThinActivity.class);
-
             }
-
         }
         mBehavior = BottomSheetBehavior.from(attachLayout);
         mBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {

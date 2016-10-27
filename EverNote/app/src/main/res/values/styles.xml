@@ -38,5 +38,10 @@
         </item>
 
     </style>
+    <style name="Transparent">
+        <item name="android:windowBackground">@color/transparent</item>
+
+    </style>
+
 
 </resources>

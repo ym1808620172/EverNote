@@ -98,6 +98,7 @@ public class PictureAndTextEditorView extends EditText {
      */
     private SpannableString insertBitmap(String path, Bitmap bitmap) {
         Editable edit_text = getEditableText();
+        Log.d("aaa", "zhixingle ");
         // 获取光标所在位置
         index = getSelectionStart();
         //插入换行符，使图片单独占一行
@@ -215,6 +216,8 @@ public class PictureAndTextEditorView extends EditText {
         DisplayMetrics dm = mContext.getResources().getDisplayMetrics();
         int w_screen = dm.widthPixels;
         int w_width = w_screen;
+        Log.d("www", "bitmap.getHeight():" + bitmap.getHeight());
+        Log.d("www", "bitmap.getWidth():" + bitmap.getWidth());
         int b_width = bitmap.getWidth();
         int b_height = bitmap.getHeight();
         int w_height = w_width * b_height / b_width;
