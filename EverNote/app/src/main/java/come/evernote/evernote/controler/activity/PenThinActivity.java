@@ -2,6 +2,7 @@ package come.evernote.evernote.controler.activity;
 
 import android.graphics.Bitmap;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -96,6 +97,7 @@ public class PenThinActivity extends AbsBaseActivity {
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+
             case R.id.item_pen_thin_return:
                 if (mPaintView.getPath().isEmpty()) {
                     Toast.makeText(this, "请写下大名", Toast.LENGTH_SHORT).show();
