@@ -12,12 +12,10 @@ import android.text.Editable;
 import android.text.Layout;
 import android.text.Spannable;
 import android.text.SpannableString;
-import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.style.ImageSpan;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
@@ -134,7 +132,7 @@ public class PictureAndTextEditorView extends EditText {
      * @param path
      */
     public void insertBitmap(String path) {
-        Bitmap bitmap = getSmallBitmap(path, 480, 800);
+        Bitmap bitmap = getSmallBitmap(path, 480, 500);
         insertBitmap(path, bitmap);
     }
 
@@ -320,4 +318,6 @@ public class PictureAndTextEditorView extends EditText {
         WindowManager windowManager = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
         height = windowManager.getDefaultDisplay().getHeight();
     }
+
+
 }
