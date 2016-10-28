@@ -76,4 +76,7 @@
     <string name="menu_delete_text">删除笔记</string>
 
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

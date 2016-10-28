@@ -6,6 +6,7 @@
     android:layout_gravity="center"
     android:background="@color/set_activity_toolbar_tv_color"
     android:orientation="vertical"
+    android:id="@+id/remend_pop_root"
     tools:context=".controler.activity.RemendPopActivity">
     <!--提醒界面的-->
     <LinearLayout

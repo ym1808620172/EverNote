@@ -57,7 +57,6 @@ public class RecodingActivity  extends  AbsBaseActivity{
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if (isStart==false) {
                     startRecord();
                     btnStart.setImageResource(R.mipmap.btn_stop_recoding);
@@ -91,7 +90,6 @@ public class RecodingActivity  extends  AbsBaseActivity{
             public void run() {
 
                 try {
-                    Log.d("aaaa", "sd");
                     Thread.sleep(2000);
                     progressDialog.dismiss();
                 } catch (InterruptedException e) {
@@ -107,7 +105,6 @@ public class RecodingActivity  extends  AbsBaseActivity{
 
         if (mr == null) {
             File dir = new File(Environment.getExternalStorageDirectory(),"/sdcards/recodrsongs");
-            Log.d("MainActivity", "Environment.getExternalStorageDirectory():" + Environment.getExternalStorageDirectory());
             if (!dir.exists()) {
                 dir.mkdirs();
             }

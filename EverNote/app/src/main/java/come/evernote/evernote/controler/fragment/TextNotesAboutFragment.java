@@ -7,6 +7,7 @@ import come.evernote.evernote.R;
  * 文字笔记中的关于的抽屉(小圆圈里有一i的图标)点击弹出
  */
 public class TextNotesAboutFragment extends ABSBaseFragment{
+
     @Override
     protected int setLayout() {
         return R.layout.fragment_about_notes_text;

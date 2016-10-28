@@ -21,6 +21,8 @@
     <color name="main_activity_label_normal_back_color">#37474f</color>
     <color name="main_activity_label_pressed_back_color">#263238</color>
     <color name="main_activity_rfab_shadow_color_color">#999999</color>
+
+    <color name="transparent">#fff</color>
     <!--文字笔记圈i的抽屉-->
     <color name="about_updated">#c9c9c9</color>
     <color name="about_create_time">#c9c9c9</color>

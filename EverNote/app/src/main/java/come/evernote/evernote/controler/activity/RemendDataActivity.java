@@ -1,84 +1,108 @@
 package come.evernote.evernote.controler.activity;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.CompoundButton;
+import android.widget.DatePicker;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
+import android.widget.TimePicker;
+import android.widget.Toast;
 
-import com.prolificinteractive.materialcalendarview.CalendarDay;
-import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
-import com.prolificinteractive.materialcalendarview.OnDateChangedListener;
-import com.prolificinteractive.materialcalendarview.OnMonthChangedListener;
-
-import org.greenrobot.eventbus.EventBus;
-
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 import come.evernote.evernote.R;
-import come.evernote.evernote.model.bean.ClockSizeBean;
-import come.evernote.evernote.model.db.G;
-import come.evernote.evernote.utils.ISetClockSize;
-import come.evernote.evernote.view.ClockView;
+import come.evernote.evernote.controler.alarm.AlarmManager;
+import come.evernote.evernote.model.bean.AlarmData;
+import come.evernote.evernote.model.db.AlarmSQLiteSave;
 
-public class RemendDataActivity extends Activity implements CompoundButton.OnCheckedChangeListener {
-
-    private RadioButton radioButton;
-    private LinearLayout dayLl;
-    private LinearLayout timeLl;
-    private LinearLayout rootLl;
-    private ISetClockSize clockSize;
-    private ClockView clockView;
-    private MaterialCalendarView calendarView;
+public class RemendDataActivity extends Activity {
+    private AlarmData alarmData;
+    private Calendar calendar;
+    private TimePickerDialog timePickerDialog;
+    private DatePickerDialog datePickerDialog;
+    private AlarmManager alarmMyManager;
+    private AlarmSQLiteSave alarmSQLiteSave;
+    private List<AlarmData> alarmDatas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_remend_data_acticity);
-        calendarView = (MaterialCalendarView) findViewById(R.id.calendarView);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL, WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
-        getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        radioButton = (RadioButton) findViewById(R.id.remend_data_radio_btn);
-        dayLl = (LinearLayout) findViewById(R.id.remend_data_day);
-        timeLl = (LinearLayout) findViewById(R.id.remend_data_time);
-        rootLl = (LinearLayout) findViewById(R.id.data_activity_root);
-        clockView = (ClockView) findViewById(R.id.remend_data_clock);
-        radioButton.setOnCheckedChangeListener(this);
-        radioButton.setChecked(true);
-        clockSize =  clockView;
-        calendarView.setOnDateChangedListener(new OnDateChangedListener() {
+        alarmDatas = new ArrayList<>();
+        alarmData = new AlarmData();
+        calendar = Calendar.getInstance();
+
+        datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+
             @Override
-            public void onDateChanged(@NonNull MaterialCalendarView widget, @Nullable CalendarDay date) {
-                Date nowTime = new Date(System.currentTimeMillis());
-                Log.d("zzz", "nowTime:" + nowTime);
-                Log.d("zzz", widget.getSelectedDate().getDate()+"");
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                alarmData.setYear(year);
+                alarmData.setMonth(monthOfYear);
+                alarmData.setDay(dayOfMonth);
+                timePickerDialog = new TimePickerDialog(RemendDataActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        alarmData.setHour(hourOfDay);
+                        alarmData.setMinute(minute);
+                        addAlarm(alarmData);
+                        alarmDatas.add(alarmData);
+                        finish();
+                    }
+                }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true);
+                timePickerDialog.show();
+                timePickerDialog.setCanceledOnTouchOutside(false);
+                timePickerDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialog) {
+                        finish();
+                    }
+                });
+            }
+        }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+        datePickerDialog.show();
+        datePickerDialog.setCanceledOnTouchOutside(false);
+
+        datePickerDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                finish();
             }
         });
     }
 
-    @Override
-    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        if (dayLl.getHeight()!=0){
-            clockSize.OnSetClockSize(dayLl.getWidth(),dayLl.getHeight());
-        }
-        if (timeLl.getHeight() != 0) {
-            ClockSizeBean bean = new ClockSizeBean();
-            bean.setWidth(timeLl.getWidth());
-            bean.setHeight(timeLl.getHeight());
-
-        }
-        if (isChecked) {
-            dayLl.setVisibility(View.VISIBLE);
-            timeLl.setVisibility(View.GONE);
+    public void addAlarm(AlarmData alarmData) {
+        alarmMyManager = new AlarmManager(this, alarmDatas);
+        alarmSQLiteSave = new AlarmSQLiteSave(this);
+        Calendar calendarGet = Calendar.getInstance();
+        Calendar calendarSet = Calendar.getInstance();
+        calendarSet.set(alarmData.getYear(), alarmData.getMonth(), alarmData.getDay(), alarmData.getHour(), alarmData.getMinute(), 0);
+        if (calendarGet.getTimeInMillis() < calendarSet.getTimeInMillis() & alarmData.getYear() < 2100) {
+            alarmSQLiteSave.saveAlarm(alarmData);
+            alarmMyManager.addAlarmManager(alarmData);
         } else {
-            dayLl.setVisibility(View.GONE);
-            timeLl.setVisibility(View.VISIBLE);
+            Toast.makeText(this, "少年，无法时空穿越", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        finish();
+        return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
     }
 }

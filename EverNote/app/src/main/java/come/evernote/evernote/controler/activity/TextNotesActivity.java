@@ -181,7 +181,7 @@ public class TextNotesActivity extends AbsBaseActivity implements AdapterView.On
                 setIfTitles(1);
                 getOpen();
 
-            }else {
+            } else {
                 textView.setVisibility(View.GONE);
                 doneIv.setImageResource(R.drawable.item_text_notes_title_done);
             }
@@ -193,29 +193,32 @@ public class TextNotesActivity extends AbsBaseActivity implements AdapterView.On
                     editorView.insertBitmap(file.getPath());
                 }
             }
+            String photoUrl = intent.getStringExtra("photoUrl");
+            Log.d("zzz", photoUrl + "");
+            if (photoUrl != null) {
+                if (photoUrl.endsWith(".png") || photoUrl.endsWith(".jpg")) {
+                    editorView.insertBitmap(photoUrl);
+                }
 
-            String content = intent.getStringExtra("text");
-            if (content != null) {
-                editorView.setText(content);
+                String content = intent.getStringExtra("text");
+                if (content != null) {
+                    editorView.setText(content);
+                }
+
             }
-
-        }
-        setIfTitles(1);
-        setSpeaking(editTextContent);
-        Bundle bundle = getIntent().getExtras();
-        Log.d("TextNotesActivity", "bundle:" + bundle);
-        if (bundle != null) {
-            String string = bundle.getString("key");
-            if (string != null && string.equals("1")) {
-                goTo(TextNotesActivity.this, PenThinActivity.class);
+            setIfTitles(1);
+            setSpeaking(editTextContent);
+            Bundle bundle = getIntent().getExtras();
+            if (bundle != null) {
+                String string = bundle.getString("key");
+                if (string != null && string.equals("1")) {
+                    goTo(TextNotesActivity.this, PenThinActivity.class);
+                }
             }
-
         }
     }
 
     private void getOpen() {
-
-
         doneIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -370,7 +373,6 @@ public class TextNotesActivity extends AbsBaseActivity implements AdapterView.On
         Bitmap bitmap = getBitmap(bean.getBitmap());
         saveCroppedImage(bitmap);
         editorView.insertBitmap(file.getPath());
-
     }
 
     public static Bitmap getBitmap(byte[] data) {
