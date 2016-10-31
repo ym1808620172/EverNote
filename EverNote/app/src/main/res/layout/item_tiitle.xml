@@ -1,70 +1,139 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/base_view"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root_view"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:clipToPadding="true"
-    android:fitsSystemWindows="true"
-    android:orientation="vertical">
-    <!--标题栏布局-->
-    <RelativeLayout
-        android:id="@+id/base_titlebar"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/base_view"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/set_activity_toolbar_expanded"
-        android:background="@color/item_title_back_color">
-
-        <ImageView
-            android:id="@+id/base_title_drawer_img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:padding="@dimen/set_activity_card_free_tv_padding"
-            android:src="@mipmap/menu" />
-
-        <ImageView
-            android:id="@+id/base_title_menu_img"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:gravity="center"
-            android:paddingRight="@dimen/set_activity_card_free_tv_padding"
-            android:src="@mipmap/ic_action_more" />
-
-        <ImageView
-            android:id="@+id/base_title_search_img"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/base_title_menu_img"
-            android:gravity="center"
-            android:paddingLeft="@dimen/set_activity_card_free_tv_padding"
-            android:paddingRight="@dimen/set_activity_card_free_tv_padding"
-            android:src="@mipmap/ic_action_search" />
-
-        <ImageView
-            android:id="@+id/base_title_msg_img"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/base_title_search_img"
-            android:gravity="center"
-            android:src="@mipmap/ic_action_message" />
-
-        <TextView
-            android:id="@+id/base_title_tv"
+        android:layout_height="match_parent"
+        android:clipToPadding="true"
+        android:fitsSystemWindows="true"
+        android:orientation="vertical">
+        <!--标题栏布局-->
+        <RelativeLayout
+            android:id="@+id/base_titlebar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="@string/item_title_tv"
-            android:textColor="@color/set_activity_toolbar_tv_color"
-            android:textSize="@dimen/item_title_tv_size" />
+            android:layout_height="@dimen/set_activity_toolbar_expanded"
+            android:background="@color/item_title_back_color">
 
-    </RelativeLayout>
+            <ImageView
+                android:id="@+id/base_title_drawer_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:padding="@dimen/set_activity_card_free_tv_padding"
+                android:src="@mipmap/menu" />
 
-    <FrameLayout
-        android:id="@+id/base_contentview"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
+            <ImageView
+                android:id="@+id/base_title_menu_img"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:paddingRight="@dimen/set_activity_card_free_tv_padding"
+                android:src="@mipmap/ic_action_more" />
 
-</LinearLayout>
+            <ImageView
+                android:id="@+id/base_title_search_img"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@id/base_title_menu_img"
+                android:gravity="center"
+                android:paddingLeft="@dimen/set_activity_card_free_tv_padding"
+                android:paddingRight="@dimen/set_activity_card_free_tv_padding"
+                android:src="@mipmap/ic_action_search" />
+
+            <ImageView
+                android:id="@+id/base_title_msg_img"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@id/base_title_search_img"
+                android:gravity="center"
+                android:src="@mipmap/ic_action_message" />
+
+            <TextView
+                android:id="@+id/base_title_tv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/item_title_tv"
+                android:textColor="@color/set_activity_toolbar_tv_color"
+                android:textSize="@dimen/item_title_tv_size" />
+
+        </RelativeLayout>
+
+        <FrameLayout
+            android:id="@+id/base_contentview"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+    </LinearLayout>
+    <!--抽屉内容-->
+    <LinearLayout
+        android:id="@+id/drawer_view"
+        android:layout_width="@dimen/layout_drawer_width"
+        android:layout_height="match_parent"
+        android:layout_gravity="left"
+        android:clipToPadding="true"
+        android:fitsSystemWindows="true"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="4"
+            android:background="@color/set_activity_toolbar_tv_color">
+
+            <ListView
+                android:id="@+id/drawer_lv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="@color/set_activity_toolbar_tv_color"
+                android:scrollbars="none" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/bottom_view"
+            android:background="@color/set_activity_card_top_view_color" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/anima_layout"
+            android:background="@color/set_activity_toolbar_tv_color"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/for_img"
+                    android:layout_width="@dimen/anima_img_height"
+                    android:layout_height="@dimen/anima_img_width"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="@dimen/anima_left"
+                    android:src="@mipmap/refrsh" />
+
+                <TextView
+                    android:id="@+id/for_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="开始同步"
+                    android:textSize="@dimen/anima_tv" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</android.support.v4.widget.DrawerLayout>
