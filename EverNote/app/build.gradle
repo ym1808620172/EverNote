@@ -47,4 +47,5 @@ dependencies {
     compile files('libs/AMap_Location_V3.0.0_20160922.jar')
     compile files('libs/lite-orm-1.9.2.jar')
     compile project(':citypickerview')
+    compile project(':lib-zxing')
 }

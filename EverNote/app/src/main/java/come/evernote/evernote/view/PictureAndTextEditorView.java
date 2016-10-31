@@ -132,7 +132,7 @@ public class PictureAndTextEditorView extends EditText {
      * @param path
      */
     public void insertBitmap(String path) {
-        Bitmap bitmap = getSmallBitmap(path, 480, 500);
+        Bitmap bitmap = getSmallBitmap(path, 200, 300);
         insertBitmap(path, bitmap);
     }
 

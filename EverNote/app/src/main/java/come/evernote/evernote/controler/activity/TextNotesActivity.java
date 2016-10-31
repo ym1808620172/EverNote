@@ -440,6 +440,7 @@ public class TextNotesActivity extends AbsBaseActivity implements AdapterView.On
                 }
                 break;
             case R.id.item_formatting_popup_window_italic_iv://斜体
+                setSpeaking(editorView.getText().toString());
                 if (!isClick) {
                     italicIv.setSelected(true);
                     span.setSpan(new StyleSpan(Typeface.ITALIC), 0, editorView.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
