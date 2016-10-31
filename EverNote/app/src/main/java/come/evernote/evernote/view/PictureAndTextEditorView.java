@@ -16,6 +16,7 @@ import android.text.TextWatcher;
 import android.text.style.ImageSpan;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
@@ -74,10 +75,27 @@ public class PictureAndTextEditorView extends EditText {
         if (mContentList.size() > 0) {
             for (String str : mContentList) {
                 if (str.indexOf(mBitmapTag) != -1) {//判断是否是图片地址
-                    String path = str.replace(mBitmapTag, "");//还原地址字符串
-                    Bitmap bitmap = getSmallBitmap(path, 480, 800);
+                    int first = str.indexOf(mBitmapTag);
+                    int next = str.indexOf(mBitmapTag, first + 1);
+                    String substring = str.substring(first, next + 1);
+                    str = str.replace(substring, "*");
+                    Log.d("ddd", str);
+                    String path = substring.replace(mBitmapTag, "");//还原地址字符串
+                    Bitmap bitmap = getSmallBitmap(path, 480, 500);
                     //插入图片
                     insertBitmap(path, bitmap);
+                    if (str.indexOf("*") != -1) {
+                        int indexOf = str.indexOf("*");
+                        if (indexOf > 0) {
+                            str = str.replace(str, "*");
+                            SpannableString ss = new SpannableString(str);
+                            append(ss, 0, getIndex());
+                        }else {
+                            //插入文字
+                            SpannableString ss = new SpannableString(str);
+                            append(ss);
+                        }
+                    }
                 } else {
                     //插入文字
                     SpannableString ss = new SpannableString(str);
@@ -99,7 +117,7 @@ public class PictureAndTextEditorView extends EditText {
         // 获取光标所在位置
         index = getSelectionStart();
         //插入换行符，使图片单独占一行
-        SpannableString newLine = new SpannableString("\n");
+        SpannableString newLine = new SpannableString("");
         edit_text.insert(index, newLine);//插入图片前换行
         // 创建一个SpannableString对象，以便插入用ImageSpan对象封装的图像
         path = mBitmapTag + path + mBitmapTag;
@@ -123,9 +141,10 @@ public class PictureAndTextEditorView extends EditText {
         return picture;
     }
 
-    public int getIndex(){
+    public int getIndex() {
         return index;
     }
+
     /**
      * 插入图片
      *
@@ -209,6 +228,22 @@ public class PictureAndTextEditorView extends EditText {
         // Decode bitmap with inSampleSize set
         options.inJustDecodeBounds = false;
 
+        Bitmap bitmap = BitmapFactory.decodeFile(filePath, options);
+        DisplayMetrics dm = mContext.getResources().getDisplayMetrics();
+        int w_screen = dm.widthPixels;
+        int w_width = w_screen;
+        int b_width = bitmap.getWidth();
+        int b_height = bitmap.getHeight();
+        int w_height = w_width * b_height / b_width;
+        bitmap = Bitmap.createScaledBitmap(bitmap, w_width, w_height, false);
+        return bitmap;
+    }
+
+    public Bitmap getSmallBitmap(String filePath) {
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(filePath, options);
+        options.inJustDecodeBounds = false;
         Bitmap bitmap = BitmapFactory.decodeFile(filePath, options);
         DisplayMetrics dm = mContext.getResources().getDisplayMetrics();
         int w_screen = dm.widthPixels;

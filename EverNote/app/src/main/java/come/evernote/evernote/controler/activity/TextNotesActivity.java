@@ -1,12 +1,15 @@
 package come.evernote.evernote.controler.activity;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.media.MediaRecorder;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.SystemClock;
@@ -16,6 +19,7 @@ import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.BackgroundColorSpan;
@@ -24,6 +28,7 @@ import android.text.style.StyleSpan;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -47,6 +52,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -57,6 +63,9 @@ import come.evernote.evernote.controler.fragment.TextNotesAboutFragment;
 import come.evernote.evernote.controler.fragment.TextNotesMenuFragment;
 import come.evernote.evernote.model.bean.AttachDrawerBean;
 import come.evernote.evernote.model.bean.PhotoBean;
+import come.evernote.evernote.model.bean.SaveBean;
+import come.evernote.evernote.model.db.LiteOrmInstance;
+import come.evernote.evernote.view.BiuEditText;
 import come.evernote.evernote.view.PictureAndTextEditorView;
 import come.evernote.evernote.view.ViewAnimation;
 
@@ -67,7 +76,7 @@ import come.evernote.evernote.view.ViewAnimation;
  *
  * @author 杜显东
  */
-public class TextNotesActivity extends AbsBaseActivity implements AdapterView.OnItemClickListener {
+public class TextNotesActivity extends AbsBaseActivity implements AdapterView.OnItemClickListener, View.OnClickListener {
     //标题栏
     private ImageView aboutTv;//介绍(圈I)
     private ImageView menuIv;//菜单(三个点)
@@ -78,10 +87,7 @@ public class TextNotesActivity extends AbsBaseActivity implements AdapterView.On
     private ImageView attachIv;//附加
     private ImageView penThinIv;//笔薄
     private ImageView shareIv;//分享
-
     private ImageView doImg;
-
-
     //抽屉
     private DrawerLayout drawerLayout;//根布局
     private LinearLayout layout;//抽屉的布局
@@ -121,10 +127,19 @@ public class TextNotesActivity extends AbsBaseActivity implements AdapterView.On
     private boolean isStart = false;
     private MediaRecorder mr = null;
     private long recordingTime = 0;// 记录下来的时间
+    private long exitTime = 0;
 
 
     // 进度对话框
     private ProgressDialog progressDialog;
+    private TextView notesBookName;
+    private BiuEditText noteTitle;
+    private byte[] bitmapList;
+    private String format;
+    private List<int[]> imgCurse = new ArrayList<>();
+    private LinearLayout bookLl;
+    private List<String> stringList = new ArrayList<>();
+
     @Override
     protected int setLayout() {
         electricQuantity();
@@ -133,6 +148,7 @@ public class TextNotesActivity extends AbsBaseActivity implements AdapterView.On
 
     @Override
     protected void initView() {
+        bookLl = byView(R.id.notes_text_book_layout);
         aboutTv = byView(R.id.notes_text_about_img);
         menuIv = byView(R.id.item_text_notes_menu_img);
         drawerLayout = byView(R.id.drawer_layout);
@@ -149,6 +165,17 @@ public class TextNotesActivity extends AbsBaseActivity implements AdapterView.On
         listView = byView(R.id.attach_drawer_bottom_list_view);
         timeIv = byView(R.id.notes_text_time_img);
         textView = byView(R.id.recoding_chronometer);
+        notesBookName = byView(R.id.notes_text_book_name);
+        noteTitle = byView(R.id.notes_text_title);
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);//抽屉关闭手势滑动
+        editorView = byView(R.id.notes_text_content_et);
+        btnStart = byView(R.id.recording_btn_start);
+        recordChronometer = byView(R.id.recoding_chronometer);
+        EventBus.getDefault().register(this);//注册Eventbus
+        setListeren();
+    }
+
+    private void setListeren() {
         menuIv.setOnClickListener(this);
         aboutTv.setOnClickListener(this);
         formattingIv.setOnClickListener(this);
@@ -159,13 +186,7 @@ public class TextNotesActivity extends AbsBaseActivity implements AdapterView.On
         penThinIv.setOnClickListener(this);
         shareIv.setOnClickListener(this);
         timeIv.setOnClickListener(this);
-        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);//抽屉关闭手势滑动
-        editorView = byView(R.id.notes_text_content_et);
-        EventBus.getDefault().register(this);//注册Eventbus
-
-        btnStart = byView(R.id.recording_btn_start);
-        recordChronometer =byView(R.id.recoding_chronometer);
-
+        bookLl.setOnClickListener(this);
     }
 
     @Override
@@ -176,44 +197,69 @@ public class TextNotesActivity extends AbsBaseActivity implements AdapterView.On
         if (intent != null) {
             int index = intent.getIntExtra("index", 100);
             if (index == 2) {
+                noteTitle.setHint("录音位于" + getCityText());
                 recordChronometer.setVisibility(View.VISIBLE);
                 doneIv.setImageResource(R.mipmap.btn_start_recoding);
-                setIfTitles(1);
                 getOpen();
-
             } else {
                 textView.setVisibility(View.GONE);
                 doneIv.setImageResource(R.drawable.item_text_notes_title_done);
             }
-            PhotoBean bean = (PhotoBean) intent.getSerializableExtra("photo");
-            if (bean != null) {
-                Bitmap bitmap = getBitmap(bean.getBitmap());
-                saveCroppedImage(bitmap);
-                if (file != null) {
-                    editorView.insertBitmap(file.getPath());
+            setEditImg();
+            Bundle bundleSave = getIntent().getExtras();
+            if (bundleSave != null) {
+                SaveBean saveBean = (SaveBean) bundleSave.getSerializable("saveBean");
+                if (saveBean != null) {
+                    String title = saveBean.getTitle();
+                    String allContent = saveBean.getAllContent();
+                    String noteName = saveBean.getNoteName();
+                    if (title!=null){
+
+                    }
+                    if (allContent!=null){
+                        List<String> list = new ArrayList<>();
+                        list.add(allContent);
+                        editorView.setmContentList(list);
+                    }
                 }
             }
-            String photoUrl = intent.getStringExtra("photoUrl");
-            Log.d("zzz", photoUrl + "");
-            if (photoUrl != null) {
-                if (photoUrl.endsWith(".png") || photoUrl.endsWith(".jpg")) {
-                    editorView.insertBitmap(photoUrl);
-                }
+        }
+    }
 
-                String content = intent.getStringExtra("text");
-                if (content != null) {
-                    editorView.setText(content);
-                }
-
+    private void setEditImg() {
+        PhotoBean bean = (PhotoBean) intent.getSerializableExtra("photo");
+        if (bean != null) {
+            noteTitle.setHint("快照位于" + getCityText());
+            Bitmap bitmap = getBitmap(bean.getBitmap());
+            saveCroppedImage(bitmap);
+            if (file != null) {
+                editorView.insertBitmap(file.getPath());
             }
-            setIfTitles(1);
-            setSpeaking(editTextContent);
-            Bundle bundle = getIntent().getExtras();
-            if (bundle != null) {
-                String string = bundle.getString("key");
-                if (string != null && string.equals("1")) {
-                    goTo(TextNotesActivity.this, PenThinActivity.class);
-                }
+            imgCurse.add(new int[]{editorView.getIndex(), editorView.getPicture()});
+
+        }
+        String photoUrl = intent.getStringExtra("photoUrl");
+        if (photoUrl != null) {
+            noteTitle.setHint("文件");
+            if (photoUrl.endsWith(".png") || photoUrl.endsWith(".jpg")) {
+                editorView.insertBitmap(photoUrl);
+                Bitmap bitmap = editorView.getSmallBitmap(photoUrl);
+                bitmapList = MainActivity.getBytes(bitmap);
+                imgCurse.add(new int[]{editorView.getIndex(), editorView.getPicture()});
+            }
+
+            String content = intent.getStringExtra("text");
+            if (content != null) {
+                editorView.setText(content);
+            }
+        }
+        setIfTitles(1);
+        setSpeaking(editTextContent);
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            String string = bundle.getString("key");
+            if (string != null && string.equals("1")) {
+                goTo(TextNotesActivity.this, PenThinActivity.class);
             }
         }
     }
@@ -222,10 +268,9 @@ public class TextNotesActivity extends AbsBaseActivity implements AdapterView.On
         doneIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if (isStart==false) {
+                if (isStart == false) {
                     startRecord();
-                   doneIv.setImageResource(R.mipmap.btn_stop_recoding);
+                    doneIv.setImageResource(R.mipmap.btn_stop_recoding);
                     Toast.makeText(TextNotesActivity.this, "开始录音", Toast.LENGTH_SHORT).show();
                     recordChronometer.setBase(SystemClock.elapsedRealtime() - recordingTime);// 跳过已经记录了的时间，起到继续计时的作用
                     recordChronometer.start();
@@ -243,15 +288,11 @@ public class TextNotesActivity extends AbsBaseActivity implements AdapterView.On
         });
 
 
-
-
     }
 
     private void stopRecord() {
-
         if (mr == null) {
-            File dir = new File(Environment.getExternalStorageDirectory(),"/sdcards/recodrsongs");
-            Log.d("MainActivity", "Environment.getExternalStorageDirectory():" + Environment.getExternalStorageDirectory());
+            File dir = new File(Environment.getExternalStorageDirectory(), "/sdcards/recodrsongs");
             if (!dir.exists()) {
                 dir.mkdirs();
             }
@@ -281,7 +322,6 @@ public class TextNotesActivity extends AbsBaseActivity implements AdapterView.On
     }
 
     private void showProgressDilog() {
-
         progressDialog = new ProgressDialog(TextNotesActivity.this);
         // 设置对话框的图标
         // 设置文字
@@ -350,6 +390,10 @@ public class TextNotesActivity extends AbsBaseActivity implements AdapterView.On
 
             }
         });
+        setAttachDrawer();
+    }
+
+    private void setAttachDrawer() {
         attachAdapter = new AttachDrawerAdapter(this);
         data = new ArrayList<>();
         data.add(new AttachDrawerBean("相册", R.mipmap.xiangce));
@@ -366,16 +410,20 @@ public class TextNotesActivity extends AbsBaseActivity implements AdapterView.On
 
     /**
      * Eventbus
+     *
      * @param bean
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void getData (PhotoBean bean){
+    public void getData(PhotoBean bean) {
+        noteTitle.setHint("手写位于" + getCityText());
         Bitmap bitmap = getBitmap(bean.getBitmap());
         saveCroppedImage(bitmap);
         editorView.insertBitmap(file.getPath());
+        imgCurse.add(new int[]{editorView.getIndex(), editorView.getPicture()});
     }
 
-    public static Bitmap getBitmap(byte[] data) {
+    public Bitmap getBitmap(byte[] data) {
+        bitmapList = data;
         return BitmapFactory.decodeByteArray(data, 0, data.length);//从字节数组解码位图
     }
 
@@ -567,7 +615,6 @@ public class TextNotesActivity extends AbsBaseActivity implements AdapterView.On
                 }
                 break;
             case R.id.item_text_notes_attach_iv://附件
-//                Log.d("aaa", "mBehavior.111():" + mBehavior.getState()+"aa");
                 if (!isPopupClick) {
                     attachIv.setSelected(true);
                     if (mBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED) {
@@ -589,6 +636,9 @@ public class TextNotesActivity extends AbsBaseActivity implements AdapterView.On
             case R.id.notes_text_time_img://时钟
                 Intent intent = new Intent(TextNotesActivity.this, RemendPopActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.notes_text_book_layout:
+
                 break;
         }
 
@@ -643,6 +693,7 @@ public class TextNotesActivity extends AbsBaseActivity implements AdapterView.On
             popupWindow.dismiss();
         }
         EventBus.getDefault().unregister(this);//解除注册
+
     }
 
     private void saveCroppedImage(Bitmap bmp) {
@@ -715,8 +766,8 @@ public class TextNotesActivity extends AbsBaseActivity implements AdapterView.On
      */
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intentActtchenment = new Intent(Intent.ACTION_GET_CONTENT);
-        switch (i){
+        Intent intentActtchenment = new Intent(Intent.ACTION_GET_CONTENT);
+        switch (i) {
             case 0:
                 intentActtchenment.setType("image/*");//设置类型，我这里是任意类型，任意后缀的可以这样写。
                 intentActtchenment.addCategory(Intent.CATEGORY_OPENABLE);
@@ -745,8 +796,76 @@ public class TextNotesActivity extends AbsBaseActivity implements AdapterView.On
 
                 break;
             case 6:
-                goTo(TextNotesActivity.this,PenThinActivity.class);
+                goTo(TextNotesActivity.this, PenThinActivity.class);
                 break;
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        editTextContent = editorView.getText().toString();
+
+        if (keyCode == KeyEvent.KEYCODE_BACK && !editTextContent.isEmpty()) {
+            exit();
+            return false;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    public void exit() {
+        if ((System.currentTimeMillis() - exitTime) > 2000 && (!editTextContent.isEmpty())) {
+            setDialog();
+            exitTime = System.currentTimeMillis();
+        }
+    }
+
+    private void setDialog() {
+        SimpleDateFormat sdf = new SimpleDateFormat("MM:dd");
+        Date nowTime = new Date(System.currentTimeMillis());
+        format = sdf.format(nowTime);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("是否保存?");
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        List<String> stringList = new ArrayList<>();
+                        String content = editTextContent;
+                        for (int i = 0; i < imgCurse.size(); i++) {
+                            String img = content.substring(imgCurse.get(i)[0], imgCurse.get(i)[1]);
+                            stringList.add(img);
+                        }
+                        for (int i = 0; i < stringList.size(); i++) {
+                            content = content.replace(stringList.get(i), "");
+                        }
+                        SaveBean saveBean = new SaveBean();
+                        saveBean.setNoteName(notesBookName.getText().toString());
+                        saveBean.setContent(content);
+                        saveBean.setBitmap(bitmapList);
+                        saveBean.setDate(format);
+                        saveBean.setAllContent(editTextContent);
+                        if (noteTitle.getText().toString().isEmpty()) {
+                            saveBean.setTitle(noteTitle.getHint().toString());
+                        } else {
+                            saveBean.setTitle(noteTitle.getText().toString());
+                        }
+                        LiteOrmInstance.getLiteOrmInstance().insert(saveBean);
+
+                        finish();
+                    }
+                }
+
+        );
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener()
+
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                }
+
+        );
+        builder.create().show();
     }
 }

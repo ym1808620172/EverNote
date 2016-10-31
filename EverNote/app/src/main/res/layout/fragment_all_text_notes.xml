@@ -1,31 +1,49 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="come.evernote.evernote.controler.fragment.AllTextNotesFragment">
 
 
-    <TextView
-        android:layout_centerInParent="true"
-        android:id="@+id/all_text_empty_tv"
-        android:textColor="#000"
-        android:layout_margin="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="一切从笔记开始"/>
-    <ImageView
-        android:layout_above="@id/all_text_empty_tv"
-        android:id="@+id/all_text_empty_img"
-        android:layout_centerHorizontal="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@mipmap/ic_empty_widgetlist_newnote"/>
-    <come.evernote.evernote.view.CenterTextView
-        android:id="@+id/all_text_center_tv"
-        android:layout_below="@id/all_text_empty_tv"
-        android:layout_centerHorizontal="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="点击 + 创建笔记。拍照、添加附件或者输入文\n字。"/>
+    <ListView
+        android:dividerHeight="1dp"
+        android:divider="#777978"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:scrollbars="none"
+        android:id="@+id/all_text_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    <RelativeLayout
+        android:id="@+id/all_text_empty_rl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/all_text_empty_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_margin="10dp"
+            android:text="一切从笔记开始"
+            android:textColor="#000" />
+
+        <ImageView
+            android:id="@+id/all_text_empty_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/all_text_empty_tv"
+            android:layout_centerHorizontal="true"
+            android:src="@mipmap/ic_empty_widgetlist_newnote" />
+
+        <come.evernote.evernote.view.CenterTextView
+            android:id="@+id/all_text_center_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/all_text_empty_tv"
+            android:layout_centerHorizontal="true"
+            android:text="点击 + 创建笔记。拍照、添加附件或者输入文\n字。" />
+    </RelativeLayout>
+
+</LinearLayout>

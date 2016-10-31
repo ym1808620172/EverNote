@@ -76,9 +76,4 @@ public class SettingActivity extends AbsBaseActivity {
 
     }
 
-
-    @Override
-    public void onClick(View v) {
-
-    }
 }

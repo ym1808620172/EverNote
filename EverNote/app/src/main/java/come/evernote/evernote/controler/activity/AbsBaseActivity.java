@@ -2,19 +2,43 @@ package come.evernote.evernote.controler.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationClientOption;
+import com.amap.api.location.AMapLocationListener;
+import com.lljjcoder.citypickerview.widget.CityPicker;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import come.evernote.evernote.R;
+import come.evernote.evernote.controler.adapter.DrawerAdapter;
+import come.evernote.evernote.controler.fragment.TextNotesBookFragment;
+import come.evernote.evernote.controler.fragment.WasteBinFragment;
+import come.evernote.evernote.model.bean.DrawerShowBean;
 
 
 /**
@@ -23,7 +47,7 @@ import come.evernote.evernote.R;
  *
  * @author sunhongxu
  */
-public abstract class AbsBaseActivity extends AppCompatActivity implements View.OnClickListener {
+public abstract class AbsBaseActivity extends AppCompatActivity implements AMapLocationListener {
     public FrameLayout contentView;//标题栏里的占位布局
     private ImageView rightImg;//标题栏右侧图片
     private ImageView leftImg;//标题栏左侧图片
@@ -31,6 +55,18 @@ public abstract class AbsBaseActivity extends AppCompatActivity implements View.
     private TextView titltTv;//标题栏文字
     private View titlebar;//标题栏布局
     private ImageView drawerImg;//打开抽屉的图片
+    private List<DrawerShowBean> datas;
+    private int index;
+    private DrawerAdapter adapter;
+    private ListView drawerLv;// 抽屉lv
+    private ImageView forImg;
+    private DrawerLayout rootView;// 整个页面的布局对象
+    private LinearLayout layout;// 抽屉布局对象
+    public AMapLocationClientOption mLocationOption = null;
+    private AMapLocationClient mlocationClient;
+    private boolean is = false;
+    private Animation animation;
+    private TextView forTv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,14 +78,132 @@ public abstract class AbsBaseActivity extends AppCompatActivity implements View.
         contentView.addView(View.inflate(this, setLayout(), null));
         //制定流程
         initView();
+        adapter = new DrawerAdapter(AbsBaseActivity.this);
+        forImg = byView(R.id.for_img);
+        drawerLv = byView(R.id.drawer_lv);
+        rootView = byView(R.id.root_view);
+        layout = byView(R.id.drawer_view);
+        forTv = byView(R.id.for_tv);
+        forTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setCity();
+            }
+        });
+        //设置抽屉
+        setDrawer();
+        // 头布局
+        getHead();
         initDatas();
     }
 
-    protected void electricQuantity() {
-            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                //透明状态栏
-                getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+    private void setCity() {
+        CityPicker cityPicker = new CityPicker.Builder(AbsBaseActivity.this).textSize(20)
+                .onlyShowProvinceAndCity(false)
+                .confirTextColor("#000000")
+                .cancelTextColor("#000000")
+                .textColor(Color.parseColor("#000000"))
+                .provinceCyclic(true)
+                .cityCyclic(true)
+                .districtCyclic(true)
+                .visibleItemsCount(7)
+                .itemPadding(10)
+                .build();
+
+        cityPicker.show();
+        cityPicker.setOnCityItemClickListener(new CityPicker.OnCityItemClickListener() {
+            @Override
+            public void onSelected(String... citySelected) {
+                forTv.setText("省：" + citySelected[0] + " " + "市：" + citySelected[1] + "区:" + " " + citySelected[2]);
             }
+        });
+    }
+
+    private void getHead() {
+        View view = getLayoutInflater().inflate(R.layout.first_page_drawer_header, null);
+        drawerLv.addHeaderView(view);
+    }
+
+    private void setDrawer() {
+        datas = new ArrayList<>();
+        datas.add(new DrawerShowBean(getResources().getString(R.string.first_page_drawer_all_notes), R.mipmap.note));
+        datas.add(new DrawerShowBean(getResources().getString(R.string.first_page_drawer_note_book), R.mipmap.bijiben));
+        datas.add(new DrawerShowBean(getResources().getString(R.string.first_page_drawer_shortcut), R.mipmap.wujiaoxing));
+        datas.add(new DrawerShowBean(getResources().getString(R.string.first_page_drawer_group_chat), R.mipmap.work));
+        datas.add(new DrawerShowBean(getResources().getString(R.string.first_page_drawer_waster_page), R.mipmap.laji));
+        datas.add(new DrawerShowBean(getResources().getString(R.string.first_page_drawer_upgrade), R.mipmap.topgrade));
+        datas.add(new DrawerShowBean(getResources().getString(R.string.first_page_drawer_explore_note), R.mipmap.tansuo));
+        datas.add(new DrawerShowBean(getResources().getString(R.string.first_page_drawer_set_Up_the), R.mipmap.shezhi));
+        adapter.setDatas(datas);
+        drawerLv.setAdapter(adapter);
+
+        drawerLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                FragmentManager manager = getSupportFragmentManager();
+                FragmentTransaction transaction = manager.beginTransaction();
+                if (position == 8) {
+                    Toast.makeText(AbsBaseActivity.this, "8", Toast.LENGTH_SHORT).show();
+                    // 跳转设置页面
+                    goTo(AbsBaseActivity.this, SettingActivity.class);
+                } else if (position == 2) {
+                    transaction.replace(R.id.main_frame_layout, TextNotesBookFragment.newInstance());
+                    manager.popBackStack();
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+                    rootView.closeDrawer(layout);
+                } else if (position == 5) {
+                    transaction.replace(R.id.main_frame_layout, WasteBinFragment.newInstance());
+                    manager.popBackStack();
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+                    rootView.closeDrawer(layout);
+                }
+                index = position - 1;
+                adapter.setIndex(index);
+                adapter.notifyDataSetChanged();
+            }
+        });
+
+        // 动画旋转
+        forImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 设置定位
+                getPositon();
+                animation = AnimationUtils.loadAnimation(AbsBaseActivity.this, R.anim.animset);
+                forImg.startAnimation(animation);
+                forTv.setText("同步时间");
+            }
+        });
+
+    }
+
+    private void getPositon() {
+        //声明mLocationOption对象
+        mlocationClient = new AMapLocationClient(this);
+        //初始化定位参数
+        mLocationOption = new AMapLocationClientOption();
+        //设置定位监听
+        mlocationClient.setLocationListener(this);
+        //设置定位模式为高精度模式，Battery_Saving为低功耗模式，Device_Sensors是仅设备模式
+        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
+        //设置定位参数
+        mlocationClient.setLocationOption(mLocationOption);
+        // 此方法为每隔固定时间会发起一次定位请求，为了减少电量消耗或网络流量消耗，
+        // 注意设置合适的定位时间的间隔（最小间隔支持为2000ms），并且在合适时间调用stopLocation()方法来取消定位请求
+        // 在定位结束后，在合适的生命周期调用onDestroy()方法
+        // 在单次定位情况下，定位无论成功与否，都无需调用stopLocation()方法移除请求，定位sdk内部会移除
+        //启动定位
+        mlocationClient.startLocation();
+    }
+
+    protected void electricQuantity() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            //透明状态栏
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        }
     }
 
     protected void setIfTitles(int titlebarResId) {
@@ -86,6 +240,7 @@ public abstract class AbsBaseActivity extends AppCompatActivity implements View.
                 @Override
                 public void onClick(View v) {
                     onClickDrawer();
+                    rootView.openDrawer(layout);
                 }
             });
             titltTv = (TextView) findViewById(R.id.base_title_tv);
@@ -328,4 +483,33 @@ public abstract class AbsBaseActivity extends AppCompatActivity implements View.
     }
 
 
+    @Override
+    public void onLocationChanged(AMapLocation aMapLocation) {
+        if (aMapLocation != null) {
+            if (aMapLocation.getErrorCode() == 0) {
+                //定位成功回调信息，设置相关消息
+                aMapLocation.getLocationType();//获取当前定位结果来源，如网络定位结果，详见定位类型表
+                aMapLocation.getLatitude();//获取纬度
+                aMapLocation.getLongitude();//获取经度
+                aMapLocation.getAccuracy();//获取精度信息
+                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                Date date = new Date(aMapLocation.getTime());
+                df.format(date);//定位时间
+                if (is = true) {
+                    forTv.setText(aMapLocation.getCity() + " " + df.format(date));
+                }
+                forTv.setText(aMapLocation.getCity());
+                mlocationClient.stopLocation();
+                forImg.clearAnimation();
+            } else {
+                //显示错误信息ErrCode是错误码，errInfo是错误信息，详见错误码表。
+                Log.d("aaaa", "location Error, ErrCode:" + aMapLocation.getErrorCode() + ", errInfo:" + aMapLocation.getErrorInfo());
+                mlocationClient.stopLocation();
+            }
+        }
+    }
+
+    public String getCityText() {
+        return forTv.getText().toString();
+    }
 }
