@@ -63,11 +63,8 @@ public class LiteOrmInstance {
 
     public List<SaveBean> queryByName(String title, String date) {
         QueryBuilder<SaveBean> sb = new QueryBuilder<>(SaveBean.class);
-<<<<<<< HEAD
         sb.where("title  = ? ", new Object[]{title}).whereAppendAnd().where("data = ?", new String[]{date});
-=======
         sb.where("title  = ? ", new Object[]{title}).whereAppendAnd().where("data = ?", new Object[]{date});
->>>>>>> 50af3903ace8ffc0bb3fd0519b7c838db5ada14d
         return liteOrm.query(sb);
     }
 
@@ -89,7 +86,6 @@ public class LiteOrmInstance {
                 .and().lessThan("id", 10000));
 
     }
-<<<<<<< HEAD
     public List<SaveBean> queryByName(Object title) {
         QueryBuilder<SaveBean> sb = new QueryBuilder<>(SaveBean.class);
         sb.where("title  = ? ", new Object[]{title});
@@ -120,7 +116,6 @@ public class LiteOrmInstance {
                 .and().lessThan("id", 10000));
 
     }
-=======
 //    public List<SaveBean> queryByName(String title) {
 //        QueryBuilder<SaveBean> sb = new QueryBuilder<>(SaveBean.class);
 //        sb.where("title  = ? ", new String[]{title});
@@ -151,7 +146,6 @@ public class LiteOrmInstance {
 //                .and().lessThan("id", 10000));
 //
 //    }
->>>>>>> 50af3903ace8ffc0bb3fd0519b7c838db5ada14d
 
 
     /**
