@@ -48,8 +48,6 @@ public class RecodingActivity  extends  AbsBaseActivity{
     protected void initDatas() {
         setIfTitles(1);
         getOpen();
-
-
     }
 
 
@@ -164,8 +162,4 @@ public class RecodingActivity  extends  AbsBaseActivity{
 
     }
 
-    @Override
-    public void onClick(View v) {
-
-    }
 }

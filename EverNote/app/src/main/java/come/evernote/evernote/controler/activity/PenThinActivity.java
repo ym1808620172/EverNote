@@ -20,7 +20,7 @@ import come.evernote.evernote.view.PaintView;
  * Created by dllo on 16/10/21.
  * 手写界面
  */
-public class PenThinActivity extends AbsBaseActivity {
+public class PenThinActivity extends AbsBaseActivity implements View.OnClickListener {
     private PaintView mPaintView;
     private LinearLayout linearLayout;
     private ImageView returnIv;//退出

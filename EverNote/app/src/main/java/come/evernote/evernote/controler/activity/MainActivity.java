@@ -46,27 +46,20 @@ import java.util.List;
 import come.evernote.evernote.R;
 import come.evernote.evernote.controler.adapter.DrawerAdapter;
 import come.evernote.evernote.controler.fragment.AllTextNotesFragment;
+import come.evernote.evernote.controler.fragment.TextNotesBookFragment;
+import come.evernote.evernote.controler.fragment.WasteBinFragment;
 import come.evernote.evernote.model.bean.DrawerShowBean;
 import come.evernote.evernote.model.bean.PhotoBean;
 
-public class MainActivity extends AbsBaseActivity implements RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener, AMapLocationListener {
-    private DrawerLayout rootView;// 整个页面的布局对象
-    private LinearLayout layout;// 抽屉布局对象
-    private List<DrawerShowBean> datas;
-    private DrawerAdapter adapter;
-    private ListView drawerLv;// 抽屉lv
-    private int index;
-    private TextView forTv;
-    private ImageView forImg;
+public class MainActivity extends AbsBaseActivity implements RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener {
+
+
+
     private RapidFloatingActionButton rfaButton;
     private RapidFloatingActionHelper rfabHelper;
     private RapidFloatingActionLayout rfaLayout;
     private static final int CAMERA_WITH_DATA = 3023;
 
-    public AMapLocationClientOption mLocationOption = null;
-    private AMapLocationClient mlocationClient;
-    private boolean is = false;
-    private Animation animation;
     private FrameLayout mainFl;
     private FragmentManager manager;
     private FragmentTransaction transaction;
@@ -78,28 +71,16 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
 
     @Override
     protected void initView() {
-        rootView = byView(R.id.root_view);
-        layout = byView(R.id.drawer_view);
-        drawerLv = byView(R.id.drawer_lv);
-        forTv = byView(R.id.for_tv);
+
         rfaLayout = byView(R.id.label_list_sample_rfal);
         rfaButton = byView(R.id.label_list_sample_rfab);
-        forImg = byView(R.id.for_img);
         mainFl = byView(R.id.main_frame_layout);
-        forTv.setOnClickListener(this);
     }
 
     @Override
     protected void initDatas() {
-        // 头布局
-        getHead();
-        adapter = new DrawerAdapter(this);
-        //设置抽屉
-        setDrawer();
         //设置卫星菜单
         setFloatingBtn();
-        // 设置定位
-        getPositon();
         manager = getSupportFragmentManager();
         transaction = manager.beginTransaction();
         transaction.replace(R.id.main_frame_layout, AllTextNotesFragment.newInstance());
@@ -169,138 +150,13 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
                 .setIconShadowDy(ABTextUtil.dip2px(this, 5))
         ;
         rfabHelper = new RapidFloatingActionHelper(this, rfaLayout, rfaButton, rfaContent).build();
-
-    }
-
-    private void setDrawer() {
-
-        datas = new ArrayList<>();
-        datas.add(new DrawerShowBean(getResources().getString(R.string.first_page_drawer_all_notes), R.mipmap.note));
-        datas.add(new DrawerShowBean(getResources().getString(R.string.first_page_drawer_note_book), R.mipmap.bijiben));
-        datas.add(new DrawerShowBean(getResources().getString(R.string.first_page_drawer_shortcut), R.mipmap.wujiaoxing));
-        datas.add(new DrawerShowBean(getResources().getString(R.string.first_page_drawer_group_chat), R.mipmap.work));
-        datas.add(new DrawerShowBean(getResources().getString(R.string.first_page_drawer_waster_page), R.mipmap.laji));
-        datas.add(new DrawerShowBean(getResources().getString(R.string.first_page_drawer_upgrade), R.mipmap.topgrade));
-        datas.add(new DrawerShowBean(getResources().getString(R.string.first_page_drawer_explore_note), R.mipmap.tansuo));
-        datas.add(new DrawerShowBean(getResources().getString(R.string.first_page_drawer_set_Up_the), R.mipmap.shezhi));
-        adapter.setDatas(datas);
-        drawerLv.setAdapter(adapter);
-
-        drawerLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (position == 8) {
-                    Toast.makeText(MainActivity.this, "8", Toast.LENGTH_SHORT).show();
-                    // 跳转设置页面
-                    goTo(MainActivity.this, SettingActivity.class);
-                } else if (position == 1) {
-
-                }
-                index = position - 1;
-                adapter.setIndex(index);
-                adapter.notifyDataSetChanged();
-            }
-        });
-
-        // 动画旋转
-        forImg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 设置定位
-                getPositon();
-                animation = AnimationUtils.loadAnimation(MainActivity.this, R.anim.animset);
-                forImg.startAnimation(animation);
-                forTv.setText("同步时间");
-            }
-        });
-
-    }
-
-    private void getPositon() {
-        //声明mLocationOption对象
-        mlocationClient = new AMapLocationClient(this);
-        //初始化定位参数
-        mLocationOption = new AMapLocationClientOption();
-        //设置定位监听
-        mlocationClient.setLocationListener(this);
-        //设置定位模式为高精度模式，Battery_Saving为低功耗模式，Device_Sensors是仅设备模式
-        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
-        //设置定位参数
-        mlocationClient.setLocationOption(mLocationOption);
-        // 此方法为每隔固定时间会发起一次定位请求，为了减少电量消耗或网络流量消耗，
-        // 注意设置合适的定位时间的间隔（最小间隔支持为2000ms），并且在合适时间调用stopLocation()方法来取消定位请求
-        // 在定位结束后，在合适的生命周期调用onDestroy()方法
-        // 在单次定位情况下，定位无论成功与否，都无需调用stopLocation()方法移除请求，定位sdk内部会移除
-        //启动定位
-        mlocationClient.startLocation();
     }
 
 
-    public void onLocationChanged(AMapLocation amapLocation) {
-        if (amapLocation != null) {
-            if (amapLocation.getErrorCode() == 0) {
-                //定位成功回调信息，设置相关消息
-                amapLocation.getLocationType();//获取当前定位结果来源，如网络定位结果，详见定位类型表
-                amapLocation.getLatitude();//获取纬度
-                amapLocation.getLongitude();//获取经度
-                amapLocation.getAccuracy();//获取精度信息
-                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                Date date = new Date(amapLocation.getTime());
-                df.format(date);//定位时间
-                if (is = true) {
-                    forTv.setText(amapLocation.getCity() + " " + df.format(date));
-                }
-                forTv.setText(df.format(date));
-                mlocationClient.stopLocation();
-                forImg.clearAnimation();
-            } else {
-                //显示错误信息ErrCode是错误码，errInfo是错误信息，详见错误码表。
-                Log.d("aaaa", "location Error, ErrCode:" + amapLocation.getErrorCode() + ", errInfo:" + amapLocation.getErrorInfo());
-                mlocationClient.stopLocation();
-            }
-        }
-    }
 
-
-    private void getHead() {
-        View view = getLayoutInflater().inflate(R.layout.first_page_drawer_header, null);
-        drawerLv.addHeaderView(view);
-    }
-
-
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()){
-            case R.id.for_tv:
-                CityPicker cityPicker = new CityPicker.Builder(MainActivity.this).textSize(20)
-                        .onlyShowProvinceAndCity(true)
-                        .confirTextColor("#000000")
-                        .cancelTextColor("#000000")
-                        .province("江苏省")
-                        .city("常州市")
-                        .district("新北区")
-                        .textColor(Color.parseColor("#000000"))
-                        .provinceCyclic(true)
-                        .cityCyclic(true)
-                        .districtCyclic(true)
-                        .visibleItemsCount(7)
-                        .itemPadding(10)
-                        .build();
-
-                cityPicker.show();
-                cityPicker.setOnCityItemClickListener(new CityPicker.OnCityItemClickListener() {
-                    @Override
-                    public void onSelected(String... citySelected) {
-                        forTv.setText("省：" + citySelected[0] + "市：" + citySelected[1]  );
-                    }
-                });
-                break;
-        }
-    }
 
     protected void onClickDrawer() {
-        rootView.openDrawer(layout);
+
     }
 
     @Override
@@ -355,8 +211,6 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-
         switch (requestCode) {
             case CAMERA_WITH_DATA:
                 final Bitmap photo = data.getParcelableExtra("data");

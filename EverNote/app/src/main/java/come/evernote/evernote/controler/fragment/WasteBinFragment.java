@@ -6,6 +6,9 @@ import android.os.Bundle;
 
 import come.evernote.evernote.R;
 
+/**
+ * 废纸篓界面
+ */
 
 public class WasteBinFragment extends ABSBaseFragment {
 
