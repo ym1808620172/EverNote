@@ -5,6 +5,7 @@ import android.content.Context;
 
 import com.iflytek.cloud.SpeechConstant;
 import com.iflytek.cloud.SpeechUtility;
+import com.uuzuche.lib_zxing.activity.ZXingLibrary;
 
 import come.evernote.evernote.R;
 
@@ -16,9 +17,10 @@ public class ImpressApp extends Application {
     private  static Context context;
     @Override
     public void onCreate() {
-        SpeechUtility.createUtility(ImpressApp.this, SpeechConstant.APPID + "=580b3054");
         super.onCreate();
+        SpeechUtility.createUtility(ImpressApp.this, SpeechConstant.APPID + "=580b3054");
         context = getApplicationContext();
+        ZXingLibrary.initDisplayOpinion(this);
     }
     public  static Context getContext(){return  context;}
 }

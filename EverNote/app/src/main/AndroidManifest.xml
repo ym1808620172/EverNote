@@ -28,6 +28,24 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+
+
+
+
+
+
+
     <application
         android:name=".controler.app.ImpressApp"
         android:allowBackup="true"
@@ -69,7 +87,7 @@
         <service android:name=".controler.alarm.AlarmService" />
         <service android:name=".controler.alarm.AlarmBootService" />
         <activity android:name=".controler.activity.AreaInfoActivity"></activity>
-        <activity android:name=".controler.activity.AreInfoActivity"></activity>
+        <activity android:name=".controler.activity.QrCodeActivity"></activity>
     </application>
 
 </manifest>

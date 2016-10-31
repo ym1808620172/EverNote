@@ -1,1 +1,1 @@
-include ':app', ':librarys', ':library', ':citypickerview'
+include ':app', ':librarys', ':library', ':citypickerview', ':lib-zxing'
