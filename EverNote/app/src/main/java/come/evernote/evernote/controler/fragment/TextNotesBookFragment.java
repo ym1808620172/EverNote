@@ -1,13 +1,20 @@
 package come.evernote.evernote.controler.fragment;
 
 
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.util.Log;
+import android.widget.ListView;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import come.evernote.evernote.R;
+import come.evernote.evernote.controler.activity.AbsBaseActivity;
+import come.evernote.evernote.controler.adapter.NotesBookAdapter;
+import come.evernote.evernote.model.bean.NoteBookBean;
+import come.evernote.evernote.model.bean.SaveBean;
+import come.evernote.evernote.model.db.LiteOrmInstance;
 
 /**
  * 笔记本界面
@@ -15,12 +22,12 @@ import come.evernote.evernote.R;
 
 public class TextNotesBookFragment extends ABSBaseFragment {
 
+    private ListView listView;
+    private List<NoteBookBean> bean;
+    private Set<String> strings = new HashSet<>();
+
     public static TextNotesBookFragment newInstance() {
-
-        Bundle args = new Bundle();
-
         TextNotesBookFragment fragment = new TextNotesBookFragment();
-        fragment.setArguments(args);
         return fragment;
     }
 
@@ -31,11 +38,27 @@ public class TextNotesBookFragment extends ABSBaseFragment {
 
     @Override
     protected void initView() {
-
+        listView = byView(R.id.notes_book_list);
     }
 
     @Override
     protected void initData() {
-
+        NoteBookBean noteBook = new NoteBookBean();
+        AbsBaseActivity.setTitle("笔记本");
+        AbsBaseActivity.setLeftImg(R.mipmap.notes_book);
+        AbsBaseActivity.setMidImg(R.mipmap.ic_action_message);
+        bean = new ArrayList<>();
+        List<SaveBean> saveBeen = LiteOrmInstance.getLiteOrmInstance().queryAll();
+        for (int i = 0; i < saveBeen.size(); i++) {
+            strings.add(saveBeen.get(i).getNoteName());
+        }
+        for (int i = 0; i < strings.size(); i++) {
+            noteBook.setNoteName(strings.toArray()[i].toString());
+            noteBook.setSize(LiteOrmInstance.getLiteOrmInstance().queryByName(strings.toArray()[i].toString()).size());
+            bean.add(noteBook);
+        }
+        NotesBookAdapter bookAdapter = new NotesBookAdapter(context);
+        listView.setAdapter(bookAdapter);
+        bookAdapter.setList(bean);
     }
 }

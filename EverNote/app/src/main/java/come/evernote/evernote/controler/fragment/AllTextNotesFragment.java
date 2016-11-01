@@ -28,9 +28,7 @@ public class AllTextNotesFragment extends ABSBaseFragment {
     private AllTextNotesAdapter adapter;
 
     public static AllTextNotesFragment newInstance() {
-        Bundle args = new Bundle();
         AllTextNotesFragment fragment = new AllTextNotesFragment();
-        fragment.setArguments(args);
         return fragment;
     }
 
@@ -54,7 +52,6 @@ public class AllTextNotesFragment extends ABSBaseFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 SaveBean saveBean = (SaveBean) parent.getItemAtPosition(position);
                 Bundle bundle = new Bundle();
-                Log.d("ddd", saveBean.getAllContent()+"suiadgb");
                 bundle.putSerializable("saveBean", saveBean);
                 goTo(context, TextNotesActivity.class, bundle);
             }

@@ -75,46 +75,48 @@ public class BiuEditText extends EditText {
 
         int pos = getSelectionStart();
         Layout layout = getLayout();
-        int line = layout.getLineForOffset(pos);
-        int baseline = layout.getLineBaseline(line);
-        int ascent = layout.getLineAscent(line);
+        if (layout!=null){
+            int line = layout.getLineForOffset(pos);
+            int baseline = layout.getLineBaseline(line);
+            int ascent = layout.getLineAscent(line);
 
-        float startX = 0;
-        float startY = 0;
-        float endX = 0;
-        float endY = 0;
-        if (isUp) {
-            startX = layout.getPrimaryHorizontal(pos) + 100;
-            startY = height / 3 * 2;
-            endX = startX;
-            endY = baseline + ascent;
-        } else {
-            endX = new Random().nextInt(contentContainer.getWidth());
-            endY = height / 3 * 2;
-            startX = layout.getPrimaryHorizontal(pos) + 70;
-            startY = baseline + ascent;
+            float startX = 0;
+            float startY = 0;
+            float endX = 0;
+            float endY = 0;
+            if (isUp) {
+                startX = layout.getPrimaryHorizontal(pos) + 100;
+                startY = height / 3 * 2;
+                endX = startX;
+                endY = baseline + ascent;
+            } else {
+                endX = new Random().nextInt(contentContainer.getWidth());
+                endY = height / 3 * 2;
+                startX = layout.getPrimaryHorizontal(pos) + 70;
+                startY = baseline + ascent;
+            }
+
+            final AnimatorSet animSet = new AnimatorSet();
+            ObjectAnimator animX = ObjectAnimator.ofFloat(textView, "translationX", startX, endX);
+            ObjectAnimator animY = ObjectAnimator.ofFloat(textView, "translationY", startY, endY);
+            ObjectAnimator scaleX = ObjectAnimator.ofFloat(textView, "scaleX", 0.6f, 1.2f);
+            ObjectAnimator scaleY = ObjectAnimator.ofFloat(textView, "scaleY", 0.6f, 1.2f);
+
+            animY.setInterpolator(new DecelerateInterpolator());
+            animSet.setDuration(600);
+            animSet.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationStart(Animator animation) {
+                }
+
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    contentContainer.removeView(textView);
+                }
+            });
+            animSet.playTogether(animX, animY, scaleX, scaleY);
+            animSet.start();
         }
-
-        final AnimatorSet animSet = new AnimatorSet();
-        ObjectAnimator animX = ObjectAnimator.ofFloat(textView, "translationX", startX, endX);
-        ObjectAnimator animY = ObjectAnimator.ofFloat(textView, "translationY", startY, endY);
-        ObjectAnimator scaleX = ObjectAnimator.ofFloat(textView, "scaleX", 0.6f, 1.2f);
-        ObjectAnimator scaleY = ObjectAnimator.ofFloat(textView, "scaleY", 0.6f, 1.2f);
-
-        animY.setInterpolator(new DecelerateInterpolator());
-        animSet.setDuration(600);
-        animSet.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                contentContainer.removeView(textView);
-            }
-        });
-        animSet.playTogether(animX, animY, scaleX, scaleY);
-        animSet.start();
     }
 
 

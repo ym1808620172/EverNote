@@ -3,13 +3,11 @@ package come.evernote.evernote.controler.activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.media.MediaRecorder;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.SystemClock;
@@ -138,7 +136,6 @@ public class TextNotesActivity extends AbsBaseActivity implements AdapterView.On
     private String format;
     private List<int[]> imgCurse = new ArrayList<>();
     private LinearLayout bookLl;
-    private List<String> stringList = new ArrayList<>();
 
     @Override
     protected int setLayout() {
@@ -213,13 +210,16 @@ public class TextNotesActivity extends AbsBaseActivity implements AdapterView.On
                     String title = saveBean.getTitle();
                     String allContent = saveBean.getAllContent();
                     String noteName = saveBean.getNoteName();
-                    if (title!=null){
-
+                    if (title != null) {
+                        noteTitle.setText(title);
                     }
-                    if (allContent!=null){
+                    if (allContent != null) {
                         List<String> list = new ArrayList<>();
                         list.add(allContent);
                         editorView.setmContentList(list);
+                    }
+                    if (noteName != null) {
+                        notesBookName.setText(noteName);
                     }
                 }
             }
@@ -433,7 +433,7 @@ public class TextNotesActivity extends AbsBaseActivity implements AdapterView.On
     }
 
     @Override
-    protected void onClickRight() {
+    protected void onClickRight(View v) {
 
     }
 

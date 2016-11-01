@@ -36,6 +36,7 @@ import java.util.List;
 
 import come.evernote.evernote.R;
 import come.evernote.evernote.controler.adapter.DrawerAdapter;
+import come.evernote.evernote.controler.fragment.AllTextNotesFragment;
 import come.evernote.evernote.controler.fragment.TextNotesBookFragment;
 import come.evernote.evernote.controler.fragment.WasteBinFragment;
 import come.evernote.evernote.model.bean.DrawerShowBean;
@@ -49,12 +50,12 @@ import come.evernote.evernote.model.bean.DrawerShowBean;
  */
 public abstract class AbsBaseActivity extends AppCompatActivity implements AMapLocationListener {
     public FrameLayout contentView;//标题栏里的占位布局
-    private ImageView rightImg;//标题栏右侧图片
-    private ImageView leftImg;//标题栏左侧图片
-    private ImageView midImg;//标题栏中间图片
-    private TextView titltTv;//标题栏文字
+    private static ImageView rightImg;//标题栏右侧图片
+    private static ImageView leftImg;//标题栏左侧图片
+    private static ImageView midImg;//标题栏中间图片
+    private static TextView titltTv;//标题栏文字
     private View titlebar;//标题栏布局
-    private ImageView drawerImg;//打开抽屉的图片
+    private static ImageView drawerImg;//打开抽屉的图片
     private List<DrawerShowBean> datas;
     private int index;
     private DrawerAdapter adapter;
@@ -154,9 +155,13 @@ public abstract class AbsBaseActivity extends AppCompatActivity implements AMapL
                     transaction.commit();
                     rootView.closeDrawer(layout);
                 } else if (position == 5) {
-                    transaction.replace(R.id.main_frame_layout, WasteBinFragment.newInstance());
+                    transaction.replace(R.id.main_frame_layout, AllTextNotesFragment.newInstance());
                     manager.popBackStack();
-                    transaction.addToBackStack(null);
+                    transaction.commit();
+                    rootView.closeDrawer(layout);
+                }else if (position==1){
+                    transaction.replace(R.id.main_frame_layout, AllTextNotesFragment.newInstance());
+                    manager.popBackStack();
                     transaction.commit();
                     rootView.closeDrawer(layout);
                 }
@@ -225,7 +230,7 @@ public abstract class AbsBaseActivity extends AppCompatActivity implements AMapL
 
                 @Override
                 public void onClick(View v) {
-                    onClickRight();
+                    onClickRight(v);
                 }
             });
             midImg = (ImageView) findViewById(R.id.base_title_search_img);
@@ -282,8 +287,9 @@ public abstract class AbsBaseActivity extends AppCompatActivity implements AMapL
 
     /**
      * 右侧图片的点击事件
+     * @param v
      */
-    protected abstract void onClickRight();
+    protected abstract void onClickRight(View v);
 
     /**
      * 中间图片的点击事件
@@ -344,7 +350,7 @@ public abstract class AbsBaseActivity extends AppCompatActivity implements AMapL
      *
      * @param visible
      */
-    public void setLeftImgVisible(Boolean visible) {
+    public static void setLeftImgVisible(Boolean visible) {
         if (leftImg != null) {
             if (visible) {
                 leftImg.setVisibility(View.VISIBLE);
@@ -360,7 +366,7 @@ public abstract class AbsBaseActivity extends AppCompatActivity implements AMapL
      *
      * @param visible
      */
-    public void setDrawerImgVisible(Boolean visible) {
+    public static void setDrawerImgVisible(Boolean visible) {
         if (drawerImg != null) {
             if (visible) {
                 drawerImg.setVisibility(View.VISIBLE);
@@ -376,7 +382,7 @@ public abstract class AbsBaseActivity extends AppCompatActivity implements AMapL
      *
      * @param visible
      */
-    public void setRightImgVisible(Boolean visible) {
+    public static void setRightImgVisible(Boolean visible) {
         if (rightImg != null) {
             if (visible) {
                 rightImg.setVisibility(View.VISIBLE);
@@ -392,7 +398,7 @@ public abstract class AbsBaseActivity extends AppCompatActivity implements AMapL
      *
      * @param visible
      */
-    public void setMidImgVisible(Boolean visible) {
+    public static void setMidImgVisible(Boolean visible) {
         if (midImg != null) {
             if (visible) {
                 midImg.setVisibility(View.VISIBLE);
@@ -418,7 +424,7 @@ public abstract class AbsBaseActivity extends AppCompatActivity implements AMapL
      *
      * @param title
      */
-    public void setTitle(String title) {
+    public static void setTitle(String title) {
         if (titltTv != null) {
             if (titltTv != null) {
                 titltTv.setText(title);
@@ -431,7 +437,7 @@ public abstract class AbsBaseActivity extends AppCompatActivity implements AMapL
      *
      * @param imgResource
      */
-    protected void setDrawerImg(int imgResource) {
+    public static void setDrawerImg(int imgResource) {
         if (drawerImg != null) {
             if (drawerImg != null) {
                 drawerImg.setImageResource(imgResource);
@@ -444,7 +450,7 @@ public abstract class AbsBaseActivity extends AppCompatActivity implements AMapL
      *
      * @param imgResource
      */
-    protected void setLeftImg(int imgResource) {
+    public static void setLeftImg(int imgResource) {
         if (leftImg != null) {
             if (leftImg != null) {
                 leftImg.setImageResource(imgResource);
@@ -457,7 +463,7 @@ public abstract class AbsBaseActivity extends AppCompatActivity implements AMapL
      *
      * @param imgResource
      */
-    protected void setRightImg(int imgResource) {
+    public static void setRightImg(int imgResource) {
         if (rightImg != null) {
             if (rightImg != null) {
                 rightImg.setImageResource(imgResource);
@@ -470,7 +476,7 @@ public abstract class AbsBaseActivity extends AppCompatActivity implements AMapL
      *
      * @param imgResource
      */
-    protected void setMidImg(int imgResource) {
+    public static void setMidImg(int imgResource) {
         if (midImg != null) {
             if (midImg != null) {
                 midImg.setImageResource(imgResource);
@@ -510,6 +516,7 @@ public abstract class AbsBaseActivity extends AppCompatActivity implements AMapL
     }
 
     public String getCityText() {
+        Log.d("dddw", forTv.getText().toString()+"");
         return forTv.getText().toString();
     }
 }

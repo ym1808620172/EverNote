@@ -51,7 +51,7 @@ public class LiteOrmInstance {
      */
     public List<SaveBean> queryByName(String title) {
         QueryBuilder<SaveBean> sb = new QueryBuilder<>(SaveBean.class);
-        sb.where("title  = ? ", new Object[]{title});
+        sb.where("noteName  = ? ", new Object[]{title});
         return liteOrm.query(sb);
     }
     public List<SaveBean> queryById(int id) {

@@ -4,12 +4,9 @@ import android.app.ProgressDialog;
 import android.media.MediaRecorder;
 import android.os.Environment;
 import android.os.SystemClock;
-import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.View;
 import android.widget.Chronometer;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -148,7 +145,7 @@ public class RecodingActivity  extends  AbsBaseActivity{
     }
 
     @Override
-    protected void onClickRight() {
+    protected void onClickRight(View v) {
 
     }
 

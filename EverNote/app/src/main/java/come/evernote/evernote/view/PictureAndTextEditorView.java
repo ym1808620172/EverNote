@@ -53,8 +53,6 @@ public class PictureAndTextEditorView extends EditText {
     public PictureAndTextEditorView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
-        initEdit();
-        setlistener();
     }
 
     public PictureAndTextEditorView(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -78,22 +76,24 @@ public class PictureAndTextEditorView extends EditText {
                     int first = str.indexOf(mBitmapTag);
                     int next = str.indexOf(mBitmapTag, first + 1);
                     String substring = str.substring(first, next + 1);
-                    str = str.replace(substring, "*");
-                    Log.d("ddd", str);
+                    String replace = str.replace(substring, "*");
                     String path = substring.replace(mBitmapTag, "");//还原地址字符串
                     Bitmap bitmap = getSmallBitmap(path, 480, 500);
                     //插入图片
                     insertBitmap(path, bitmap);
-                    if (str.indexOf("*") != -1) {
-                        int indexOf = str.indexOf("*");
-                        if (indexOf > 0) {
-                            str = str.replace(str, "*");
-                            SpannableString ss = new SpannableString(str);
-                            append(ss, 0, getIndex());
-                        }else {
-                            //插入文字
-                            SpannableString ss = new SpannableString(str);
-                            append(ss);
+                    if (str.indexOf(mBitmapTag) == -1) {
+                        if (replace.indexOf("*") != -1) {
+                            int indexOf = str.indexOf("*");
+                            if (indexOf > 0) {
+                                replace = replace.replace("*", "");
+                                SpannableString ss = new SpannableString(replace);
+                                append(ss);
+                            } else {
+                                replace = replace.replace("*", "");
+                                SpannableString ss = new SpannableString(replace);
+                                Log.d("ddd", "ss11:" + ss);
+                                append(ss);
+                            }
                         }
                     }
                 } else {
@@ -268,91 +268,5 @@ public class PictureAndTextEditorView extends EditText {
         }
         return inSampleSize;
     }
-
-    private void setlistener() {
-        addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (cacheStr.length() < s.length()) {
-                    char last = s.charAt(s.length() - 1);
-                    update(last, true);
-                } else {
-                    char last = cacheStr.charAt(cacheStr.length() - 1);
-                    update(last, false);
-                }
-                cacheStr = s.toString();
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-    }
-
-    private void update(char last, boolean isUp) {
-        final TextView textView = new TextView(getContext());
-        textView.setTextColor(getResources().getColor(android.R.color.background_dark));
-        textView.setTextSize(30);
-        textView.setText(String.valueOf(last));
-        textView.setGravity(Gravity.CENTER);
-        contentContainer.addView(textView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        textView.measure(0, 0);
-        Layout layout = getLayout();
-        if (layout != null) {
-            int pos = getSelectionStart();
-            int line = layout.getLineForOffset(pos);
-            int baseline = layout.getLineBaseline(line);
-            int ascent = layout.getLineAscent(line);
-
-            float startX = 0;
-            float startY = 0;
-            float endX = 0;
-            float endY = 0;
-            if (isUp) {
-                startX = layout.getPrimaryHorizontal(pos) + 100;
-                startY = height / 3 * 2;
-                endX = startX;
-                endY = baseline + ascent;
-            } else {
-                endX = new Random().nextInt(contentContainer.getWidth());
-                endY = height / 3 * 2;
-                startX = layout.getPrimaryHorizontal(pos) + 70;
-                startY = baseline + ascent;
-            }
-
-            final AnimatorSet animSet = new AnimatorSet();
-            ObjectAnimator animX = ObjectAnimator.ofFloat(textView, "translationX", startX, endX);
-            ObjectAnimator animY = ObjectAnimator.ofFloat(textView, "translationY", startY, endY);
-            ObjectAnimator scaleX = ObjectAnimator.ofFloat(textView, "scaleX", 0.6f, 1.2f);
-            ObjectAnimator scaleY = ObjectAnimator.ofFloat(textView, "scaleY", 0.6f, 1.2f);
-
-            animY.setInterpolator(new DecelerateInterpolator());
-            animSet.setDuration(600);
-            animSet.addListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationStart(Animator animation) {
-                }
-
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    contentContainer.removeView(textView);
-                }
-            });
-            animSet.playTogether(animX, animY, scaleX, scaleY);
-            animSet.start();
-        }
-    }
-
-    private void initEdit() {
-        contentContainer = (ViewGroup) ((Activity) getContext()).findViewById(android.R.id.content);
-        WindowManager windowManager = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
-        height = windowManager.getDefaultDisplay().getHeight();
-    }
-
 
 }

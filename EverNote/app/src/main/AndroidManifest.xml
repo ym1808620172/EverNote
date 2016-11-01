@@ -87,6 +87,8 @@
         <service android:name=".controler.alarm.AlarmService" />
         <service android:name=".controler.alarm.AlarmBootService" />
         <activity android:name=".controler.activity.AreaInfoActivity"></activity>
+        <activity android:name=".controler.activity.AreInfoActivity"></activity>
+        <activity android:name=".snake.Snake"/>
         <activity android:name=".controler.activity.QrCodeActivity"></activity>
     </application>
 
