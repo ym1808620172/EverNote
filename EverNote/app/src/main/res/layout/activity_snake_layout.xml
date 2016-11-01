@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <come.evernote.evernote.snake.SnakeView
+        android:id="@+id/snake"
+        tileSize="12"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/teneight" />
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center_horizontal"
+            android:textColor="#FF0033"
+            android:textSize="24sp"
+            android:visibility="visible" />
+
+        <Button
+            android:id="@+id/play"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10px"
+            android:gravity="center_horizontal"
+            android:text="点击这里开始哦" />
+    </RelativeLayout>
+
+    <AbsoluteLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+
+        <ImageButton
+            android:id="@+id/left"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="100px"
+
+            android:layout_height="100px"
+            android:layout_x="75px"
+            android:layout_y="100px"
+            android:src="@mipmap/left" />
+
+        <ImageButton
+            android:id="@+id/right"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="100px"
+
+            android:layout_height="100px"
+            android:layout_x="175px"
+            android:layout_y="100px"
+            android:src="@mipmap/right" />
+
+        <ImageButton
+            android:id="@+id/up"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="100px"
+
+            android:layout_height="100px"
+            android:layout_x="125px"
+            android:layout_y="50px"
+            android:src="@mipmap/up" />
+
+        <ImageButton
+            android:id="@+id/down"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="100px"
+
+            android:layout_height="100px"
+            android:layout_x="125px"
+            android:layout_y="150px"
+            android:src="@mipmap/down" />
+    </AbsoluteLayout>
+</FrameLayout>

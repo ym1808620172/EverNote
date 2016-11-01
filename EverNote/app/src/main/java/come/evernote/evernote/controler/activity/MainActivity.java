@@ -10,24 +10,11 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
+import android.support.v7.widget.PopupMenu;
+import android.view.Gravity;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.AdapterView;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.amap.api.location.AMapLocation;
-import com.amap.api.location.AMapLocationClient;
-import com.amap.api.location.AMapLocationClientOption;
-import com.amap.api.location.AMapLocationListener;
-import com.lljjcoder.citypickerview.widget.CityPicker;
 import com.wangjie.androidbucket.utils.ABTextUtil;
 import com.wangjie.androidbucket.utils.imageprocess.ABShape;
 import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionButton;
@@ -38,21 +25,15 @@ import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RapidFloating
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import come.evernote.evernote.R;
-import come.evernote.evernote.controler.adapter.DrawerAdapter;
 import come.evernote.evernote.controler.fragment.AllTextNotesFragment;
-import come.evernote.evernote.controler.fragment.TextNotesBookFragment;
-import come.evernote.evernote.controler.fragment.WasteBinFragment;
-import come.evernote.evernote.model.bean.DrawerShowBean;
 import come.evernote.evernote.model.bean.PhotoBean;
+import come.evernote.evernote.snake.Snake;
 
 public class MainActivity extends AbsBaseActivity implements RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener {
-
 
 
     private RapidFloatingActionButton rfaButton;
@@ -142,17 +123,20 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
                 .setIconPressedColor(0xffbf360c)
                 .setWrapper(5)
         );
+        items.add(new RFACLabelItem<Integer>().setLabel("贪吃蛇")
+                .setResId(R.mipmap.icon)
+                .setIconNormalColor(0xff283593)
+                .setIconPressedColor(0xff283593)
+                .setWrapper(6));
 
         rfaContent
                 .setItems(items)
-                .setIconShadowRadius(ABTextUtil.dip2px(this, 5))
+                .setIconShadowRadius(ABTextUtil.dip2px(this, 6))
                 .setIconShadowColor(0xff888888)
-                .setIconShadowDy(ABTextUtil.dip2px(this, 5))
+                .setIconShadowDy(ABTextUtil.dip2px(this, 6))
         ;
         rfabHelper = new RapidFloatingActionHelper(this, rfaLayout, rfaButton, rfaContent).build();
     }
-
-
 
 
     protected void onClickDrawer() {
@@ -160,7 +144,10 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
     }
 
     @Override
-    protected void onClickRight() {
+    protected void onClickRight(View v) {
+        PopupMenu popupMenu = new PopupMenu(this, v);
+        popupMenu.getMenuInflater().inflate(R.menu.activity_main_menu, popupMenu.getMenu());
+        popupMenu.show();
     }
 
     @Override
@@ -202,6 +189,10 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
                 intentActtchenment.setType("*/*");//设置类型，我这里是任意类型，任意后缀的可以这样写。
                 intentActtchenment.addCategory(Intent.CATEGORY_OPENABLE);
                 startActivityForResult(intentActtchenment, 1);
+                break;
+            case 6:
+                intent = new Intent(MainActivity.this, Snake.class);
+                startActivity(intent);
                 break;
 
         }

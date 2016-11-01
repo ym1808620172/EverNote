@@ -3,15 +3,9 @@ package come.evernote.evernote.controler.activity;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import come.evernote.evernote.R;
 
@@ -62,7 +56,7 @@ public class SettingActivity extends AbsBaseActivity {
     }
 
     @Override
-    protected void onClickRight() {
+    protected void onClickRight(View v) {
 
     }
 

@@ -76,7 +76,10 @@
     <string name="menu_delete_text">删除笔记</string>
 
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="mode_ready"></string>
+    <string name="mode_pause"></string>
+    <string name="mode_lose_prefix"></string>
+    <string name="mode_lose_suffix"></string>
+    <string name="snake_layout_text_text"></string>
 
 </resources>

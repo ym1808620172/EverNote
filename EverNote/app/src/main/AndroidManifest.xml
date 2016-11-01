@@ -70,6 +70,7 @@
         <service android:name=".controler.alarm.AlarmBootService" />
         <activity android:name=".controler.activity.AreaInfoActivity"></activity>
         <activity android:name=".controler.activity.AreInfoActivity"></activity>
+        <activity android:name=".snake.Snake"/>
     </application>
 
 </manifest>
