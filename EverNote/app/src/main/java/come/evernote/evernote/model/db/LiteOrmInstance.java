@@ -5,6 +5,7 @@ import com.litesuits.orm.db.assit.QueryBuilder;
 import com.litesuits.orm.db.assit.WhereBuilder;
 
 import java.util.List;
+import java.util.Objects;
 
 import come.evernote.evernote.controler.app.ImpressApp;
 import come.evernote.evernote.model.bean.SaveBean;
@@ -62,6 +63,7 @@ public class LiteOrmInstance {
 
     public List<SaveBean> queryByName(String title, String date) {
         QueryBuilder<SaveBean> sb = new QueryBuilder<>(SaveBean.class);
+        sb.where("title  = ? ", new Object[]{title}).whereAppendAnd().where("data = ?", new String[]{date});
         sb.where("title  = ? ", new Object[]{title}).whereAppendAnd().where("data = ?", new Object[]{date});
         return liteOrm.query(sb);
     }
@@ -77,6 +79,36 @@ public class LiteOrmInstance {
     }
 
     public void delateByNames(String title, int id) {
+        liteOrm.delete(new WhereBuilder(SaveBean.class)
+                .where("title = ?", new Object[]{title})
+                .and()
+                .greaterThan("id", 0)
+                .and().lessThan("id", 10000));
+
+    }
+    public List<SaveBean> queryByName(Object title) {
+        QueryBuilder<SaveBean> sb = new QueryBuilder<>(SaveBean.class);
+        sb.where("title  = ? ", new Object[]{title});
+        return liteOrm.query(sb);
+    }
+
+    public List<SaveBean> queryByName(Objects title,Objects date) {
+        QueryBuilder<SaveBean> sb = new QueryBuilder<>(SaveBean.class);
+        sb.where("title  = ? ", new Object[]{title}).whereAppendAnd().where("data = ?", new Object[]{date});
+        return liteOrm.query(sb);
+    }
+
+
+    /**
+     * 按条件删除
+     */
+    public void delateByName(Object title) {
+        WhereBuilder wb = new WhereBuilder(SaveBean.class);
+        wb.where("title = ?", new Object[]{title});
+        liteOrm.delete(wb);
+    }
+
+    public void delateByNames(Object title, int id) {
         liteOrm.delete(new WhereBuilder(SaveBean.class)
                 .where("title = ?", new Object[]{title})
                 .and()

@@ -14,7 +14,19 @@ import android.support.v7.widget.PopupMenu;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationClientOption;
+import com.amap.api.location.AMapLocationListener;
+import com.lljjcoder.citypickerview.widget.CityPicker;
+import com.uuzuche.lib_zxing.activity.CaptureActivity;
+import com.uuzuche.lib_zxing.activity.CodeUtils;
 import com.wangjie.androidbucket.utils.ABTextUtil;
 import com.wangjie.androidbucket.utils.imageprocess.ABShape;
 import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionButton;
@@ -45,6 +57,12 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
     private FragmentManager manager;
     private FragmentTransaction transaction;
 
+
+    /**
+     * 扫描跳转Activity RequestCode
+     */
+    public static final int REQUEST_CODE = 111;
+
     @Override
     protected int setLayout() {
         return R.layout.activity_main;
@@ -66,6 +84,7 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
         transaction = manager.beginTransaction();
         transaction.replace(R.id.main_frame_layout, AllTextNotesFragment.newInstance());
         transaction.commit();
+        setMidImg(R.mipmap.erweima);
 
     }
 
@@ -149,9 +168,14 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
         popupMenu.getMenuInflater().inflate(R.menu.activity_main_menu, popupMenu.getMenu());
         popupMenu.show();
     }
+    protected void onClickRight() {
+
+    }
 
     @Override
     protected void onClickMid() {
+        Intent intent = new Intent(getApplication(), CaptureActivity.class);
+        startActivityForResult(intent, REQUEST_CODE);
 
     }
 
@@ -234,6 +258,31 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
                 }
                 break;
         }
+
+        /**
+         * 处理二维码扫描结果
+         */
+        if (requestCode == REQUEST_CODE) {
+            //处理扫描结果（在界面上显示）
+            if (null != data) {
+                Bundle bundle = data.getExtras();
+                if (bundle == null) {
+                    return;
+                }
+                if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_SUCCESS) {
+                    String result = bundle.getString(CodeUtils.RESULT_STRING);
+                    // Toast.makeText(this, "解析结果:" + result, Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(MainActivity.this,QrCodeActivity.class);
+                    intent.putExtra("result",result);
+                    startActivity(intent);
+                } else if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_FAILED) {
+                    Toast.makeText(MainActivity.this, "解析二维码失败", Toast.LENGTH_LONG).show();
+                }
+            }
+
+
+        }
+
     }
 
     private String getFileName(String pathandname) {
