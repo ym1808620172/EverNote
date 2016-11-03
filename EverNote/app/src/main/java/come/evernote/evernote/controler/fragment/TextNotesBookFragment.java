@@ -44,13 +44,13 @@ public class TextNotesBookFragment extends ABSBaseFragment {
     protected void initData() {
         NoteBookBean noteBook = new NoteBookBean();
         bean = new ArrayList<>();
-        List<SaveBean> saveBeen = LiteOrmInstance.getLiteOrmInstance("save.db").queryAll();
+        List<SaveBean> saveBeen = LiteOrmInstance.getLiteOrmInstance().queryAll(SaveBean.class);
         for (int i = 0; i < saveBeen.size(); i++) {
             strings.add(saveBeen.get(i).getNoteName());
         }
         for (int i = 0; i < strings.size(); i++) {
             noteBook.setNoteName(strings.toArray()[i].toString());
-            noteBook.setSize(LiteOrmInstance.getLiteOrmInstance("save.db").queryByName(strings.toArray()[i].toString()).size());
+            noteBook.setSize(LiteOrmInstance.getLiteOrmInstance().queryByName(strings.toArray()[i].toString(),SaveBean.class).size());
             bean.add(noteBook);
         }
         NotesBookAdapter bookAdapter = new NotesBookAdapter(context);

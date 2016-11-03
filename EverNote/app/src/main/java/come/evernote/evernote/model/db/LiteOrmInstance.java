@@ -12,23 +12,22 @@ import come.evernote.evernote.model.bean.SaveBean;
 
 /**
  * Created by dllo on 16/10/26.
- *
  */
 public class LiteOrmInstance {
 
     private static LiteOrmInstance liteOrmInstance;
-
+    private static final String DB_NAME = "save.db";
     private LiteOrm liteOrm;
 
-    private LiteOrmInstance(String DB_NAME) {
-        liteOrm = LiteOrm.newSingleInstance(ImpressApp.getContext(), DB_NAME);
+    private LiteOrmInstance() {
+        liteOrm = LiteOrm.newCascadeInstance(ImpressApp.getContext(), DB_NAME);
     }
 
-    public static LiteOrmInstance getLiteOrmInstance(String DB_NAME) {
+    public static LiteOrmInstance getLiteOrmInstance() {
         if (liteOrmInstance == null) {
             synchronized (LiteOrmInstance.class) {
                 if (liteOrmInstance == null) {
-                    liteOrmInstance = new LiteOrmInstance(DB_NAME);
+                    liteOrmInstance = new LiteOrmInstance();
                 }
             }
         }
@@ -40,7 +39,7 @@ public class LiteOrmInstance {
      * 添加数据
      **/
 
-    public void insert(SaveBean sb) {
+    public <T> void insert(T sb) {
         if (liteOrm != null) {
             liteOrm.insert(sb);
         }
@@ -49,22 +48,22 @@ public class LiteOrmInstance {
     /**
      * 按条件查询
      */
-    public List<SaveBean> queryByName(String title) {
-        QueryBuilder<SaveBean> sb = new QueryBuilder<>(SaveBean.class);
+    public <T> List<T> queryByName(String title, Class<T> tClass) {
+        QueryBuilder<T> sb = new QueryBuilder<>(tClass);
         sb.where("noteName  = ? ", new Object[]{title});
-        sb.where("title  = ? ", new Object[]{title});
         return liteOrm.query(sb);
     }
-    public List<SaveBean> queryById(int id) {
-        QueryBuilder<SaveBean> sb = new QueryBuilder<>(SaveBean.class);
+
+    public <T> List<T> queryById(int id, Class<T> tClass) {
+        QueryBuilder<T> sb = new QueryBuilder<>(tClass);
         sb.where("id  = ? ", new Object[]{id});
         return liteOrm.query(sb);
     }
 
 
-    public List<SaveBean> queryByName(String title, String date) {
-        QueryBuilder<SaveBean> sb = new QueryBuilder<>(SaveBean.class);
-        sb.where("title  = ? ", new Object[]{title}).whereAppendAnd().where("data = ?", new String[]{date});
+    public <T> List<T> queryByName(String title, String date, Class<T> tClass) {
+        QueryBuilder<T> sb = new QueryBuilder<>(tClass);
+        sb.where("title  = ? ", new Object[]{title}).whereAppendAnd().where("data = ?", new Object[]{date});
         sb.where("title  = ? ", new Object[]{title}).whereAppendAnd().where("data = ?", new Object[]{date});
         return liteOrm.query(sb);
     }
@@ -73,28 +72,29 @@ public class LiteOrmInstance {
     /**
      * 按条件删除
      */
-    public void delateByName(String title) {
-        WhereBuilder wb = new WhereBuilder(SaveBean.class);
+    public <T> void delateByName(String title, Class<T> tClass) {
+        WhereBuilder wb = new WhereBuilder(tClass);
         wb.where("title = ?", new Object[]{title});
         liteOrm.delete(wb);
     }
 
-    public void delateByNames(String title, int id) {
-        liteOrm.delete(new WhereBuilder(SaveBean.class)
+    public <T> void delateByNames(String title, int id, Class<T> tClass) {
+        liteOrm.delete(new WhereBuilder(tClass)
                 .where("title = ?", new Object[]{title})
                 .and()
                 .greaterThan("id", 0)
                 .and().lessThan("id", 10000));
 
     }
-    public List<SaveBean> queryByName(Object title) {
-        QueryBuilder<SaveBean> sb = new QueryBuilder<>(SaveBean.class);
+
+    public <T> List<T> queryByName(Object title, Class<T> tClass) {
+        QueryBuilder<T> sb = new QueryBuilder<>(tClass);
         sb.where("title  = ? ", new Object[]{title});
         return liteOrm.query(sb);
     }
 
-    public List<SaveBean> queryByName(Objects title,Objects date) {
-        QueryBuilder<SaveBean> sb = new QueryBuilder<>(SaveBean.class);
+    public <T> List<T> queryByName(Objects title, Objects date, Class<T> tClass) {
+        QueryBuilder<T> sb = new QueryBuilder<>(tClass);
         sb.where("title  = ? ", new Object[]{title}).whereAppendAnd().where("data = ?", new Object[]{date});
         return liteOrm.query(sb);
     }
@@ -103,14 +103,14 @@ public class LiteOrmInstance {
     /**
      * 按条件删除
      */
-    public void delateByName(Object title) {
-        WhereBuilder wb = new WhereBuilder(SaveBean.class);
+    public <T> void delateByName(Object title, Class<T> tClass) {
+        WhereBuilder wb = new WhereBuilder(tClass);
         wb.where("title = ?", new Object[]{title});
         liteOrm.delete(wb);
     }
 
-    public void delateByNames(Object title, int id) {
-        liteOrm.delete(new WhereBuilder(SaveBean.class)
+    public <T> void delateByNames(Object title, int id, Class<T> tClass) {
+        liteOrm.delete(new WhereBuilder(tClass)
                 .where("title = ?", new Object[]{title})
                 .and()
                 .greaterThan("id", 0)
@@ -152,15 +152,24 @@ public class LiteOrmInstance {
     /**
      * 删除所有
      */
-    public void delateAll() {
-        liteOrm.deleteAll(SaveBean.class);
+    public <T> void delateAll(Class<T> tClass) {
+        liteOrm.deleteAll(tClass);
+    }
+
+    /**
+     * 按条件删除
+     */
+    public <T> void deleteById(int id,Class<T> tClass) {
+        WhereBuilder wb = new WhereBuilder(tClass);
+        wb.where("id = ?", new int[]{id});
+        liteOrm.delete(wb);
     }
 
     /**
      * 查询所有
      */
-    public List<SaveBean> queryAll() {
-        return liteOrm.query(SaveBean.class);
+    public <T> List<T> queryAll(Class<T> tClass) {
+        return liteOrm.query(tClass);
     }
 }
 

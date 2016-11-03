@@ -37,6 +37,7 @@ import come.evernote.evernote.R;
 import come.evernote.evernote.controler.adapter.DrawerAdapter;
 import come.evernote.evernote.controler.fragment.AllTextNotesFragment;
 import come.evernote.evernote.controler.fragment.TextNotesBookFragment;
+import come.evernote.evernote.controler.fragment.WasteBinFragment;
 import come.evernote.evernote.model.bean.DrawerShowBean;
 
 
@@ -153,12 +154,13 @@ public abstract class AbsBaseActivity extends AppCompatActivity implements AMapL
                     transaction.commit();
                     rootView.closeDrawer(layout);
                 } else if (position == 5) {
-                    transaction.replace(R.id.main_frame_layout, AllTextNotesFragment.newInstance(5));
+                    transaction.replace(R.id.main_frame_layout, WasteBinFragment.newInstance());
                     manager.popBackStack();
+                    transaction.addToBackStack(null);
                     transaction.commit();
                     rootView.closeDrawer(layout);
                 } else if (position == 1) {
-                    transaction.replace(R.id.main_frame_layout, AllTextNotesFragment.newInstance(1));
+                    transaction.replace(R.id.main_frame_layout, AllTextNotesFragment.newInstance());
                     manager.popBackStack();
                     transaction.commit();
                     rootView.closeDrawer(layout);

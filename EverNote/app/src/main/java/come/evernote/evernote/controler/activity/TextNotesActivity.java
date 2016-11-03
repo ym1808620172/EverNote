@@ -187,7 +187,7 @@ public class TextNotesActivity extends AbsBaseActivity implements AdapterView.On
         noteBook.setOnClickListener(this);
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);//抽屉关闭手势滑动
         editorView = byView(R.id.notes_text_content_et);
-        EventBus.getDefault().register(this);//注册Eventbus
+//        EventBus.getDefault().register(this);//注册Eventbus
 
         btnStart = byView(R.id.recording_btn_start);
         recordChronometer =byView(R.id.recoding_chronometer);
@@ -860,7 +860,7 @@ public class TextNotesActivity extends AbsBaseActivity implements AdapterView.On
                         } else {
                             saveBean.setTitle(noteTitle.getText().toString());
                         }
-                        LiteOrmInstance.getLiteOrmInstance("save.db").insert(saveBean);
+                        LiteOrmInstance.getLiteOrmInstance().insert(saveBean);
 
                         finish();
                     }

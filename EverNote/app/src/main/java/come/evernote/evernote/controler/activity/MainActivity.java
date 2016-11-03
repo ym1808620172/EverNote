@@ -72,7 +72,7 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
         //设置当前界面
         manager = getSupportFragmentManager();
         transaction = manager.beginTransaction();
-        transaction.replace(R.id.main_frame_layout, AllTextNotesFragment.newInstance(1));
+        transaction.replace(R.id.main_frame_layout, AllTextNotesFragment.newInstance());
         transaction.commit();
         setMidImg(R.mipmap.erweima);
     }
