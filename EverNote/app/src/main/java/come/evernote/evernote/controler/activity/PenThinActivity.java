@@ -5,7 +5,6 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -68,7 +67,6 @@ public class PenThinActivity extends AbsBaseActivity implements View.OnClickList
         linearLayout.addView(mPaintView);
         mPaintView.requestFocus();
         eventBus = EventBus.getDefault();//初始化Eventbus
-
     }
 
     @Override
@@ -98,14 +96,15 @@ public class PenThinActivity extends AbsBaseActivity implements View.OnClickList
         switch (view.getId()) {
 
             case R.id.item_pen_thin_return:
-                if (mPaintView.getPath().isEmpty()) {
-                    Toast.makeText(this, "请写下大名", Toast.LENGTH_SHORT).show();
+                if (mPaintView.getPath() != null) {
+                    if (mPaintView.getPath().isEmpty()) {
 
-                } else {
-                    Bitmap bitmap = mPaintView.getPaintBitmap();
-                    PhotoBean bean = new PhotoBean();
-                    bean.setBitmap(getBytes(bitmap));
-                    eventBus.post(bean);
+                    } else {
+                        Bitmap bitmap = mPaintView.getPaintBitmap();
+                        PhotoBean bean = new PhotoBean();
+                        bean.setBitmap(getBytes(bitmap));
+                        eventBus.post(bean);
+                    }
                 }
                 finish();
                 break;
@@ -140,13 +139,14 @@ public class PenThinActivity extends AbsBaseActivity implements View.OnClickList
                 }
                 break;
             case R.id.item_pen_thin_undo:
-                if (!isClick) {
-                    undoIv.setSelected(true);
-                    isClick = true;
-                } else if (isClick) {
-                    undoIv.setSelected(false);
-                    isClick = false;
-                }
+//                if (!isClick) {
+//                    undoIv.setSelected(true);
+                    mPaintView.undo();
+//                    isClick = true;
+//                } else if (isClick) {
+//                    undoIv.setSelected(false);
+//                    isClick = false;
+//                }
                 break;
             case R.id.item_pen_thin_redo:
                 if (!isClick) {
@@ -173,5 +173,6 @@ public class PenThinActivity extends AbsBaseActivity implements View.OnClickList
         bitmap.compress(Bitmap.CompressFormat.PNG, 0, baos);//压缩位图
         return baos.toByteArray();//创建分配字节数组
     }
+
 
 }

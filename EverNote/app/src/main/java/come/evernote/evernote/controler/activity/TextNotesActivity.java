@@ -126,8 +126,7 @@ public class TextNotesActivity extends AbsBaseActivity implements AdapterView.On
     private MediaRecorder mr = null;
     private long recordingTime = 0;// 记录下来的时间
     private long exitTime = 0;
-
-
+    private LinearLayout noteBook;//我的第一个笔记本
     // 进度对话框
     private ProgressDialog progressDialog;
     private TextView notesBookName;
@@ -173,6 +172,7 @@ public class TextNotesActivity extends AbsBaseActivity implements AdapterView.On
     }
 
     private void setListeren() {
+        noteBook = byView(R.id.notes_text_book_layout);
         menuIv.setOnClickListener(this);
         aboutTv.setOnClickListener(this);
         formattingIv.setOnClickListener(this);
@@ -184,6 +184,14 @@ public class TextNotesActivity extends AbsBaseActivity implements AdapterView.On
         shareIv.setOnClickListener(this);
         timeIv.setOnClickListener(this);
         bookLl.setOnClickListener(this);
+        noteBook.setOnClickListener(this);
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);//抽屉关闭手势滑动
+        editorView = byView(R.id.notes_text_content_et);
+        EventBus.getDefault().register(this);//注册Eventbus
+
+        btnStart = byView(R.id.recording_btn_start);
+        recordChronometer =byView(R.id.recoding_chronometer);
+
     }
 
     @Override
@@ -637,9 +645,11 @@ public class TextNotesActivity extends AbsBaseActivity implements AdapterView.On
                 Intent intent = new Intent(TextNotesActivity.this, RemendPopActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.notes_text_book_layout:
-
+            case R.id.notes_text_book_layout://第一个笔记本
+                Intent noteIntent = new Intent(TextNotesActivity.this,NoteBookActivity.class);
+                startActivity(noteIntent);
                 break;
+
         }
 
     }

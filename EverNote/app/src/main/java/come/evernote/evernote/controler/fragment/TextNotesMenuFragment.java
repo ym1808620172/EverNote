@@ -1,5 +1,6 @@
 package come.evernote.evernote.controler.fragment;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -24,6 +25,7 @@ public class TextNotesMenuFragment extends ABSBaseFragment implements View.OnCli
     private LinearLayout simplifiedLayout;//简化格式
     private LinearLayout settingLayout;//设置
     private LinearLayout deleteLayout;//删除笔记
+    private ProgressDialog progressDialog;
 
     public static TextNotesMenuFragment newInstance() {
 
@@ -61,6 +63,8 @@ public class TextNotesMenuFragment extends ABSBaseFragment implements View.OnCli
         settingLayout.setOnClickListener(this);
         deleteLayout.setOnClickListener(this);
         screenLayout.setOnClickListener(this);
+        progressDialog = new ProgressDialog(context);
+        progressDialog.setMessage("正在保存笔记...");
 
     }
 
@@ -77,12 +81,14 @@ public class TextNotesMenuFragment extends ABSBaseFragment implements View.OnCli
                 break;
             case R.id.menu_share:
                 Toast.makeText(context, "共享笔记", Toast.LENGTH_SHORT).show();
+                progressDialog.show();
                 break;
             case R.id.menu_search:
                 Toast.makeText(context, "笔记内搜索", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.menu_connection:
                 Toast.makeText(context, "复制笔记本连接", Toast.LENGTH_SHORT).show();
+                progressDialog.show();
                 break;
             case R.id.menu_duplicate:
                 Toast.makeText(context, "复制", Toast.LENGTH_SHORT).show();
@@ -104,6 +110,18 @@ public class TextNotesMenuFragment extends ABSBaseFragment implements View.OnCli
                 break;
 
         }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(2000);
+                    progressDialog.dismiss();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }).start();
 
     }
 }
