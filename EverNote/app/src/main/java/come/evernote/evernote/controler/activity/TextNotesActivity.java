@@ -78,10 +78,7 @@ public class TextNotesActivity extends AbsBaseActivity implements AdapterView.On
     private ImageView attachIv;//附加
     private ImageView penThinIv;//笔薄
     private ImageView shareIv;//分享
-
     private ImageView doImg;
-
-
     //抽屉
     private DrawerLayout drawerLayout;//根布局
     private LinearLayout layout;//抽屉的布局
@@ -121,8 +118,7 @@ public class TextNotesActivity extends AbsBaseActivity implements AdapterView.On
     private boolean isStart = false;
     private MediaRecorder mr = null;
     private long recordingTime = 0;// 记录下来的时间
-
-
+    private LinearLayout noteBook;//我的第一个笔记本
     // 进度对话框
     private ProgressDialog progressDialog;
     @Override
@@ -149,6 +145,7 @@ public class TextNotesActivity extends AbsBaseActivity implements AdapterView.On
         listView = byView(R.id.attach_drawer_bottom_list_view);
         timeIv = byView(R.id.notes_text_time_img);
         textView = byView(R.id.recoding_chronometer);
+        noteBook = byView(R.id.notes_text_book_layout);
         menuIv.setOnClickListener(this);
         aboutTv.setOnClickListener(this);
         formattingIv.setOnClickListener(this);
@@ -159,6 +156,7 @@ public class TextNotesActivity extends AbsBaseActivity implements AdapterView.On
         penThinIv.setOnClickListener(this);
         shareIv.setOnClickListener(this);
         timeIv.setOnClickListener(this);
+        noteBook.setOnClickListener(this);
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);//抽屉关闭手势滑动
         editorView = byView(R.id.notes_text_content_et);
         EventBus.getDefault().register(this);//注册Eventbus
@@ -566,7 +564,6 @@ public class TextNotesActivity extends AbsBaseActivity implements AdapterView.On
                 }
                 break;
             case R.id.item_text_notes_attach_iv://附件
-//                Log.d("aaa", "mBehavior.111():" + mBehavior.getState()+"aa");
                 if (!isPopupClick) {
                     attachIv.setSelected(true);
                     if (mBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED) {
@@ -589,6 +586,11 @@ public class TextNotesActivity extends AbsBaseActivity implements AdapterView.On
                 Intent intent = new Intent(TextNotesActivity.this, RemendPopActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.notes_text_book_layout://第一个笔记本
+                Intent noteIntent = new Intent(TextNotesActivity.this,NoteBookActivity.class);
+                startActivity(noteIntent);
+                break;
+
         }
 
     }

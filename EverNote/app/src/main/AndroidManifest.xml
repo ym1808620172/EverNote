@@ -70,6 +70,10 @@
         <service android:name=".controler.alarm.AlarmBootService" />
         <activity android:name=".controler.activity.AreaInfoActivity"></activity>
         <activity android:name=".controler.activity.AreInfoActivity"></activity>
+        <activity android:name=".controler.activity.NoteBookActivity"
+            android:theme="@style/translucentActivity"/>
+        <activity android:name=".controler.activity.NewNotesBookActivity"
+            android:theme="@style/translucentActivity"/>
     </application>
 
 </manifest>

@@ -51,13 +51,13 @@ public class LiteOrmInstance {
      */
     public List<SaveBean> queryByName(String title) {
         QueryBuilder<SaveBean> sb = new QueryBuilder<>(SaveBean.class);
-        sb.where("title  = ? ", new String[]{title});
+        sb.where("title  = ? ", new Object[]{title});
         return liteOrm.query(sb);
     }
 
     public List<SaveBean> queryByName(String title, String date) {
         QueryBuilder<SaveBean> sb = new QueryBuilder<>(SaveBean.class);
-        sb.where("title  = ? ", new String[]{title}).whereAppendAnd().where("data = ?", new String[]{date});
+        sb.where("title  = ? ", new Object[]{title}).whereAppendAnd().where("data = ?", new Object[]{date});
         return liteOrm.query(sb);
     }
 
@@ -67,13 +67,13 @@ public class LiteOrmInstance {
      */
     public void delateByName(String title) {
         WhereBuilder wb = new WhereBuilder(SaveBean.class);
-        wb.where("title = ?", new String[]{title});
+        wb.where("title = ?", new Object[]{title});
         liteOrm.delete(wb);
     }
 
     public void delateByNames(String title, int id) {
         liteOrm.delete(new WhereBuilder(SaveBean.class)
-                .where("title = ?", new String[]{title})
+                .where("title = ?", new Object[]{title})
                 .and()
                 .greaterThan("id", 0)
                 .and().lessThan("id", 10000));

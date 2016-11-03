@@ -13,6 +13,10 @@ import android.graphics.PorterDuffXfermode;
 import android.view.MotionEvent;
 import android.view.View;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 /**
  * 自定义画笔
  */
@@ -21,7 +25,6 @@ public class PaintView extends View {
     private Path mPath;
     private Bitmap mBitmap;
     private Canvas mCanvas;
-
     private int screenWidth, screenHeight;
     private float currentX, currentY;
     private float x ,y;
@@ -30,6 +33,9 @@ public class PaintView extends View {
     private int Pen = 1;
     private int Eraser = 2;
     private static final float TOUCH_TOLERANCE = 4;
+    private static List<DrawPath> savePath;// 保存Path路径的集合,用List集合来模拟栈
+    private DrawPath dp;//记录Path路劲的对象
+
 
     public void setmMode(int mMode) {
         this.mMode = mMode;
@@ -62,6 +68,11 @@ public class PaintView extends View {
         mPath = new Path();
         mBitmap = Bitmap.createBitmap(screenWidth, screenHeight, Config.ARGB_8888);
         mCanvas = new Canvas(mBitmap);
+        savePath = new ArrayList<DrawPath>();
+
+    }
+    public List<DrawPath> List(){
+        return savePath;
     }
 
     @Override
@@ -106,6 +117,7 @@ public class PaintView extends View {
         if (mMode == Eraser) {
             mCanvas.drawPath(mPath, paint);
         }
+        savePath.add(dp);
     }
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -114,6 +126,10 @@ public class PaintView extends View {
 
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
+                mPath = new Path();
+                dp = new DrawPath();
+                dp.path = mPath;
+                dp.Tpaint = mPaint;
                 touch_start(x,y);
                 invalidate();
 
@@ -121,12 +137,11 @@ public class PaintView extends View {
             case MotionEvent.ACTION_MOVE:
                 touch_move(x,y);
                 invalidate();
-
                 break;
             case MotionEvent.ACTION_UP:
                 touch_up();
                 invalidate();
-
+                mPath = null;
                 break;
         }
 
@@ -164,4 +179,24 @@ public class PaintView extends View {
             invalidate();
         }
     }
+    public void undo() {
+        mBitmap = Bitmap.createBitmap(screenWidth, screenHeight, Config.ARGB_8888);
+        mCanvas.setBitmap(mBitmap);
+        if (savePath != null && savePath.size() > 0) {
+            savePath.remove(savePath.size() - 1);
+
+            Iterator<DrawPath> iterator = savePath.iterator();
+            while (iterator.hasNext()) {
+                DrawPath drawPath = iterator.next();
+                mCanvas.drawPath(drawPath.path, drawPath.Tpaint);
+            }
+            invalidate();
+        }
+    }
+    private class DrawPath{
+        public Path path;
+        public Paint Tpaint;
+    }
+
+
 }
