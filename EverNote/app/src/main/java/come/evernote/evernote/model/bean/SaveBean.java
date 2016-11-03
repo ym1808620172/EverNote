@@ -2,11 +2,14 @@ package come.evernote.evernote.model.bean;
 
 import android.graphics.Bitmap;
 
+import com.litesuits.orm.db.annotation.Mapping;
 import com.litesuits.orm.db.annotation.PrimaryKey;
 import com.litesuits.orm.db.annotation.Table;
 import com.litesuits.orm.db.enums.AssignType;
+import com.litesuits.orm.db.enums.Relation;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -57,23 +60,6 @@ public class SaveBean implements Serializable {
         this.date = date;
     }
 
-//    public SaveBean(int id, String title, String content, String date, List<byte[]> bitmap) {
-//        this.id = id;
-//        this.title = title;
-//        this.content = content;
-//        this.date = date;
-//        this.bitmap = bitmap;
-//    }
-
-//    public List<byte[]> getBitmap() {
-//        return bitmap;
-//    }
-//
-//    public void setBitmap(List<byte[]> bitmap) {
-//        this.bitmap = bitmap;
-//    }
-
-
     public String getAllContent() {
         return allContent;
     }
@@ -123,3 +109,4 @@ public class SaveBean implements Serializable {
     }
 
 }
+

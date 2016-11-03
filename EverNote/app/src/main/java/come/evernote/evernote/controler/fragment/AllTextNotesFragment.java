@@ -1,7 +1,9 @@
 package come.evernote.evernote.controler.fragment;
 
 
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +19,7 @@ import come.evernote.evernote.R;
 import come.evernote.evernote.controler.activity.AbsBaseActivity;
 import come.evernote.evernote.controler.activity.TextNotesActivity;
 import come.evernote.evernote.controler.adapter.AllTextNotesAdapter;
+import come.evernote.evernote.model.bean.NoteNameBean;
 import come.evernote.evernote.model.bean.SaveBean;
 import come.evernote.evernote.model.db.LiteOrmInstance;
 import come.evernote.evernote.view.ListViewForScrollView;
@@ -27,14 +30,10 @@ public class AllTextNotesFragment extends ABSBaseFragment {
     private ListView listView;
     private RelativeLayout emityRl;
     private AllTextNotesAdapter adapter;
-    private static final String WHICH_FRAGMENT = "which";
 
-    public static AllTextNotesFragment newInstance(int index) {
+    public static AllTextNotesFragment newInstance() {
 
-        Bundle args = new Bundle();
-        args.putInt(WHICH_FRAGMENT,index);
         AllTextNotesFragment fragment = new AllTextNotesFragment();
-        fragment.setArguments(args);
         return fragment;
     }
 
@@ -52,6 +51,7 @@ public class AllTextNotesFragment extends ABSBaseFragment {
     @Override
     protected void initData() {
         adapter = new AllTextNotesAdapter(context);
+        final NoteNameBean bean = new NoteNameBean();
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -62,12 +62,42 @@ public class AllTextNotesFragment extends ABSBaseFragment {
                 goTo(context, TextNotesActivity.class, bundle);
             }
         });
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                final SaveBean saveBeen = (SaveBean) parent.getItemAtPosition(position);
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setMessage("是否删除该数据");
+                builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        LiteOrmInstance.getLiteOrmInstance().deleteById(bean.getId(),SaveBean.class);
+                        bean.setNoteName(saveBeen.getNoteName());
+                        bean.setTitle(saveBeen.getTitle());
+                        bean.setAllContent(saveBeen.getAllContent());
+                        bean.setBitmap(saveBeen.getBitmap());
+                        bean.setDate(saveBeen.getDate());
+                        bean.setContent(saveBeen.getContent());
+                        LiteOrmInstance.getLiteOrmInstance().insert(bean);
+                        adapter.notifyDataSetChanged();
+                    }
+                });
+                builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                builder.create().show();
+                return true;
+            }
+        });
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        List<SaveBean> been = LiteOrmInstance.getLiteOrmInstance("save.db").queryAll();
+        List<SaveBean> been = LiteOrmInstance.getLiteOrmInstance().queryAll(SaveBean.class);
         if (been.size() > 0) {
             emityRl.setVisibility(View.GONE);
             listView.setVisibility(View.VISIBLE);
@@ -76,15 +106,6 @@ public class AllTextNotesFragment extends ABSBaseFragment {
             listView.setVisibility(View.GONE);
             emityRl.setVisibility(View.VISIBLE);
         }
-        Bundle bundle = getArguments();
-        int index = bundle.getInt(WHICH_FRAGMENT);
-        switch (index){
-            case 1:
-                AbsBaseActivity.setTitle("全部笔记");
-                break;
-            case 5:
-                AbsBaseActivity.setTitle("废纸篓");
-                break;
-        }
+        AbsBaseActivity.setTitle("全部笔记");
     }
 }

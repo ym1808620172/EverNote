@@ -5,13 +5,31 @@
     android:orientation="vertical"
     tools:context="come.evernote.evernote.controler.fragment.WasteBinFragment">
     <ListView
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/waste_bin_list"/>
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/waste_empty_rl"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    </LinearLayout>
+        <TextView
+            android:id="@+id/waste_empty_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_margin="10dp"
+            android:text="废纸篓空空如也"
+            android:textColor="#000" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/waste_empty_tv"
+            android:layout_centerHorizontal="true"
+            android:src="@mipmap/waste" />
+    </RelativeLayout>
 
 </LinearLayout>
