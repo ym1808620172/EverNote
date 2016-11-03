@@ -11,7 +11,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -38,7 +37,6 @@ import come.evernote.evernote.R;
 import come.evernote.evernote.controler.adapter.DrawerAdapter;
 import come.evernote.evernote.controler.fragment.AllTextNotesFragment;
 import come.evernote.evernote.controler.fragment.TextNotesBookFragment;
-import come.evernote.evernote.controler.fragment.WasteBinFragment;
 import come.evernote.evernote.model.bean.DrawerShowBean;
 
 
@@ -155,16 +153,17 @@ public abstract class AbsBaseActivity extends AppCompatActivity implements AMapL
                     transaction.commit();
                     rootView.closeDrawer(layout);
                 } else if (position == 5) {
-                    transaction.replace(R.id.main_frame_layout, AllTextNotesFragment.newInstance());
+                    transaction.replace(R.id.main_frame_layout, AllTextNotesFragment.newInstance(5));
                     manager.popBackStack();
                     transaction.commit();
                     rootView.closeDrawer(layout);
-                }else if (position==1){
-                    transaction.replace(R.id.main_frame_layout, AllTextNotesFragment.newInstance());
+                } else if (position == 1) {
+                    transaction.replace(R.id.main_frame_layout, AllTextNotesFragment.newInstance(1));
                     manager.popBackStack();
                     transaction.commit();
                     rootView.closeDrawer(layout);
                 }
+                MainActivity.FloatingBtnShow(position);
                 index = position - 1;
                 adapter.setIndex(index);
                 adapter.notifyDataSetChanged();
@@ -287,6 +286,7 @@ public abstract class AbsBaseActivity extends AppCompatActivity implements AMapL
 
     /**
      * 右侧图片的点击事件
+     *
      * @param v
      */
     protected abstract void onClickRight(View v);
@@ -516,7 +516,7 @@ public abstract class AbsBaseActivity extends AppCompatActivity implements AMapL
     }
 
     public String getCityText() {
-        Log.d("dddw", forTv.getText().toString()+"");
+        Log.d("dddw", forTv.getText().toString() + "");
         return forTv.getText().toString();
     }
 }

@@ -17,18 +17,18 @@ import come.evernote.evernote.model.bean.SaveBean;
 public class LiteOrmInstance {
 
     private static LiteOrmInstance liteOrmInstance;
-    private static final String DB_NAME = "save.db";
+
     private LiteOrm liteOrm;
 
-    private LiteOrmInstance() {
+    private LiteOrmInstance(String DB_NAME) {
         liteOrm = LiteOrm.newSingleInstance(ImpressApp.getContext(), DB_NAME);
     }
 
-    public static LiteOrmInstance getLiteOrmInstance() {
+    public static LiteOrmInstance getLiteOrmInstance(String DB_NAME) {
         if (liteOrmInstance == null) {
             synchronized (LiteOrmInstance.class) {
                 if (liteOrmInstance == null) {
-                    liteOrmInstance = new LiteOrmInstance();
+                    liteOrmInstance = new LiteOrmInstance(DB_NAME);
                 }
             }
         }
