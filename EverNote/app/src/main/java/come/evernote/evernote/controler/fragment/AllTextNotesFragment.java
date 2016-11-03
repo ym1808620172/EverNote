@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import come.evernote.evernote.R;
+import come.evernote.evernote.controler.activity.AbsBaseActivity;
 import come.evernote.evernote.controler.activity.TextNotesActivity;
 import come.evernote.evernote.controler.adapter.AllTextNotesAdapter;
 import come.evernote.evernote.model.bean.SaveBean;
@@ -26,9 +27,14 @@ public class AllTextNotesFragment extends ABSBaseFragment {
     private ListView listView;
     private RelativeLayout emityRl;
     private AllTextNotesAdapter adapter;
+    private static final String WHICH_FRAGMENT = "which";
 
-    public static AllTextNotesFragment newInstance() {
+    public static AllTextNotesFragment newInstance(int index) {
+
+        Bundle args = new Bundle();
+        args.putInt(WHICH_FRAGMENT,index);
         AllTextNotesFragment fragment = new AllTextNotesFragment();
+        fragment.setArguments(args);
         return fragment;
     }
 
@@ -61,7 +67,7 @@ public class AllTextNotesFragment extends ABSBaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        List<SaveBean> been = LiteOrmInstance.getLiteOrmInstance().queryAll();
+        List<SaveBean> been = LiteOrmInstance.getLiteOrmInstance("save.db").queryAll();
         if (been.size() > 0) {
             emityRl.setVisibility(View.GONE);
             listView.setVisibility(View.VISIBLE);
@@ -69,6 +75,16 @@ public class AllTextNotesFragment extends ABSBaseFragment {
         } else {
             listView.setVisibility(View.GONE);
             emityRl.setVisibility(View.VISIBLE);
+        }
+        Bundle bundle = getArguments();
+        int index = bundle.getInt(WHICH_FRAGMENT);
+        switch (index){
+            case 1:
+                AbsBaseActivity.setTitle("全部笔记");
+                break;
+            case 5:
+                AbsBaseActivity.setTitle("废纸篓");
+                break;
         }
     }
 }

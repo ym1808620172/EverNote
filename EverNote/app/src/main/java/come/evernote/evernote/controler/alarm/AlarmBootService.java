@@ -34,7 +34,6 @@ public class AlarmBootService extends Service {
 
     @Override
     public void onCreate() {
-        System.out.println(">>> boot service success <<<");
     }
 
     @Override

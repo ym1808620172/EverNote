@@ -580,18 +580,15 @@ public class TextNotesActivity extends AbsBaseActivity implements AdapterView.On
                 } else if (isClick) {
                     leftIv.setSelected(false);
                     isClick = false;
-
                 }
                 break;
             case R.id.item_formatting_popup_window_right_iv://右侧缩进
                 if (!isClick) {
                     rightIv.setSelected(true);
                     isClick = true;
-
                 } else if (isClick) {
                     rightIv.setSelected(false);
                     isClick = false;
-
                 }
                 break;
             case R.id.item_text_notes_done_iv://完成返回
@@ -601,6 +598,12 @@ public class TextNotesActivity extends AbsBaseActivity implements AdapterView.On
                 } else if (isPopupClick) {
                     doneIv.setSelected(false);
                     isPopupClick = false;
+                    if (editTextContent.isEmpty()) {
+                        finish();
+                    } else {
+                        editTextContent = editorView.getText().toString();
+                        setDialog();
+                    }
                 }
                 break;
             case R.id.item_text_notes_left_undo_iv://撤销
@@ -611,7 +614,6 @@ public class TextNotesActivity extends AbsBaseActivity implements AdapterView.On
                     underIv.setSelected(false);
                     isPopupClick = false;
                 }
-
                 break;
             case R.id.item_text_notes_right_redo_iv://撤销
                 if (!isPopupClick) {
@@ -628,7 +630,6 @@ public class TextNotesActivity extends AbsBaseActivity implements AdapterView.On
                     if (mBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED) {
                         mBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
                     }
-
                     isPopupClick = true;
                 } else if (isPopupClick) {
                     attachIv.setSelected(false);
@@ -859,7 +860,7 @@ public class TextNotesActivity extends AbsBaseActivity implements AdapterView.On
                         } else {
                             saveBean.setTitle(noteTitle.getText().toString());
                         }
-                        LiteOrmInstance.getLiteOrmInstance().insert(saveBean);
+                        LiteOrmInstance.getLiteOrmInstance("save.db").insert(saveBean);
 
                         finish();
                     }

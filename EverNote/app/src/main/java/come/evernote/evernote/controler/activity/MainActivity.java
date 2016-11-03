@@ -11,20 +11,10 @@ import android.provider.MediaStore;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.PopupMenu;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.amap.api.location.AMapLocation;
-import com.amap.api.location.AMapLocationClient;
-import com.amap.api.location.AMapLocationClientOption;
-import com.amap.api.location.AMapLocationListener;
-import com.lljjcoder.citypickerview.widget.CityPicker;
 import com.uuzuche.lib_zxing.activity.CaptureActivity;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
 import com.wangjie.androidbucket.utils.ABTextUtil;
@@ -48,9 +38,9 @@ import come.evernote.evernote.snake.Snake;
 public class MainActivity extends AbsBaseActivity implements RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener {
 
 
-    private RapidFloatingActionButton rfaButton;
+    private static RapidFloatingActionButton rfaButton;
     private RapidFloatingActionHelper rfabHelper;
-    private RapidFloatingActionLayout rfaLayout;
+    private static RapidFloatingActionLayout rfaLayout;
     private static final int CAMERA_WITH_DATA = 3023;
 
     private FrameLayout mainFl;
@@ -70,7 +60,6 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
 
     @Override
     protected void initView() {
-
         rfaLayout = byView(R.id.label_list_sample_rfal);
         rfaButton = byView(R.id.label_list_sample_rfab);
         mainFl = byView(R.id.main_frame_layout);
@@ -80,12 +69,19 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
     protected void initDatas() {
         //设置卫星菜单
         setFloatingBtn();
+        //设置当前界面
         manager = getSupportFragmentManager();
         transaction = manager.beginTransaction();
-        transaction.replace(R.id.main_frame_layout, AllTextNotesFragment.newInstance());
+        transaction.replace(R.id.main_frame_layout, AllTextNotesFragment.newInstance(1));
         transaction.commit();
         setMidImg(R.mipmap.erweima);
-
+    }
+    public static void FloatingBtnShow(int which){
+        if (which==1){
+            rfaButton.setVisibility(View.VISIBLE);
+        }else {
+            rfaButton.setVisibility(View.GONE);
+        }
     }
 
     private void setFloatingBtn() {
@@ -124,7 +120,6 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
                 .setLabelColor(0xff056f00)
                 .setWrapper(3)
         );
-
         items.add(new RFACLabelItem<Integer>()
                 .setLabel("手写")
                 .setResId(R.mipmap.ic_list_bar_handwriting)
@@ -167,9 +162,6 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
         PopupMenu popupMenu = new PopupMenu(this, v);
         popupMenu.getMenuInflater().inflate(R.menu.activity_main_menu, popupMenu.getMenu());
         popupMenu.show();
-    }
-    protected void onClickRight() {
-
     }
 
     @Override

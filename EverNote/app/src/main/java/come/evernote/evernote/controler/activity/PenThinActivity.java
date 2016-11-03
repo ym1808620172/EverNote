@@ -113,7 +113,6 @@ public class PenThinActivity extends AbsBaseActivity implements View.OnClickList
                     mPaintView.setmMode(Pen);
                     penIv.setSelected(true);
                     isClick = true;
-
                 } else if (isClick) {
                     penIv.setSelected(false);
                     isClick = false;

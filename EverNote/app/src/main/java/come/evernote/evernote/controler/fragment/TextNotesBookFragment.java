@@ -1,7 +1,6 @@
 package come.evernote.evernote.controler.fragment;
 
 
-import android.util.Log;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -44,21 +43,24 @@ public class TextNotesBookFragment extends ABSBaseFragment {
     @Override
     protected void initData() {
         NoteBookBean noteBook = new NoteBookBean();
-        AbsBaseActivity.setTitle("笔记本");
-        AbsBaseActivity.setLeftImg(R.mipmap.notes_book);
-        AbsBaseActivity.setMidImg(R.mipmap.ic_action_message);
         bean = new ArrayList<>();
-        List<SaveBean> saveBeen = LiteOrmInstance.getLiteOrmInstance().queryAll();
+        List<SaveBean> saveBeen = LiteOrmInstance.getLiteOrmInstance("save.db").queryAll();
         for (int i = 0; i < saveBeen.size(); i++) {
             strings.add(saveBeen.get(i).getNoteName());
         }
         for (int i = 0; i < strings.size(); i++) {
             noteBook.setNoteName(strings.toArray()[i].toString());
-            noteBook.setSize(LiteOrmInstance.getLiteOrmInstance().queryByName(strings.toArray()[i].toString()).size());
+            noteBook.setSize(LiteOrmInstance.getLiteOrmInstance("save.db").queryByName(strings.toArray()[i].toString()).size());
             bean.add(noteBook);
         }
         NotesBookAdapter bookAdapter = new NotesBookAdapter(context);
         listView.setAdapter(bookAdapter);
         bookAdapter.setList(bean);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        AbsBaseActivity.setTitle("笔记本");
     }
 }
