@@ -135,6 +135,7 @@ public class TextNotesActivity extends AbsBaseActivity implements AdapterView.On
     private String format;
     private List<int[]> imgCurse = new ArrayList<>();
     private LinearLayout bookLl;
+    private static TextView nameTv;//我的第一个笔记本
 
     @Override
     protected int setLayout() {
@@ -167,7 +168,8 @@ public class TextNotesActivity extends AbsBaseActivity implements AdapterView.On
         editorView = byView(R.id.notes_text_content_et);
         btnStart = byView(R.id.recording_btn_start);
         recordChronometer = byView(R.id.recoding_chronometer);
-        EventBus.getDefault().register(this);//注册Eventbus
+        nameTv = byView(R.id.notes_text_book_name);
+//        EventBus.getDefault().register(this);//注册Eventbus
         setListeren();
     }
 
@@ -232,6 +234,10 @@ public class TextNotesActivity extends AbsBaseActivity implements AdapterView.On
                 }
             }
         }
+    }
+
+    public static void setText(String string){
+        nameTv.setText(string);
     }
 
     private void setEditImg() {
@@ -879,4 +885,6 @@ public class TextNotesActivity extends AbsBaseActivity implements AdapterView.On
         );
         builder.create().show();
     }
+
+
 }

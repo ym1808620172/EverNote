@@ -13,10 +13,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,16 +53,8 @@ public class NoteBookActivity extends Activity implements AdapterView.OnItemClic
 
         listView.setOnItemClickListener(this);
         bookIv.setOnClickListener(this);
-        EventBus.getDefault().register(this);//注册
 
     }
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void getData(NoteBookListViewBean bean){
-        adapter.addOneData(bean);
-        
-    }
-
-
 
     @Override
     protected void onResume() {
@@ -85,10 +73,7 @@ public class NoteBookActivity extends Activity implements AdapterView.OnItemClic
         Intent intent = new Intent(NoteBookActivity.this,NewNotesBookActivity.class);
         startActivity(intent);
     }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);//解除
+    public static void addList(String string){
     }
+
 }
