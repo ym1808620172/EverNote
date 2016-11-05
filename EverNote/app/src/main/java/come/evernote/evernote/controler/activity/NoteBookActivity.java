@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -34,7 +35,6 @@ public class NoteBookActivity extends Activity implements AdapterView.OnItemClic
     private NoteBookListViewAdapter adapter;
     private List<NoteBookListViewBean> data;
     private ImageView bookIv;
-    private AlertDialog alertDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,12 +83,20 @@ public class NoteBookActivity extends Activity implements AdapterView.OnItemClic
     @Override
     public void onClick(View view) {
         Intent intent = new Intent(NoteBookActivity.this,NewNotesBookActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent,100);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);//解除
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==100&&resultCode==300){
+            finish();
+        }
     }
 }

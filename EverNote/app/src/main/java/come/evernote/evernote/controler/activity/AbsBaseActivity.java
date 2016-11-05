@@ -9,7 +9,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.PopupMenu;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
@@ -34,6 +36,7 @@ import java.util.Date;
 import java.util.List;
 
 import come.evernote.evernote.R;
+import come.evernote.evernote.controler.Interfaces.MenuDeleteI;
 import come.evernote.evernote.controler.adapter.DrawerAdapter;
 import come.evernote.evernote.controler.fragment.AllTextNotesFragment;
 import come.evernote.evernote.controler.fragment.TextNotesBookFragment;
@@ -47,7 +50,7 @@ import come.evernote.evernote.model.bean.DrawerShowBean;
  *
  * @author sunhongxu
  */
-public abstract class AbsBaseActivity extends AppCompatActivity implements AMapLocationListener {
+public abstract class AbsBaseActivity extends AppCompatActivity implements AMapLocationListener, PopupMenu.OnMenuItemClickListener {
     public FrameLayout contentView;//标题栏里的占位布局
     private static ImageView rightImg;//标题栏右侧图片
     private static ImageView leftImg;//标题栏左侧图片
@@ -67,6 +70,9 @@ public abstract class AbsBaseActivity extends AppCompatActivity implements AMapL
     private boolean is = false;
     private Animation animation;
     private TextView forTv;
+    private MenuDeleteI deleteI;
+    private WasteBinFragment fragment;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +96,7 @@ public abstract class AbsBaseActivity extends AppCompatActivity implements AMapL
                 setCity();
             }
         });
+        fragment = WasteBinFragment.newInstance();
         //设置抽屉
         setDrawer();
         // 头布局
@@ -154,9 +161,10 @@ public abstract class AbsBaseActivity extends AppCompatActivity implements AMapL
                     transaction.commit();
                     rootView.closeDrawer(layout);
                 } else if (position == 5) {
-                    transaction.replace(R.id.main_frame_layout, WasteBinFragment.newInstance());
+                    transaction.replace(R.id.main_frame_layout, fragment);
                     manager.popBackStack();
                     transaction.addToBackStack(null);
+                    deleteI = fragment;
                     transaction.commit();
                     rootView.closeDrawer(layout);
                 } else if (position == 1) {
@@ -231,6 +239,10 @@ public abstract class AbsBaseActivity extends AppCompatActivity implements AMapL
 
                 @Override
                 public void onClick(View v) {
+                    PopupMenu popupMenu = new PopupMenu(AbsBaseActivity.this, v);
+                    popupMenu.getMenuInflater().inflate(R.menu.activity_main_menu, popupMenu.getMenu());
+                    popupMenu.setOnMenuItemClickListener(AbsBaseActivity.this);
+                    popupMenu.show();
                     onClickRight(v);
                 }
             });
@@ -325,27 +337,6 @@ public abstract class AbsBaseActivity extends AppCompatActivity implements AMapL
     public void overridePendingTransition(int enterAnim, int exitAnim) {
         super.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
-
-//    /**
-//     * 点击左侧按钮
-//     * 默认什么都不做
-//     */
-//    protected void onClickLeft() {
-//    }
-//
-//    /**
-//     * 点击左侧图片
-//     * 默认什么都不做
-//     */
-//    private void onClickMid() {
-//    }
-//    /**
-//     * 点击右侧按钮
-//     * 默认什么都不做
-//     */
-//    protected void onClickRight() {
-//
-//    }
 
     /**
      * 设置左侧图片显示与隐藏
@@ -520,5 +511,30 @@ public abstract class AbsBaseActivity extends AppCompatActivity implements AMapL
     public String getCityText() {
         Log.d("dddw", forTv.getText().toString() + "");
         return forTv.getText().toString();
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.main_menu_select:
+                if (deleteI!=null){
+                    deleteI.onDeleteWasteBin(1);
+                }
+                break;
+            case R.id.main_menu_add:
+                if (deleteI!=null){
+                    deleteI.onDeleteWasteBin(2);
+                }
+                break;
+            case R.id.main_menu_rank:
+                break;
+            case R.id.main_menu_check:
+                break;
+            case R.id.main_menu_synchronization:
+                break;
+            case R.id.main_menu_setting:
+                break;
+        }
+        return false;
     }
 }

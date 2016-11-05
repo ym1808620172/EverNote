@@ -1,6 +1,7 @@
 package come.evernote.evernote.controler.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ public class NewNotesBookActivity extends Activity implements View.OnClickListen
     private TextView okTv;
     private TextView cancelTv;
     private EventBus eventbus;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +39,7 @@ public class NewNotesBookActivity extends Activity implements View.OnClickListen
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.note_book_cancel_tv:
                 finish();
                 break;
@@ -46,6 +48,8 @@ public class NewNotesBookActivity extends Activity implements View.OnClickListen
                 NoteBookListViewBean bookBean = new NoteBookListViewBean();
                 bookBean.setText(string);
                 eventbus.post(bookBean);
+                Intent intent = new Intent();
+                setResult(300,intent);
                 finish();
                 break;
         }

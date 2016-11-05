@@ -1,35 +1,96 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="come.evernote.evernote.controler.fragment.TextNotesBookFragment">
 
-    <LinearLayout
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/text_book_root_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:background="#f1ecec"
-        android:orientation="horizontal">
+        android:layout_height="match_parent">
 
-        <ImageView
-            android:layout_width="wrap_content"
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/text_book_bar_layout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@mipmap/ic_action_search" />
+            android:fitsSystemWindows="true">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="20dp"
-            android:text="查找笔记本" />
-    </LinearLayout>
+            <android.support.design.widget.CollapsingToolbarLayout
+                android:id="@+id/text_book_collapsing_toolbar_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:collapsedTitleTextAppearance="@style/ToolBarTitleText"
+                app:expandedTitleMarginEnd="@dimen/set_activity_toolbar_expanded"
+                app:expandedTitleMarginStart="@dimen/set_activity_toolbar_expanded"
+                app:expandedTitleTextAppearance="@style/transparentText"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-    <ListView
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:id="@+id/notes_book_list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+                <android.support.v7.widget.Toolbar
+                    android:background="#fff"
+                    android:id="@+id/text_book_toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    app:layout_collapseMode="pin"
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                    app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-</LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:background="#f1ecec"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/ic_action_search" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="20dp"
+                        android:text="查找笔记本" />
+                </LinearLayout>
+
+            </android.support.design.widget.CollapsingToolbarLayout>
+
+        </android.support.design.widget.AppBarLayout>
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_marginTop="10dp"
+            android:id="@+id/text_book_nsv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+           <RelativeLayout
+               android:layout_width="match_parent"
+               android:layout_height="match_parent">
+               <ListView
+                   android:background="#fff"
+                   android:id="@+id/notes_book_list"
+                   android:layout_width="match_parent"
+                   android:layout_height="match_parent"
+                   android:layout_marginLeft="15dp"
+                   android:layout_marginRight="15dp" />
+
+               <!--<RelativeLayout-->
+                   <!--android:id="@+id/notes_empity_rl"-->
+                   <!--android:layout_width="match_parent"-->
+                   <!--android:layout_height="match_parent">-->
+
+                   <!--<TextView-->
+                       <!--android:gravity="center"-->
+                       <!--android:layout_width="match_parent"-->
+                       <!--android:layout_height="match_parent"-->
+                       <!--android:text="啥也没有,快去创建"-->
+                       <!--android:textSize="30dp" />-->
+               <!--</RelativeLayout>-->
+           </RelativeLayout>
+        </android.support.v4.widget.NestedScrollView>
+    </android.support.design.widget.CoordinatorLayout>
+
+</RelativeLayout>

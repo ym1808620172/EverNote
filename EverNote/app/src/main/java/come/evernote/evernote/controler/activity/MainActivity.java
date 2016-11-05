@@ -11,6 +11,8 @@ import android.provider.MediaStore;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.PopupMenu;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.Toast;
@@ -41,11 +43,11 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
     private static RapidFloatingActionButton rfaButton;
     private RapidFloatingActionHelper rfabHelper;
     private static RapidFloatingActionLayout rfaLayout;
-    private static final int CAMERA_WITH_DATA = 3023;
+    public static final int CAMERA_WITH_DATA = 3023;
 
-    private FrameLayout mainFl;
     private FragmentManager manager;
     private FragmentTransaction transaction;
+
 
 
     /**
@@ -62,7 +64,6 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
     protected void initView() {
         rfaLayout = byView(R.id.label_list_sample_rfal);
         rfaButton = byView(R.id.label_list_sample_rfab);
-        mainFl = byView(R.id.main_frame_layout);
     }
 
     @Override
@@ -77,11 +78,11 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
         setMidImg(R.mipmap.erweima);
     }
     public static void FloatingBtnShow(int which){
-        if (which==1){
-            rfaButton.setVisibility(View.VISIBLE);
-        }else {
-            rfaButton.setVisibility(View.GONE);
-        }
+//        if (which==1){
+//            rfaButton.setVisibility(View.VISIBLE);
+//        }else {
+//            rfaButton.setVisibility(View.GONE);
+//        }
     }
 
     private void setFloatingBtn() {
@@ -159,9 +160,7 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
 
     @Override
     protected void onClickRight(View v) {
-        PopupMenu popupMenu = new PopupMenu(this, v);
-        popupMenu.getMenuInflater().inflate(R.menu.activity_main_menu, popupMenu.getMenu());
-        popupMenu.show();
+
     }
 
     @Override
@@ -304,4 +303,5 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
         }
         rfabHelper.toggleContent();
     }
+
 }

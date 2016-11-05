@@ -1,5 +1,7 @@
 package come.evernote.evernote.controler.activity;
 
+import android.content.Intent;
+import android.provider.MediaStore;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
@@ -9,13 +11,16 @@ import android.widget.LinearLayout;
 
 import come.evernote.evernote.R;
 
-public class SettingActivity extends AbsBaseActivity {
+public class SettingActivity extends AbsBaseActivity implements View.OnClickListener {
 
     private LinearLayout head_layout;
     private CollapsingToolbarLayout mCollapsingToolbarLayout;
     private CoordinatorLayout root_layout;
     private AppBarLayout app_bar_layout;
     private Toolbar mToolbar;
+    private LinearLayout setPhoto;
+    private LinearLayout setNote;
+    private LinearLayout setBook;
 
     @Override
     protected int setLayout() {
@@ -29,6 +34,12 @@ public class SettingActivity extends AbsBaseActivity {
         head_layout = byView(R.id.head_layout);
         root_layout = byView(R.id.root_layout);
         mCollapsingToolbarLayout = byView(R.id.collapsing_toolbar_layout);
+        setPhoto = byView(R.id.set_photo);
+        setNote = byView(R.id.set_note);
+        setBook = byView(R.id.set_note_book);
+        setPhoto.setOnClickListener(this);
+        setNote.setOnClickListener(this);
+        setBook.setOnClickListener(this);
     }
 
     @Override
@@ -70,4 +81,16 @@ public class SettingActivity extends AbsBaseActivity {
 
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.set_photo:
+
+                break;
+            case R.id.set_note:
+                break;
+            case R.id.set_note_book:
+                break;
+        }
+    }
 }

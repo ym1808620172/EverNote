@@ -27,12 +27,12 @@ public class RemendPopActivity extends Activity implements View.OnClickListener 
         getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
         dataImg = (ImageView) findViewById(R.id.data_pop_img);
         dataImg.setOnClickListener(this);
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        Log.d("ddd", "ISSHOW:" + ISSHOW);
         if (!ISSHOW){
             rooLl.setVisibility(View.VISIBLE);
         }

@@ -65,47 +65,55 @@ public class AllTextNotesFragment extends ABSBaseFragment {
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                final SaveBean saveBeen = (SaveBean) parent.getItemAtPosition(position);
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setMessage("是否删除该数据");
-                builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        LiteOrmInstance.getLiteOrmInstance().deleteById(bean.getId(),SaveBean.class);
-                        bean.setNoteName(saveBeen.getNoteName());
-                        bean.setTitle(saveBeen.getTitle());
-                        bean.setAllContent(saveBeen.getAllContent());
-                        bean.setBitmap(saveBeen.getBitmap());
-                        bean.setDate(saveBeen.getDate());
-                        bean.setContent(saveBeen.getContent());
-                        LiteOrmInstance.getLiteOrmInstance().insert(bean);
-                        adapter.notifyDataSetChanged();
-                    }
-                });
-                builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
-                builder.create().show();
+                setDialog(parent, position, bean);
                 return true;
             }
         });
+    }
+
+    private void setDialog(AdapterView<?> parent, int position, final NoteNameBean bean) {
+        final SaveBean saveBeen = (SaveBean) parent.getItemAtPosition(position);
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage("是否删除该数据");
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Log.d("ddd", "bean.getId():" + bean.getId());
+                LiteOrmInstance.getLiteOrmInstance().deleteById(bean.getId(), SaveBean.class);
+                bean.setNoteName(saveBeen.getNoteName());
+                bean.setTitle(saveBeen.getTitle());
+                bean.setAllContent(saveBeen.getAllContent());
+                bean.setBitmap(saveBeen.getBitmap());
+                bean.setDate(saveBeen.getDate());
+                bean.setContent(saveBeen.getContent());
+                LiteOrmInstance.getLiteOrmInstance().insert(bean);
+                List<SaveBean> been = LiteOrmInstance.getLiteOrmInstance().queryAll(SaveBean.class);
+                Log.d("ddd", "been.size():" + been.size());
+                if (been.size() > 0) {
+                    emityRl.setVisibility(View.GONE);
+                    listView.setVisibility(View.VISIBLE);
+                    adapter.setBeen(been);
+                } else {
+                    listView.setVisibility(View.GONE);
+                    emityRl.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        builder.create().show();
     }
 
     @Override
     public void onResume() {
         super.onResume();
         List<SaveBean> been = LiteOrmInstance.getLiteOrmInstance().queryAll(SaveBean.class);
-        if (been.size() > 0) {
-            emityRl.setVisibility(View.GONE);
-            listView.setVisibility(View.VISIBLE);
-            adapter.setBeen(been);
-        } else {
-            listView.setVisibility(View.GONE);
-            emityRl.setVisibility(View.VISIBLE);
-        }
+        adapter.setBeen(been);
+        listView.setEmptyView(emityRl);
         AbsBaseActivity.setTitle("全部笔记");
     }
 }
