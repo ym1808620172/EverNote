@@ -10,7 +10,6 @@ import android.text.Editable;
 import android.text.Layout;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -19,8 +18,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.Random;
-
-import come.evernote.evernote.controler.activity.MainActivity;
 
 /**
  * Created by james on 22/11/15.

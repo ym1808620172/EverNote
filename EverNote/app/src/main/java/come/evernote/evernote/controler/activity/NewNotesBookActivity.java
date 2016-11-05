@@ -8,10 +8,9 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import org.greenrobot.eventbus.EventBus;
-
 import come.evernote.evernote.R;
-import come.evernote.evernote.model.bean.NoteBookListViewBean;
+import come.evernote.evernote.model.bean.SaveBean;
+import come.evernote.evernote.model.db.LiteOrmInstance;
 
 /**
  * Created by dllo on 16/11/2.
@@ -20,7 +19,8 @@ public class NewNotesBookActivity extends Activity implements View.OnClickListen
     private EditText editText;
     private TextView okTv;
     private TextView cancelTv;
-    private EventBus eventbus;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,21 +32,23 @@ public class NewNotesBookActivity extends Activity implements View.OnClickListen
         cancelTv = (TextView) findViewById(R.id.note_book_cancel_tv);
         okTv.setOnClickListener(this);
         cancelTv.setOnClickListener(this);
-        eventbus = EventBus.getDefault();//初始化
     }
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.note_book_cancel_tv:
                 finish();
                 break;
             case R.id.note_book_ok_tv:
                 String string = editText.getText().toString();
-                NoteBookListViewBean bookBean = new NoteBookListViewBean();
-                bookBean.setText(string);
-                eventbus.post(bookBean);
-                finish();
+                if (string!=null){
+                    SaveBean bean = new SaveBean();
+                    bean.setNoteName(string);
+                    LiteOrmInstance.getLiteOrmInstance().insert(bean);
+                    TextNotesActivity.setText(string);
+                    finish();
+                }
                 break;
         }
     }

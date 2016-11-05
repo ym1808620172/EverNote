@@ -1,9 +1,11 @@
 package come.evernote.evernote.model.bean;
 
+import java.io.Serializable;
+
 /**
  * Created by dllo on 16/10/31.
  */
-public class NoteBookListViewBean {
+public class NoteBookListViewBean implements Serializable {
     private String text;
 
     public NoteBookListViewBean() {
