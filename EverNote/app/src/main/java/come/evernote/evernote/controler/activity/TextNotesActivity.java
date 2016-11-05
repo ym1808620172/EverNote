@@ -192,7 +192,7 @@ public class TextNotesActivity extends AbsBaseActivity implements AdapterView.On
 //        EventBus.getDefault().register(this);//注册Eventbus
 
         btnStart = byView(R.id.recording_btn_start);
-        recordChronometer =byView(R.id.recoding_chronometer);
+        recordChronometer = byView(R.id.recoding_chronometer);
 
     }
 
@@ -236,7 +236,7 @@ public class TextNotesActivity extends AbsBaseActivity implements AdapterView.On
         }
     }
 
-    public static void setText(String string){
+    public static void setText(String string) {
         nameTv.setText(string);
     }
 
@@ -653,7 +653,7 @@ public class TextNotesActivity extends AbsBaseActivity implements AdapterView.On
                 startActivity(intent);
                 break;
             case R.id.notes_text_book_layout://第一个笔记本
-                Intent noteIntent = new Intent(TextNotesActivity.this,NoteBookActivity.class);
+                Intent noteIntent = new Intent(TextNotesActivity.this, NoteBookActivity.class);
                 startActivity(noteIntent);
                 break;
 

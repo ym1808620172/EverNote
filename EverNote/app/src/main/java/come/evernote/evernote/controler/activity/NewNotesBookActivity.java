@@ -9,6 +9,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import come.evernote.evernote.R;
+import come.evernote.evernote.model.bean.SaveBean;
+import come.evernote.evernote.model.db.LiteOrmInstance;
 
 /**
  * Created by dllo on 16/11/2.
@@ -41,8 +43,10 @@ public class NewNotesBookActivity extends Activity implements View.OnClickListen
             case R.id.note_book_ok_tv:
                 String string = editText.getText().toString();
                 if (string!=null){
+                    SaveBean bean = new SaveBean();
+                    bean.setNoteName(string);
+                    LiteOrmInstance.getLiteOrmInstance().insert(bean);
                     TextNotesActivity.setText(string);
-                    NoteBookActivity.addList(string);
                     finish();
                 }
                 break;

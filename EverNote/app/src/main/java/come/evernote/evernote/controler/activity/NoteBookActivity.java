@@ -11,7 +11,6 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +18,8 @@ import java.util.List;
 import come.evernote.evernote.R;
 import come.evernote.evernote.controler.adapter.NoteBookListViewAdapter;
 import come.evernote.evernote.model.bean.NoteBookListViewBean;
+import come.evernote.evernote.model.bean.SaveBean;
+import come.evernote.evernote.model.db.LiteOrmInstance;
 
 /**
  * Created by dllo on 16/10/31.
@@ -60,20 +61,30 @@ public class NoteBookActivity extends Activity implements AdapterView.OnItemClic
     protected void onResume() {
         super.onResume();
         noteBookLayout.setVisibility(View.VISIBLE);
+
+        List<SaveBean> saveBean = LiteOrmInstance.getLiteOrmInstance().queryAll(SaveBean.class);
+        for (int i = 0; i < saveBean.size(); i++) {
+            data.add(new NoteBookListViewBean(saveBean.get(i).getNoteName()));
+        }
+
+
     }
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-            Toast.makeText(this, "你点击了" + i + "行", Toast.LENGTH_SHORT).show();
-
+        NoteBookListViewBean bean = (NoteBookListViewBean) adapterView.getItemAtPosition(i);
+        String text = bean.getText().toString();
+        TextNotesActivity.setText(text);
+        finish();
     }
+
 
     @Override
     public void onClick(View view) {
         Intent intent = new Intent(NoteBookActivity.this,NewNotesBookActivity.class);
         startActivity(intent);
     }
-    public static void addList(String string){
-    }
+
+
 
 }

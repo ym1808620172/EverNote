@@ -63,10 +63,10 @@ public class AllTextNotesAdapter extends BaseAdapter {
             if (saveBeen.getTitle() != null) {
                 viewHolder.titleTv.setText(saveBeen.getTitle());
             }
-            if (!saveBeen.getDate().isEmpty()) {
+            if (saveBeen.getDate() != null) {
                 viewHolder.timeTv.setText(saveBeen.getDate());
             }
-            if (!saveBeen.getContent().isEmpty()) {
+            if (saveBeen.getContent() != null) {
                 viewHolder.contentTv.setText(saveBeen.getContent());
             }
             byte[] list = saveBeen.getBitmap();
