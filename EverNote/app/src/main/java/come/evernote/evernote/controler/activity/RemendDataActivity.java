@@ -41,6 +41,7 @@ public class RemendDataActivity extends Activity {
         setContentView(R.layout.activity_remend_data_acticity);
         alarmDatas = new ArrayList<>();
         alarmData = new AlarmData();
+        alarmData.setSet(false);
         calendar = Calendar.getInstance();
 
         datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
@@ -57,15 +58,20 @@ public class RemendDataActivity extends Activity {
                         alarmData.setMinute(minute);
                         addAlarm(alarmData);
                         alarmDatas.add(alarmData);
+                        alarmData.setSet(true);
                         finish();
                     }
                 }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true);
                 timePickerDialog.show();
                 timePickerDialog.setCanceledOnTouchOutside(false);
-                timePickerDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                timePickerDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                     @Override
-                    public void onCancel(DialogInterface dialog) {
-                        finish();
+                    public void onDismiss(DialogInterface dialog) {
+                        if (alarmData.isSet()){
+                            finish();
+                        }else {
+                            datePickerDialog.show();
+                        }
                     }
                 });
             }
@@ -79,6 +85,7 @@ public class RemendDataActivity extends Activity {
                 finish();
             }
         });
+
     }
 
     public void addAlarm(AlarmData alarmData) {
@@ -101,8 +108,4 @@ public class RemendDataActivity extends Activity {
         return super.onKeyDown(keyCode, event);
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
 }

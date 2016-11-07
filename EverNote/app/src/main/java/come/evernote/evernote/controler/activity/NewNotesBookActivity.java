@@ -1,15 +1,18 @@
 package come.evernote.evernote.controler.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
+
 import come.evernote.evernote.R;
-import come.evernote.evernote.model.bean.SaveBean;
+import come.evernote.evernote.model.bean.NoteBookListViewBean;
 import come.evernote.evernote.model.db.LiteOrmInstance;
 
 /**
@@ -19,7 +22,6 @@ public class NewNotesBookActivity extends Activity implements View.OnClickListen
     private EditText editText;
     private TextView okTv;
     private TextView cancelTv;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,13 +44,15 @@ public class NewNotesBookActivity extends Activity implements View.OnClickListen
                 break;
             case R.id.note_book_ok_tv:
                 String string = editText.getText().toString();
-                if (string!=null){
-                    SaveBean bean = new SaveBean();
+                if (!string.isEmpty()){
+                    NoteBookListViewBean bean = new NoteBookListViewBean();
                     bean.setNoteName(string);
                     LiteOrmInstance.getLiteOrmInstance().insert(bean);
                     TextNotesActivity.setText(string);
-                    finish();
+                    Intent intent = new Intent();
+                    setResult(300,intent);
                 }
+                finish();
                 break;
         }
     }

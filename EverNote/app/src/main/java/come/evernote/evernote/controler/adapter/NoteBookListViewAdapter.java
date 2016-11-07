@@ -30,21 +30,17 @@ public class NoteBookListViewAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return data != null ? data.size() : 0;
+        return data != null && data.size() > 0 ? data.size() : 0;
     }
 
     @Override
     public Object getItem(int i) {
-        return data.get(i);
+        return data == null ? null : data.get(i);
     }
 
     @Override
     public long getItemId(int i) {
         return i;
-    }
-    public void addOneData(NoteBookListViewBean bean){
-        data.add(bean);
-        notifyDataSetChanged();
     }
 
     @Override
@@ -58,7 +54,7 @@ public class NoteBookListViewAdapter extends BaseAdapter {
             holder = (ViewHolder) view.getTag();
         }
         NoteBookListViewBean bean = data.get(i);
-        holder.textView.setText(bean.getText());
+        holder.textView.setText(bean.getNoteName());
         return view;
     }
 

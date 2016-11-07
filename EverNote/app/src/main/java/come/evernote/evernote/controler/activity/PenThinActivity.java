@@ -160,7 +160,6 @@ public class PenThinActivity extends AbsBaseActivity implements View.OnClickList
                 }
                 break;
         }
-
     }
 
     /**
@@ -175,6 +174,4 @@ public class PenThinActivity extends AbsBaseActivity implements View.OnClickList
         bitmap.compress(Bitmap.CompressFormat.PNG, 0, baos);//压缩位图
         return baos.toByteArray();//创建分配字节数组
     }
-
-
 }

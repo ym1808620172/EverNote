@@ -7,7 +7,7 @@
     <item
         android:id="@+id/main_menu_add"
         android:orderInCategory="2"
-        android:title="添加到手机主屏" />
+        android:title="删除笔记" />
     <item
         android:id="@+id/main_menu_rank"
         android:orderInCategory="3"

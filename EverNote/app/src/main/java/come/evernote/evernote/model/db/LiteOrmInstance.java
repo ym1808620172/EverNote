@@ -159,9 +159,7 @@ public class LiteOrmInstance {
      * 按条件删除
      */
     public <T> void deleteById(int id,Class<T> tClass) {
-        WhereBuilder wb = new WhereBuilder(tClass);
-        wb.where("id = ?", new int[]{id});
-        liteOrm.delete(wb);
+        liteOrm.delete(new WhereBuilder(tClass).greaterThan("id",id));
     }
 
     /**

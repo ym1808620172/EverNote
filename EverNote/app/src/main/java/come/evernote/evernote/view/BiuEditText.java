@@ -47,8 +47,10 @@ public class BiuEditText extends EditText {
                     char last = s.charAt(s.length() - 1);
                     update(last, true);
                 } else {
-                    char last = cacheStr.charAt(cacheStr.length() - 1);
-                    update(last, false);
+                    if (cacheStr.length()>0){
+                        char last = cacheStr.charAt(cacheStr.length() - 1);
+                        update(last, false);
+                    }
                 }
                 cacheStr = s.toString();
             }

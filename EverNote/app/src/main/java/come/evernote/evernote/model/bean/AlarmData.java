@@ -17,6 +17,7 @@ public class AlarmData {
     private int hour;
     private int minute;
     private int alarmSwitch;
+    private boolean isSet;
 
 
     public AlarmData() {
@@ -35,6 +36,15 @@ public class AlarmData {
         this.hour = hour;
         this.minute = minute;
         this.alarmSwitch = alarmSwitch;
+    }
+
+
+    public boolean isSet() {
+        return isSet;
+    }
+
+    public void setSet(boolean set) {
+        isSet = set;
     }
 
     public int getYear() {
