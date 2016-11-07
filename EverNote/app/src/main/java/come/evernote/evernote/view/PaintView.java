@@ -69,7 +69,7 @@ public class PaintView extends View {
         mPath = new Path();
         mBitmap = Bitmap.createBitmap(screenWidth, screenHeight, Config.ARGB_8888);
         mCanvas = new Canvas(mBitmap);
-        savePath = new ArrayList<DrawPath>();
+        savePath = new ArrayList<>();
 
     }
     public List<DrawPath> List(){
@@ -199,6 +199,4 @@ public class PaintView extends View {
         public Path path;
         public Paint Tpaint;
     }
-
-
 }
