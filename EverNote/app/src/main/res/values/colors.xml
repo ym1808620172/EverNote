@@ -26,10 +26,10 @@
     <!--文字笔记圈i的抽屉-->
     <color name="about_updated">#c9c9c9</color>
     <color name="about_create_time">#c9c9c9</color>
-    <color name="about_view_background">#b4b4b4</color>
-    <color name="about_note_text">#01b12a</color>
-    <color name="about_label_text">#01b12a</color>
-    <color name="about_location_text">#01b12a</color>
+    <color name="about_view_background">#45AD42</color>
+    <color name="about_note_text">#45AD42</color>
+    <color name="about_label_text">#45AD42</color>
+    <color name="about_location_text">#45AD42</color>
     <!--文件笔记小点的抽屉-->
     <color name="menu_view">#cfcfcf</color>
     <!--手写的标题-->

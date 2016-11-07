@@ -78,7 +78,6 @@ public class TextNotesBookFragment extends ABSBaseFragment {
         listView.setAdapter(bookAdapter);
         bookAdapter.setList(bean);
 //        listView.setEmptyView(rl);
-//       app_bar_layout
 
     }
 

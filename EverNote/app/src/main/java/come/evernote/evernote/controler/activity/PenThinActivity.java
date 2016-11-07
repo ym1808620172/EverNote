@@ -2,6 +2,7 @@ package come.evernote.evernote.controler.activity;
 
 import android.graphics.Bitmap;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;

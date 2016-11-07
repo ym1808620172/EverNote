@@ -34,7 +34,9 @@ import java.util.List;
 
 import come.evernote.evernote.R;
 import come.evernote.evernote.controler.fragment.AllTextNotesFragment;
+import come.evernote.evernote.model.bean.NoteBookListViewBean;
 import come.evernote.evernote.model.bean.PhotoBean;
+import come.evernote.evernote.model.db.LiteOrmInstance;
 import come.evernote.evernote.snake.Snake;
 
 public class MainActivity extends AbsBaseActivity implements RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener {
@@ -76,6 +78,7 @@ public class MainActivity extends AbsBaseActivity implements RapidFloatingAction
         transaction.replace(R.id.main_frame_layout, AllTextNotesFragment.newInstance());
         transaction.commit();
         setMidImg(R.mipmap.erweima);
+
     }
     public static void FloatingBtnShow(int which){
 //        if (which==1){

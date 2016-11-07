@@ -12,19 +12,17 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import come.evernote.evernote.R;
-import come.evernote.evernote.model.bean.NoteNameBean;
-import come.evernote.evernote.model.bean.SaveBean;
+import come.evernote.evernote.model.bean.WasteBinBean;
 
 /**
  * Created by dllo on 16/10/29.
  */
 public class WasteBinAdapter extends BaseAdapter {
-    private List<NoteNameBean> been;
+    private List<WasteBinBean> been;
     private Context context;
     private ViewHolder viewHolder;
     private HashMap<Integer, Boolean> map;
@@ -40,7 +38,7 @@ public class WasteBinAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
-    public void setBeen(List<NoteNameBean> been) {
+    public void setBeen(List<WasteBinBean> been) {
         this.been = been;
         map = new HashMap<>();
         for (int i = 0; i < been.size(); i++) {
@@ -74,7 +72,7 @@ public class WasteBinAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        NoteNameBean saveBeen = been.get(position);
+        WasteBinBean saveBeen = been.get(position);
         if (saveBeen != null) {
             if (saveBeen.getTitle() != null) {
                 viewHolder.titleTv.setText(saveBeen.getTitle());

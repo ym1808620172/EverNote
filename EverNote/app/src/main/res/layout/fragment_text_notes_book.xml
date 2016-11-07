@@ -1,8 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="come.evernote.evernote.controler.fragment.TextNotesBookFragment">
 
     <android.support.design.widget.CoordinatorLayout
@@ -27,10 +27,10 @@
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
                 <android.support.v7.widget.Toolbar
-                    android:background="#fff"
                     android:id="@+id/text_book_toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
+                    android:background="#fff"
                     app:layout_collapseMode="pin"
                     app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                     app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
@@ -60,36 +60,36 @@
         </android.support.design.widget.AppBarLayout>
 
         <android.support.v4.widget.NestedScrollView
-            android:layout_marginTop="10dp"
             android:id="@+id/text_book_nsv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-           <RelativeLayout
-               android:layout_width="match_parent"
-               android:layout_height="match_parent">
-               <ListView
-                   android:background="#fff"
-                   android:id="@+id/notes_book_list"
-                   android:layout_width="match_parent"
-                   android:layout_height="match_parent"
-                   android:layout_marginLeft="15dp"
-                   android:layout_marginRight="15dp" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-               <!--<RelativeLayout-->
-                   <!--android:id="@+id/notes_empity_rl"-->
-                   <!--android:layout_width="match_parent"-->
-                   <!--android:layout_height="match_parent">-->
+                <ListView
+                    android:id="@+id/notes_book_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#fff"
+                    />
 
-                   <!--<TextView-->
-                       <!--android:gravity="center"-->
-                       <!--android:layout_width="match_parent"-->
-                       <!--android:layout_height="match_parent"-->
-                       <!--android:text="啥也没有,快去创建"-->
-                       <!--android:textSize="30dp" />-->
-               <!--</RelativeLayout>-->
-           </RelativeLayout>
+                <!--<RelativeLayout-->
+                <!--android:id="@+id/notes_empity_rl"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent">-->
+
+                <!--<TextView-->
+                <!--android:gravity="center"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:text="啥也没有,快去创建"-->
+                <!--android:textSize="30dp" />-->
+                <!--</RelativeLayout>-->
+            </RelativeLayout>
         </android.support.v4.widget.NestedScrollView>
     </android.support.design.widget.CoordinatorLayout>
 

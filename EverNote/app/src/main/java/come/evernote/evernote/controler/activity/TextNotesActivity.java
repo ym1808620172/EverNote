@@ -135,6 +135,7 @@ public class TextNotesActivity extends AbsBaseActivity implements AdapterView.On
     private String format;
     private List<int[]> imgCurse = new ArrayList<>();
     private LinearLayout bookLl;
+    private static TextView nameTv;//我的第一个笔记本
 
     @Override
     protected int setLayout() {
@@ -167,7 +168,8 @@ public class TextNotesActivity extends AbsBaseActivity implements AdapterView.On
         editorView = byView(R.id.notes_text_content_et);
         btnStart = byView(R.id.recording_btn_start);
         recordChronometer = byView(R.id.recoding_chronometer);
-        EventBus.getDefault().register(this);//注册Eventbus
+        nameTv = byView(R.id.notes_text_book_name);
+//        EventBus.getDefault().register(this);//注册Eventbus
         setListeren();
     }
 
@@ -187,10 +189,10 @@ public class TextNotesActivity extends AbsBaseActivity implements AdapterView.On
         noteBook.setOnClickListener(this);
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);//抽屉关闭手势滑动
         editorView = byView(R.id.notes_text_content_et);
-//        EventBus.getDefault().register(this);//注册Eventbus
+        EventBus.getDefault().register(this);//注册Eventbus
 
         btnStart = byView(R.id.recording_btn_start);
-        recordChronometer =byView(R.id.recoding_chronometer);
+        recordChronometer = byView(R.id.recoding_chronometer);
 
     }
 
@@ -232,6 +234,10 @@ public class TextNotesActivity extends AbsBaseActivity implements AdapterView.On
                 }
             }
         }
+    }
+
+    public static void setText(String string) {
+        nameTv.setText(string);
     }
 
     private void setEditImg() {
@@ -480,7 +486,9 @@ public class TextNotesActivity extends AbsBaseActivity implements AdapterView.On
                     isPopupClick = true;
                 } else if (isPopupClick) {
                     formattingIv.setSelected(false);
-                    popupWindow.dismiss();
+                    if (popupWindow!=null){
+                        popupWindow.dismiss();
+                    }
                     isPopupClick = false;
                 }
                 break;
@@ -493,6 +501,8 @@ public class TextNotesActivity extends AbsBaseActivity implements AdapterView.On
                 } else if (isClick) {
                     boldIv.setSelected(false);
                     isClick = false;
+                    span.setSpan(new StyleSpan(Typeface.NORMAL), 0, editorView.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    setEdText();
                 }
                 break;
             case R.id.item_formatting_popup_window_italic_iv://斜体
@@ -647,7 +657,7 @@ public class TextNotesActivity extends AbsBaseActivity implements AdapterView.On
                 startActivity(intent);
                 break;
             case R.id.notes_text_book_layout://第一个笔记本
-                Intent noteIntent = new Intent(TextNotesActivity.this,NoteBookActivity.class);
+                Intent noteIntent = new Intent(TextNotesActivity.this, NoteBookActivity.class);
                 startActivity(noteIntent);
                 break;
 
@@ -879,4 +889,6 @@ public class TextNotesActivity extends AbsBaseActivity implements AdapterView.On
         );
         builder.create().show();
     }
+
+
 }

@@ -13,7 +13,7 @@ import come.evernote.evernote.R;
 import come.evernote.evernote.controler.Interfaces.MenuDeleteI;
 import come.evernote.evernote.controler.activity.AbsBaseActivity;
 import come.evernote.evernote.controler.adapter.WasteBinAdapter;
-import come.evernote.evernote.model.bean.NoteNameBean;
+import come.evernote.evernote.model.bean.WasteBinBean;
 import come.evernote.evernote.model.db.LiteOrmInstance;
 
 /**
@@ -61,7 +61,7 @@ public class WasteBinFragment extends ABSBaseFragment implements MenuDeleteI {
     @Override
     public void onResume() {
         super.onResume();
-        List<NoteNameBean> been = LiteOrmInstance.getLiteOrmInstance().queryAll(NoteNameBean.class);
+        List<WasteBinBean> been = LiteOrmInstance.getLiteOrmInstance().queryAll(WasteBinBean.class);
         adapter.setBeen(been);
         listView.setEmptyView(emityRl);
         AbsBaseActivity.setTitle("废纸篓");
@@ -75,9 +75,9 @@ public class WasteBinFragment extends ABSBaseFragment implements MenuDeleteI {
             } else {
                 if (integerList != null) {
                     for (int i = 0; i < integerList.size(); i++) {
-                        LiteOrmInstance.getLiteOrmInstance().deleteById(integerList.get(i), NoteNameBean.class);
+                        LiteOrmInstance.getLiteOrmInstance().deleteById(integerList.get(i), WasteBinBean.class);
                     }
-                    List<NoteNameBean> been = LiteOrmInstance.getLiteOrmInstance().queryAll(NoteNameBean.class);
+                    List<WasteBinBean> been = LiteOrmInstance.getLiteOrmInstance().queryAll(WasteBinBean.class);
                     adapter.setBeen(been);
                     listView.setEmptyView(emityRl);
                 }

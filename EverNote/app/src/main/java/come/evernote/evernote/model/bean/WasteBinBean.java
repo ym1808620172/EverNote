@@ -8,9 +8,7 @@ import com.litesuits.orm.db.enums.AssignType;
  * Created by dllo on 16/11/3.
  */
 @Table("waste")
-public class NoteNameBean {
-
-
+public class WasteBinBean {
         @PrimaryKey(AssignType.AUTO_INCREMENT)
         private int id;
         private String title;
@@ -20,7 +18,7 @@ public class NoteNameBean {
         private byte[] bitmap;
         private String noteName;
 
-        public NoteNameBean(String title, String content, String date, String allContent, byte[] bitmap, String noteName) {
+        public WasteBinBean(String title, String content, String date, String allContent, byte[] bitmap, String noteName) {
             this.title = title;
             this.content = content;
             this.date = date;
@@ -29,7 +27,7 @@ public class NoteNameBean {
             this.noteName = noteName;
         }
 
-    public NoteNameBean() {
+    public WasteBinBean() {
     }
 
     public int getId() {

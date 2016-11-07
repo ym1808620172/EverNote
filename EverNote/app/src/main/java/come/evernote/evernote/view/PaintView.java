@@ -10,6 +10,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -141,7 +142,7 @@ public class PaintView extends View {
             case MotionEvent.ACTION_UP:
                 touch_up();
                 invalidate();
-                mPath = null;
+//                mPath = null;
                 break;
         }
 
@@ -153,6 +154,7 @@ public class PaintView extends View {
     }
 
     public Path getPath() {
+        Log.d("ddd", "mPaint:" + mPaint);
         return mPath;
     }
 

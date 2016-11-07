@@ -5,24 +5,20 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import come.evernote.evernote.R;
 import come.evernote.evernote.controler.activity.AbsBaseActivity;
 import come.evernote.evernote.controler.activity.TextNotesActivity;
 import come.evernote.evernote.controler.adapter.AllTextNotesAdapter;
-import come.evernote.evernote.model.bean.NoteNameBean;
+import come.evernote.evernote.model.bean.WasteBinBean;
 import come.evernote.evernote.model.bean.SaveBean;
 import come.evernote.evernote.model.db.LiteOrmInstance;
-import come.evernote.evernote.view.ListViewForScrollView;
 
 
 public class AllTextNotesFragment extends ABSBaseFragment {
@@ -32,7 +28,6 @@ public class AllTextNotesFragment extends ABSBaseFragment {
     private AllTextNotesAdapter adapter;
 
     public static AllTextNotesFragment newInstance() {
-
         AllTextNotesFragment fragment = new AllTextNotesFragment();
         return fragment;
     }
@@ -51,7 +46,7 @@ public class AllTextNotesFragment extends ABSBaseFragment {
     @Override
     protected void initData() {
         adapter = new AllTextNotesAdapter(context);
-        final NoteNameBean bean = new NoteNameBean();
+        final WasteBinBean bean = new WasteBinBean();
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -71,14 +66,14 @@ public class AllTextNotesFragment extends ABSBaseFragment {
         });
     }
 
-    private void setDialog(AdapterView<?> parent, int position, final NoteNameBean bean) {
+
+    private void setDialog(AdapterView<?> parent, int position, final WasteBinBean bean) {
         final SaveBean saveBeen = (SaveBean) parent.getItemAtPosition(position);
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setMessage("是否删除该数据");
         builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Log.d("ddd", "bean.getId():" + bean.getId());
                 LiteOrmInstance.getLiteOrmInstance().deleteById(bean.getId(), SaveBean.class);
                 bean.setNoteName(saveBeen.getNoteName());
                 bean.setTitle(saveBeen.getTitle());

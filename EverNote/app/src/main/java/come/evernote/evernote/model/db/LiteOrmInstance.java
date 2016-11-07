@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Objects;
 
 import come.evernote.evernote.controler.app.ImpressApp;
-import come.evernote.evernote.model.bean.SaveBean;
 
 /**
  * Created by dllo on 16/10/26.

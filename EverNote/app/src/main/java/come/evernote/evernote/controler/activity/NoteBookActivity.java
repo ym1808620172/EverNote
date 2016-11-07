@@ -2,6 +2,7 @@ package come.evernote.evernote.controler.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -12,34 +13,33 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.Toast;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import come.evernote.evernote.R;
 import come.evernote.evernote.controler.adapter.NoteBookListViewAdapter;
 import come.evernote.evernote.model.bean.NoteBookListViewBean;
+import come.evernote.evernote.model.bean.SaveBean;
+import come.evernote.evernote.model.db.LiteOrmInstance;
 
 /**
  * Created by dllo on 16/10/31.
  * 选择笔记页面(点击我的第一个笔记本弹出)
  */
 public class NoteBookActivity extends Activity implements AdapterView.OnItemClickListener, View.OnClickListener {
-    private LinearLayout noteBookLayout;
     private ListView listView;
     private NoteBookListViewAdapter adapter;
-    private List<NoteBookListViewBean> data;
     private ImageView bookIv;
+    private boolean isHave = false;
+    private boolean SpisHave;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_note);
-        noteBookLayout = (LinearLayout) findViewById(R.id.note_book_layout);
         listView = (ListView) findViewById(R.id.note_book_list_view);
         bookIv = (ImageView) findViewById(R.id.note_book_iv);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
@@ -48,37 +48,41 @@ public class NoteBookActivity extends Activity implements AdapterView.OnItemClic
     }
 
     private void initData() {
-        data = new ArrayList<>();
         adapter = new NoteBookListViewAdapter(this);
-
-        data.add(new NoteBookListViewBean("我的第一个笔记本"));
-        adapter.setData(data);
         listView.setAdapter(adapter);
-
         listView.setOnItemClickListener(this);
         bookIv.setOnClickListener(this);
-        EventBus.getDefault().register(this);//注册
-
+        SharedPreferences sp = getSharedPreferences("name",MODE_PRIVATE);
+        SpisHave = sp.getBoolean("ishave",false);
     }
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void getData(NoteBookListViewBean bean){
-        adapter.addOneData(bean);
-        
-    }
-
-
 
     @Override
     protected void onResume() {
         super.onResume();
-        noteBookLayout.setVisibility(View.VISIBLE);
+        List<NoteBookListViewBean> listViewBeen =LiteOrmInstance.getLiteOrmInstance().queryAll(NoteBookListViewBean.class);
+        if (!SpisHave){
+            for (int i = 0; i < listViewBeen.size(); i++) {
+                if (listViewBeen.get(i).getNoteName().equals("我是第一个笔记本")) {
+                    isHave = true;
+                }
+            }
+            if (!isHave){
+                NoteBookListViewBean bean = new NoteBookListViewBean();
+                bean.setNoteName("我是第一个笔记本");
+                LiteOrmInstance.getLiteOrmInstance().insert(bean);
+            }
+        }
+        adapter.setData(listViewBeen);
     }
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-            Toast.makeText(this, "你点击了" + i + "行", Toast.LENGTH_SHORT).show();
-
+        NoteBookListViewBean bean = (NoteBookListViewBean) adapterView.getItemAtPosition(i);
+        String text = bean.getNoteName();
+        TextNotesActivity.setText(text);
+        finish();
     }
+
 
     @Override
     public void onClick(View view) {
@@ -89,7 +93,6 @@ public class NoteBookActivity extends Activity implements AdapterView.OnItemClic
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);//解除
     }
 
     @Override
@@ -99,4 +102,5 @@ public class NoteBookActivity extends Activity implements AdapterView.OnItemClic
             finish();
         }
     }
+
 }
