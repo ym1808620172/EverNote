@@ -169,7 +169,7 @@ public class TextNotesActivity extends AbsBaseActivity implements AdapterView.On
         btnStart = byView(R.id.recording_btn_start);
         recordChronometer = byView(R.id.recoding_chronometer);
         nameTv = byView(R.id.notes_text_book_name);
-//        EventBus.getDefault().register(this);//注册Eventbus
+        EventBus.getDefault().register(this);//注册Eventbus
         setListeren();
     }
 
@@ -190,7 +190,7 @@ public class TextNotesActivity extends AbsBaseActivity implements AdapterView.On
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);//抽屉关闭手势滑动
         editorView = byView(R.id.notes_text_content_et);
 //        EventBus.getDefault().register(this);//注册Eventbus
-
+//
         btnStart = byView(R.id.recording_btn_start);
         recordChronometer = byView(R.id.recoding_chronometer);
 
@@ -431,7 +431,10 @@ public class TextNotesActivity extends AbsBaseActivity implements AdapterView.On
     public void getData(PhotoBean bean) {
         noteTitle.setHint("手写位于" + getCityText());
         Bitmap bitmap = getBitmap(bean.getBitmap());
+        Log.d("xxx", "bean.getBitmap():" + bean.getBitmap());
+
         saveCroppedImage(bitmap);
+        Log.d("ddd", file.getPath()+"");
         editorView.insertBitmap(file.getPath());
         imgCurse.add(new int[]{editorView.getIndex(), editorView.getPicture()});
     }

@@ -2,6 +2,7 @@ package come.evernote.evernote.controler.activity;
 
 import android.graphics.Bitmap;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -96,6 +97,7 @@ public class PenThinActivity extends AbsBaseActivity implements View.OnClickList
         switch (view.getId()) {
 
             case R.id.item_pen_thin_return:
+                Log.d("ddd", "mPaintView.getPath():" + mPaintView.getPath());
                 if (mPaintView.getPath() != null) {
                     if (mPaintView.getPath().isEmpty()) {
 
@@ -104,6 +106,7 @@ public class PenThinActivity extends AbsBaseActivity implements View.OnClickList
                         PhotoBean bean = new PhotoBean();
                         bean.setBitmap(getBytes(bitmap));
                         eventBus.post(bean);
+                        Log.d("ddd", "执行了");
                     }
                 }
                 finish();
